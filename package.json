@@ -1,0 +1,36 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@popperjs/core": "^2.11.6",
+        "@vitejs/plugin-react": "^2.2.0",
+        "axios": "^1.4.0",
+        "bootstrap": "^5.2.3",
+        "laravel-vite-plugin": "^0.7.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "sass": "^1.56.1",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@mantine/core": "^6.0.17",
+        "@mantine/dates": "^6.0.17",
+        "@mantine/form": "^6.0.17",
+        "@mantine/hooks": "^6.0.17",
+        "@reduxjs/toolkit": "^1.9.5",
+        "@tabler/icons-react": "^2.30.0",
+        "chart.js": "^4.3.3",
+        "dayjs": "^1.11.9",
+        "mantine-react-table": "^1.0.0",
+        "react-chartjs-2": "^5.2.0",
+        "react-redux": "^8.1.2",
+        "react-router-dom": "^6.14.2",
+        "redux": "^4.2.1",
+        "sweetalert2": "^11.7.20"
+    }
+}

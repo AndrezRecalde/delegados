@@ -1,0 +1,36 @@
+{
+    "data": [
+        {
+            "title": "Veedores Incriptos",
+            "icon": "veed_enrroled",
+            "value": "veed_enrroled"
+        },
+        {
+            "title": "Veedores Confirmados",
+            "icon": "veed_confirmed",
+            "value": "veed_confirmed"
+        },
+        {
+            "title": "Supervisores",
+            "icon": "supervisores",
+            "value": "supervisores"
+        },
+
+        {
+            "title": "Coordinadores",
+            "icon": "coordinadores",
+            "value": "coordinadores"
+        },
+        {
+            "title": "Escaneadores",
+            "icon": "escaneadores",
+            "value": "escaneadores"
+        },
+        {
+            "title": "Usuarios",
+            "icon": "usuarios",
+            "value": "usuarios"
+        }
+    ]
+}
+
