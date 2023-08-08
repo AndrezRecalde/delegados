@@ -49,7 +49,7 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.veedores.card', $data);
 
-        return $pdf->setPaper('a4', 'landscape')->download('veedores.pdf');
+        return $pdf->download('veedores.pdf');
     }
 
     function generateTableVeedoresPDF(Request $request)
@@ -112,7 +112,7 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.coordinadores.card', $data);
 
-        return $pdf->setPaper('a4', 'landscape')->download('coordinadores.pdf');
+        return $pdf->download('coordinadores.pdf');
     }
 
     function getTableCoordinadoresPDF(Request $request)
@@ -172,7 +172,7 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.supervisores.card', $data);
 
-        return $pdf->setPaper('a4', 'landscape')->download('supervisores.pdf');
+        return $pdf->download('supervisores.pdf');
     }
 
     function getTableSupervisoresPDF(Request $request)
@@ -234,6 +234,6 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.escaneadores.card', $data);
 
-        return $pdf->setPaper('a4', 'landscape')->download('escaneadores.pdf');
+        return $pdf->download('escaneadores.pdf');
     }
 }

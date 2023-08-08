@@ -15,24 +15,41 @@
 
 <body>
 
-    <center>
+    {{-- <center>
         <strong style="font-size:20px">{{ $title }}</strong>
     </center>
     <br />
-
+ --}}
     <table>
         <tbody>
 
-            @foreach ($supervisores->chunk(3) as $supervisor)
+            @foreach ($supervisores->chunk(2) as $supervisor)
                 <tr>
                     @foreach ($supervisor as $item)
                         <td>
-                            <div class="card ml-3" style="width: 20rem;">
-                                <img src={{ public_path('/images/cnelogo.png') }} class="card-img-top" alt="cne_logo" />
+                            <div class="card ml-2 mb-5" style="width: 21rem;">
+                                <img src={{ public_path('/images/cneweb.png') }} class="card-img-top" alt="cne_logo" />
                                 <div class="card-body">
-                                    <img src={{ public_path('/images/psclogo.jpg') }} class="img-fluid" alt="psc_logo" />
-                                    <h5 class="card-title">PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6</h5>
-                                    <h6 class="card-text">{{ $item->nombres_completos }}</h6>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <p>20 de agosto</p>
+                                                </td>
+                                                <td>
+                                                <img src={{ public_path('/images/psclogo.jpg') }}
+                                                        class="img-fluid mb-2 mr-5" height="90" width="90"
+                                                        alt="psc_logo" />
+                                                </td>
+                                                <td>
+                                                    <p><em>www.cne.gob.ec</em></p>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="card-title">PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6</p>
+                                    <p class="card-text">{{ $item->nombres_completos }}</p>
                                     <p class="card-text">{{ $item->dni }}</p>
                                     <p class="card-text">{{ $item->parroquias->implode('nombre_parroquia', ', ') }}</p>
                                 </div>
