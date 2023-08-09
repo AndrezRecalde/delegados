@@ -27,7 +27,7 @@
                 <tr>
                     @foreach ($escaneador as $item)
                         <td>
-                            <div class="card ml-2 mb-5" style="width: 21rem;">
+                            <div class="card ml-0 mr-4 mb-5" style="width: 21rem;">
                                 <img src={{ public_path('/images/cnelogo.png') }} class="card-img-top" alt="cne_logo" />
                                 <div class="card-body">
                                     <table>

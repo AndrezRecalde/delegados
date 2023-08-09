@@ -23,37 +23,46 @@
     <table>
         <tbody>
 
-            @foreach ($coordinadores->chunk(2) as $coordinador)
+            @foreach ($coordinadores->chunk(3) as $coordinador)
                 <tr>
                     @foreach ($coordinador as $item)
                         <td>
-                            <div class="card ml-2 mb-5" style="width: 21rem;">
-                                <img src={{ public_path('/images/cneweb.png') }} class="card-img-top" alt="cne_logo" />
+                            <div class="card ml-0 mr-4 mb-2" style="width: 20rem;">
+                                <div class="text-center mt-5">
+                                    <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" height="250"
+                                        width="250" alt="cne_logo" />
+                                </div>
                                 <div class="card-body">
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <p>20 de agosto</p>
+                                                    <p style="font-size: 12px">20 de agosto</p>
                                                 </td>
                                                 <td>
                                                     <img src={{ public_path('/images/psclogo.jpg') }}
-                                                        class="img-fluid mb-2 mr-5" height="90" width="90"
+                                                        class="img-fluid mb-2 ml-2 mr-2" height="90" width="90"
                                                         alt="psc_logo" />
                                                 </td>
                                                 <td>
-                                                    <p><em>www.cne.gob.ec</em></p>
+                                                    <p style="font-size: 12px">www.cne.gob.ec</p>
                                                 </td>
 
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <p class="card-title">PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6</p>
-                                    <p class="card-text">{{ $item->nombres_completos }}</p>
-                                    <p class="card-text">{{ $item->dni }}</p>
-                                    <p class="card-text">{{ $item->parroquia }}</p>
+                                    <div >
+                                        <input type="text" class="form-control" style="width: 90%" aria-describedby="organizacion" value="PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6">
+                                        <small id="organizacion" class="form-text text-muted" style="font-size: 10px">NOMBRE DE LA ORGANIZACION POLITICA O ALIANZA</small>
+                                        <p class="form-control" style="width: 90%; font-size: 16px;">{{ $item->nombres_completos }}</p>
+                                        <small id="nombres_completos" class="form-text text-muted" style="font-size: 10px">NOMBRES APELLIDOS</small>
+                                        <input type="text" class="form-control" style="width: 90%" aria-describedby="dni" value={{ $item->dni }}>
+                                        <small id="dni" class="form-text text-muted" style="font-size: 10px">CEDULA CIUDADANIA N°</small>
+                                        <input type="text" class="form-control" style="width: 90%" aria-describedby="parroquia" value={{ $item->parroquia }}>
+                                        <small id="parroquia" class="form-text text-muted" style="font-size: 10px">PARROQUIA</small>
+                                    </div>
                                 </div>
-                                <div class="card-footer text-muted">
+                                <div class="card-footer text-white font-weight-bold" style="background-color: black;">
                                     COORDINADOR/A ANTE LA JUNTA RECEPTORA DEL VOTO
                                 </div>
                             </div>

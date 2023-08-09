@@ -30,6 +30,7 @@ class PDFController extends Controller
             ->join('supervisores as super', 'super.id', 'coord.supervisor_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
+            ->join('parroquias as p', 'p.id', 'r.parroquia_id')
             ->canton($request->canton_id)
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
@@ -39,7 +40,8 @@ class PDFController extends Controller
                     super.nombres_completos as supervisor,
                     coord.nombres_completos as coordinador,
                     c.nombre_canton as canton,
-                    r.nombre_recinto as recinto')
+                    r.nombre_recinto as recinto,
+                    p.nombre_parroquia as parroquia')
             ->get();
 
         $data = [
@@ -49,7 +51,7 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.veedores.card', $data);
 
-        return $pdf->download('veedores.pdf');
+        return $pdf->setPaper('a4', 'landscape')->download('veedores.pdf');
     }
 
     function generateTableVeedoresPDF(Request $request)
@@ -112,7 +114,7 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.coordinadores.card', $data);
 
-        return $pdf->download('coordinadores.pdf');
+        return $pdf->setPaper('a4', 'landscape')->download('coordinadores.pdf');
     }
 
     function getTableCoordinadoresPDF(Request $request)

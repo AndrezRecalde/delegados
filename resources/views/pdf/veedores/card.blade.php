@@ -23,37 +23,72 @@
     <table>
         <tbody>
 
-            @foreach ($veedores->chunk(2) as $veedor)
+            @foreach ($veedores->chunk(3) as $veedor)
                 <tr>
                     @foreach ($veedor as $item)
                         <td>
-                            <div class="card ml-2 mb-5" style="width: 21rem;">
-                                <img src={{ public_path('/images/cneweb.png') }} class="card-img-top" alt="cne_logo" />
+                            <div class="card ml-0 mr-1 ml-1 mb-1" style="width: 20rem;">
+                                <div class="text-center mt-5">
+                                    <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" alt="cne_logo"
+                                        height="250" width="250" />
+                                </div>
                                 <div class="card-body">
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <p>20 de agosto</p>
+                                                    <p style="font-size: 12px">20 de agosto</p>
                                                 </td>
                                                 <td>
                                                     <img src={{ public_path('/images/psclogo.jpg') }}
-                                                        class="img-fluid mb-2 mr-5" height="90" width="90"
+                                                        class="img-fluid mb-2 ml-2 mr-2" height="90" width="90"
                                                         alt="psc_logo" />
                                                 </td>
                                                 <td>
-                                                    <p><em>www.cne.gob.ec</em></p>
+                                                    <p style="font-size: 12px">www.cne.gob.ec</p>
                                                 </td>
 
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <p class="card-title">PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6</p>
-                                    <p class="card-text">{{ $item->nombres_completos }}</p>
-                                    <p class="card-text">{{ $item->dni }}</p>
-                                    <p class="card-text">{{ $item->recinto }}</p>
+                                    <input type="text" class="form-control" style="width: 90%"
+                                        aria-describedby="organizacion" value="PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6">
+                                    <small id="organizacion" class="form-text text-muted" style="font-size: 10px">NOMBRE
+                                        DE LA ORGANIZACION POLITICA O ALIANZA</small>
+                                    <p class="form-control" style="width: 90%; font-size: 16px;">
+                                        {{ $item->nombres_completos }}</p>
+                                    <small id="nombres_completos" class="form-text text-muted"
+                                        style="font-size: 10px">NOMBRES APELLIDOS</small>
+                                    <input type="text" class="form-control" style="width: 90%" aria-describedby="dni"
+                                        value={{ $item->dni }}>
+                                    <small id="dni" class="form-text text-muted" style="font-size: 10px">CEDULA
+                                        CIUDADANIA N°</small>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <p class="form-control" style="width: 80%; font-size: 10px;">
+                                                        {{ $item->parroquia }}</p>
+                                                    <small id="parroquia" class="form-text text-muted"
+                                                        style="font-size: 10px">PARROQUIA</small>
+                                                    <p class="form-control" style="width: 80%; font-size: 10px;">
+                                                        {{ $item->recinto }}</p>
+                                                    <small id="parroquia" class="form-text text-muted"
+                                                        style="font-size: 10px">RECINTO</small>
+                                                </td>
+                                                <td>
+
+                                                    <input type="text" class="form-control ml-3 mr-5"
+                                                        style="width: 50%; height: 60px;" aria-describedby="dni"
+                                                        value="2 F">
+                                                    <small id="parroquia" class="form-text text-muted  text-center"
+                                                        style="font-size: 10px">JRV N°</small>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="card-footer text-muted">
+                                <div class="card-footer text-white font-weight-bold" style="background-color: black;">
                                     DELEGADO/A ANTE LA JUNTA RECEPTORA DEL VOTO
                                 </div>
                             </div>
