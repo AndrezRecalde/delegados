@@ -18,11 +18,12 @@ class VeedorController extends Controller
         $veedores = Veedor::from('veedores as veed')
             ->selectRaw('veed.id, veed.nombres_completos, veed.dni, veed.telefono,
                         veed.coordinador_id, coord.nombres_completos as coordinador,
-                        veed.canton_id, c.nombre_canton as canton,
-                        veed.recinto_id, r.nombre_recinto as recinto, veed.confirmado')
+                        veed.canton_id, c.nombre_canton as canton, veed.recinto_id,
+                        r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado')
             ->join('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
+            ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
             ->get();
 
         return response()->json(['status' => 'success', 'veedores' => $veedores], 200);
@@ -80,6 +81,7 @@ class VeedorController extends Controller
             ->join('supervisores as super', 'super.id', 'coord.supervisor_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
+            ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
             ->canton($request->canton_id)
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
@@ -89,7 +91,8 @@ class VeedorController extends Controller
                         super.nombres_completos as supervisor,
                         coord.nombres_completos as coordinador,
                         c.nombre_canton as canton,
-                        r.nombre_recinto as recinto')
+                        r.nombre_recinto as recinto,
+                        veed.confirmado, veed.junta_id, j.junta_nombre as junta')
             ->get();
 
         if (sizeof($veedores) >= 1) {

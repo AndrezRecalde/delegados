@@ -51,18 +51,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <input type="text" class="form-control" style="width: 90%"
-                                        aria-describedby="organizacion" value="PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6">
-                                    <small id="organizacion" class="form-text text-muted" style="font-size: 10px">NOMBRE
-                                        DE LA ORGANIZACION POLITICA O ALIANZA</small>
-                                    <p class="form-control" style="width: 90%; font-size: 16px;">
-                                        {{ $item->nombres_completos }}</p>
-                                    <small id="nombres_completos" class="form-text text-muted"
-                                        style="font-size: 10px">NOMBRES APELLIDOS</small>
-                                    <input type="text" class="form-control" style="width: 90%" aria-describedby="dni"
-                                        value={{ $item->dni }}>
-                                    <small id="dni" class="form-text text-muted" style="font-size: 10px">CEDULA
-                                        CIUDADANIA N°</small>
+                                    <p class="form-control" style="width: 90%; font-size: 16px;">PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6</p>
+                                    <small id="organizacion" class="form-text text-muted" style="font-size: 10px">NOMBRE DE LA ORGANIZACION POLITICA O ALIANZA</small>
+                                    <p class="form-control" style="width: 90%; font-size: 16px;">{{ $item->nombres_completos }}</p>
+                                    <small id="nombres_completos" class="form-text text-muted" style="font-size: 10px">NOMBRES APELLIDOS</small>
+                                    <input type="text" class="form-control" style="width: 90%" aria-describedby="dni" value={{ $item->dni }}/>
+                                    <small id="dni" class="form-text text-muted" style="font-size: 10px">CEDULA CIUDADANIA N°</small>
                                     <table>
                                         <tbody>
                                             <tr>

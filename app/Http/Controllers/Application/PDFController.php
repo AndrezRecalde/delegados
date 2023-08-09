@@ -31,6 +31,7 @@ class PDFController extends Controller
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->join('parroquias as p', 'p.id', 'r.parroquia_id')
+            ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
             ->canton($request->canton_id)
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
@@ -41,7 +42,8 @@ class PDFController extends Controller
                     coord.nombres_completos as coordinador,
                     c.nombre_canton as canton,
                     r.nombre_recinto as recinto,
-                    p.nombre_parroquia as parroquia')
+                    p.nombre_parroquia as parroquia,
+                    j.junta_nombre as junta')
             ->get();
 
         $data = [

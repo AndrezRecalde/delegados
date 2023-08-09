@@ -12,6 +12,7 @@ import { useUiEscaner } from "./escaner/useUiEscaner";
 import { useStateStore } from "./state/useStateStore";
 import { useDashboardStore } from "./dashboard/useDashboardStore";
 import { useRoleStore } from "./role/useRoleStore";
+import { useJuntaStore } from "./junta/useJuntaStore";
 
 export {
   useAuthStore,
@@ -27,5 +28,6 @@ export {
   useUiEscaner,
   useStateStore,
   useDashboardStore,
-  useRoleStore
+  useRoleStore,
+  useJuntaStore
 };

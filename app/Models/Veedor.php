@@ -18,6 +18,7 @@ class Veedor extends Model
         'coordinador_id',
         'canton_id',
         'recinto_id',
+        'junta_id',
         'confirmado'
     ];
 

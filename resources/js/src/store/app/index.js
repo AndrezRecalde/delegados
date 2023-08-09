@@ -11,6 +11,7 @@ import { escaneadorSlice } from "./escaneador/escaneadorSlice";
 import { uiEscaneadorSlice } from "./escaneador/uiEscaneadorSlice";
 import { dashboardSlice } from "./dashboard/dashboardSlice";
 import { roleSlice } from "./role/roleSlice";
+import { juntaSlice } from "./junta/juntaSlice";
 
 export {
   usuarioSlice,
@@ -25,5 +26,6 @@ export {
   escaneadorSlice,
   uiEscaneadorSlice,
   dashboardSlice,
-  roleSlice
+  roleSlice,
+  juntaSlice
 };

@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { Box, Grid, Select, TextInput } from "@mantine/core";
 import { IconChecks } from "@tabler/icons-react";
-import { useCoordinadorStore, useStateStore, useUiVeedor, useVeedorStore } from "../../../hooks";
+import { useCoordinadorStore, useJuntaStore, useStateStore, useUiVeedor, useVeedorStore } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
 
 
 export const FormVeedor = ({ form }) => {
-    const { canton_id } = form.values;
+    const { canton_id, recinto_id } = form.values;
     const { coordinadores, startLoadCoordinadores } = useCoordinadorStore();
     const { startAddVeedor, activateVeedor } = useVeedorStore();
     const { modalActionVeedor } = useUiVeedor();
     const { cantones, recintos, startLoadCantones, startLoadAllRecintos } = useStateStore();
+    const { juntas, startLoadJuntas } = useJuntaStore();
 
     useEffect(() => {
         startLoadCantones();
@@ -30,6 +31,11 @@ export const FormVeedor = ({ form }) => {
         startLoadAllRecintos(canton_id);
         form.setFieldValue("recinto_id", activateVeedor?.recinto_id ?? activateVeedor?.recinto_id);
     }, [canton_id]);
+
+    useEffect(() => {
+      startLoadJuntas(recinto_id);
+      form.setFieldValue("junta_id", activateVeedor?.junta_id ?? activateVeedor?.junta_id);
+    }, [recinto_id]);
 
 
 
@@ -117,6 +123,23 @@ export const FormVeedor = ({ form }) => {
                             return {
                                 value: recinto.id,
                                 label: recinto.nombre_recinto
+                            }
+                        })}
+                    />
+                </Grid.Col>
+                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                    <Select
+                        label="Seleccione la junta"
+                        description="La junta se puede agregar luego"
+                        placeholder="Numero de junta"
+                        searchable
+                        withAsterisk
+                        nothingFound="No options"
+                        {...form.getInputProps("junta_id")}
+                        data={juntas?.map(junta => {
+                            return {
+                                value: junta.id,
+                                label: junta.junta_nombre
                             }
                         })}
                     />

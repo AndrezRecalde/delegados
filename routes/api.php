@@ -3,6 +3,7 @@
 use App\Http\Controllers\Application\CoordinadorController;
 use App\Http\Controllers\Application\DashboardController;
 use App\Http\Controllers\Application\EscaneadorController;
+use App\Http\Controllers\Application\JuntaController;
 use App\Http\Controllers\Application\PDFController;
 use App\Http\Controllers\Application\RoleController;
 use App\Http\Controllers\Application\StateController;
@@ -54,6 +55,9 @@ Route::group(
 
         /* Roles */
         Route::get('/roles/listar', [RoleController::class, 'getRoles']);
+
+        /* Juntas */
+        Route::post('/juntas/recinto', [JuntaController::class, 'getJuntas']);
 
         /* States */
         Route::get('cantones', [StateController::class, 'getCantones']);

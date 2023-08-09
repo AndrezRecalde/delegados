@@ -29,7 +29,8 @@ class VeedorRequest extends FormRequest
             'telefono'          =>  'required',
             'coordinador_id'    =>  'required',
             'canton_id'         =>  'required',
-            'recinto_id'        =>  'required'
+            'recinto_id'        =>  'required',
+            'junta_id'          =>  ''
         ];
     }
 

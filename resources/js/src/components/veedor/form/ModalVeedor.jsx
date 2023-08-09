@@ -17,6 +17,7 @@ export const ModalVeedor = () => {
             coordinador_id: "",
             canton_id: "",
             recinto_id: "",
+            junta_id: ""
         },
         validate: {
             nombres_completos: isNotEmpty("Por favor ingrese apellidos y nombres"),

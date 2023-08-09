@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('coordinador_id');
             $table->unsignedInteger('canton_id');
             $table->unsignedInteger('recinto_id'); /* Recinto donde cuida el voto */
+            $table->unsignedInteger('junta_id')->nullable();
             $table->boolean('confirmado')->default(0);
             $table->timestamps();
         });
