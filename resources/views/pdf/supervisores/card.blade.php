@@ -11,9 +11,9 @@
 
     <style>
         .fondo {
-            background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/08/delegado.png');
-            background-size: 100% 100%;
+            background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/08/FFF-02.jpg');
             background-repeat: no-repeat;
+            background-size: 320px 400px;
         }
     </style>
 
@@ -35,22 +35,52 @@
                 <tr>
                     @foreach ($supervisor as $item)
                         <td>
-                            <div class="card ml-0 mr-4 mb-5 fondo" style="width: 21rem; height: 28rem;">
-                                {{-- <img src={{ public_path('/images/cneweb.png') }} class="card-img-top" alt="cne_logo" /> --}}
-                                <div class="card-body mt-5">
-                                    <div class="text-center">
-                                        <img src={{ public_path('/images/psclogo.jpg') }}
-                                            class="img-fluid mb-2 mr-5" height="90" width="90"
-                                            alt="psc_logo" />
-                                    </div>
-                                    <p class="card-title">PARTIDO SOCIAL CRISTIANO (PSC) LISTA 6</p>
-                                    <p class="card-text">{{ $item->nombres_completos }}</p>
-                                    <p class="card-text">{{ $item->dni }}</p>
-                                    <p class="card-text">{{ $item->parroquias->implode('nombre_parroquia', ', ') }}</p>
+                            <div class="card ml-0 mr-1 ml-1 mb-1 fondo" style="width: 20rem;">
+                                <div class="text-center mt-4">
+                                    <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" height="180"
+                                        width="180" alt="cne_logo" />
                                 </div>
-                                {{-- <div class="card-footer text-muted">
-                                    SUPERVISOR/A ANTE LA JUNTA RECEPTORA DEL VOTO
-                                </div> --}}
+                                <div class="card-body">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <p style="font-size: 12px">20 de agosto</p>
+                                                </td>
+                                                <td>
+                                                    <img src={{ public_path('/images/psclogo.jpg') }}
+                                                        class="img-fluid mb-3 ml-2 mr-2" height="90" width="90"
+                                                        alt="psc_logo" />
+                                                </td>
+                                                <td>
+                                                    <p style="font-size: 10px">www.cne.gob.ec</p>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">PARTIDO SOCIAL
+                                        CRISTIANO (PSC) LISTA 6</p>
+                                    <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRE
+                                        DE LA ORGANIZACION POLITICA O ALIANZA</small>
+
+                                    <p class="form-control" style="width: 80%; font-size: 7px;">
+                                        {{ $item->nombres_completos }}</p>
+                                    <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRES
+                                        APELLIDOS</small>
+                                    <input type="text" class="form-control" style="width: 80%; font-size: 7px;"
+                                        aria-describedby="dni" value={{ $item->dni }}>
+                                    <small id="dni" class="form-text text-muted text-center mt-1"
+                                        style="font-size: 7px">CEDULA CIUDADANIA N°</small>
+                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">
+                                        {{ $item->parroquias->implode('nombre_parroquia', ', ') }}</p>
+                                    <small id="parroquia" class="form-text text-muted text-center mt-1"
+                                        style="font-size: 7px">PARROQUIA</small>
+                                </div>
+                                <div class="card-footer text-center text-white font-weight-bold"
+                                    style="background-color: black; font-size: 14px;">
+                                    SUPERVISOR DE DELEGADOS/AS <br /> ANTE LA JUNTA RECEPTORA DEL VOTO
+                                </div>
                             </div>
                         </td>
                     @endforeach
