@@ -8,7 +8,7 @@ export const FormCoordinador = ({ form }) => {
     const { canton_id, parroquia_id } = form.values;
     const { startAddCoordinador, activateCoordinador } = useCoordinadorStore();
     const { modalActionCoordinador } = useUiCoordinador();
-    const { supervisores, startLoadSupervisores } = useSupervisorStore();
+    const { supervisores, startLoadSupervisoresForCanton } = useSupervisorStore();
     const {
         cantones,
         parroquias,
@@ -20,8 +20,13 @@ export const FormCoordinador = ({ form }) => {
 
     useEffect(() => {
         startLoadCantones();
-        startLoadSupervisores();
     }, []);
+
+    useEffect(() => {
+        startLoadSupervisoresForCanton(canton_id);
+
+    }, [canton_id]);
+
 
     useEffect(() => {
         if (activateCoordinador !== null) {
@@ -68,6 +73,22 @@ export const FormCoordinador = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Grid>
+            <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                    <Select
+                        label="Seleccione el cantón"
+                        placeholder="Cantón"
+                        searchable
+                        withAsterisk
+                        nothingFound="No options"
+                        {...form.getInputProps("canton_id")}
+                        data={cantones.map((canton) => {
+                            return {
+                                value: canton.id,
+                                label: canton.nombre_canton,
+                            };
+                        })}
+                    />
+                </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <Select
                         label="Seleccione el supervisor"
@@ -115,23 +136,7 @@ export const FormCoordinador = ({ form }) => {
                         {...form.getInputProps("telefono")}
                     />
                 </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={4} xl={4}>
-                    <Select
-                        label="Seleccione el cantón"
-                        placeholder="Cantón"
-                        searchable
-                        withAsterisk
-                        nothingFound="No options"
-                        {...form.getInputProps("canton_id")}
-                        data={cantones.map((canton) => {
-                            return {
-                                value: canton.id,
-                                label: canton.nombre_canton,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={4} xl={4}>
+                <Grid.Col sm={12} md={12} lg={6} xl={6}>
                     <Select
                         label="Seleccione la parroquia"
                         placeholder="Parroquia"
@@ -147,7 +152,7 @@ export const FormCoordinador = ({ form }) => {
                         })}
                     />
                 </Grid.Col>
-                <Grid.Col xs={12} md={12} lg={4} xl={4}>
+                <Grid.Col xs={12} md={12} lg={6} xl={6}>
                     <MultiSelect
                         label="Elija el/los recinto(s)"
                         placeholder="Recinto(s)"

@@ -37,6 +37,26 @@ export const useCoordinadorStore = () => {
         }
     };
 
+    const startLoadCoordsForCanton = async(canton_id) => {
+        dispatch(onLoading());
+        try {
+            const { data } = await eleccionApi.post("/coordinadores/canton", {canton_id});
+            const { coordinadores } = data;
+            dispatch(onCoordinadores(coordinadores));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
     const startAddCoordinador = async (coordinador) => {
         try {
             if (coordinador.id) {
@@ -252,6 +272,7 @@ export const useCoordinadorStore = () => {
         errores,
 
         startLoadCoordinadores,
+        startLoadCoordsForCanton,
         startAddCoordinador,
         startDeleteCoordinador,
         setActivateCoordinador,

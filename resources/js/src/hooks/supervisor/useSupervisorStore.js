@@ -37,6 +37,26 @@ export const useSupervisorStore = () => {
         }
     };
 
+    const startLoadSupervisoresForCanton = async (canton_id) => {
+        dispatch(onLoading());
+        try {
+            const { data } = await eleccionApi.post("/supervisores/canton", {canton_id});
+            const { supervisores } = data;
+            dispatch(onSupervisores(supervisores));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
     const startAddSupervisor = async (supervisor) => {
         try {
             if (supervisor.id) {
@@ -247,6 +267,7 @@ export const useSupervisorStore = () => {
         errores,
 
         startLoadSupervisores,
+        startLoadSupervisoresForCanton,
         startAddSupervisor,
         setActivateSupervisor,
         setClearActivateSupervisor,

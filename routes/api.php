@@ -73,6 +73,7 @@ Route::group(
         Route::delete('/supervisor/delete/{id}', [SupervisorController::class, 'destroy']);
         Route::post('/supervisores/search',  [SupervisorController::class, 'searchSupervisores']);  /* TODO FINISH */
         Route::post('/supervisores/import', [SupervisorController::class, 'massiveStore']); /* TODO FINISH */
+        Route::post('/supervisores/canton', [SupervisorController::class, 'getSupervisoresForCanton']);
 
         /* Coordinadores */
         Route::get('/coordinadores/listar', [CoordinadorController::class, 'getCoordinadores']);
@@ -81,6 +82,7 @@ Route::group(
         Route::delete('/coordinador/delete/{id}', [CoordinadorController::class, 'destroy']);
         Route::post('/coordinadores/search', [CoordinadorController::class, 'searchCoordinadores']); /* TODO FINISH */
         Route::post('/coordinadores/import', [CoordinadorController::class, 'massiveStore']); /* TODO FINISH */
+        Route::post('/coordinadores/canton', [CoordinadorController::class, 'getCoordinadoresForCanton']);
 
         /* Veedores */
         Route::get('/veedores/listar', [VeedorController::class, 'getVeedores']);

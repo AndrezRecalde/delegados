@@ -27,6 +27,22 @@ class SupervisorController extends Controller
         return response()->json(['status' => 'success', 'supervisores' => $supervisores], 200);
     }
 
+    function getSupervisoresForCanton(Request $request): JsonResponse
+    {
+        $supervisores = Supervisor::from('supervisores as s')
+            ->selectRaw('s.id, s.nombres_completos, s.dni, s.email, s.telefono,
+                         s.canton_id, c.nombre_canton as canton')
+            ->with([
+                'parroquias' => function ($query) {
+                    return $query->select('parroquias.id', 'parroquias.nombre_parroquia');
+                }
+            ])
+            ->join('cantones as c', 'c.id', 's.canton_id')
+            ->canton($request->canton_id)
+            ->get();
+        return response()->json(['status' => 'success', 'supervisores' => $supervisores], 200);
+    }
+
     function store(SupervisorRequest $request): JsonResponse
     {
         try {

@@ -32,6 +32,28 @@ class CoordinadorController extends Controller
         return response()->json(['status' => 'success', 'coordinadores' => $coordinadores], 200);
     }
 
+    function getCoordinadoresForCanton(Request $request): JsonResponse
+    {
+        $coordinadores = Coordinador::from('coordinadores as coord')
+            ->selectRaw('coord.id, coord.nombres_completos, coord.dni,
+                                coord.email, coord.telefono,
+                                coord.supervisor_id, s.nombres_completos as supervisor,
+                                coord.canton_id, c.nombre_canton as canton,
+                                coord.parroquia_id, p.nombre_parroquia as parroquia')
+            ->with([
+                'recintos'  =>  function ($query) {
+                    return $query->select('recintos.id', 'recintos.nombre_recinto');
+                }
+            ])
+            ->join('supervisores as s', 's.id', 'coord.supervisor_id')
+            ->join('cantones as c', 'c.id', 'coord.canton_id')
+            ->join('parroquias as p', 'p.id', 'coord.parroquia_id')
+            ->canton($request->canton_id)
+            ->get();
+
+        return response()->json(['status' => 'success', 'coordinadores' => $coordinadores], 200);
+    }
+
     function store(CoordinadorRequest $request): JsonResponse
     {
         try {

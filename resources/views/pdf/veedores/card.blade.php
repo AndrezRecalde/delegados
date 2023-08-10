@@ -60,15 +60,15 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">PARTIDO SOCIAL
+                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">PARTIDO SOCIAL
                                         CRISTIANO (PSC) LISTA 6</p>
                                     <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRE
                                         DE LA ORGANIZACION POLITICA O ALIANZA</small>
-                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">
+                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
                                         {{ $item->nombres_completos }}</p>
                                     <small class="form-text text-muted text-center mt-1"
                                     style="width: 80%; font-size: 7px;">NOMBRES APELLIDOS</small>
-                                    <input type="text" class="form-control mb-0" style="width: 80%; font-size: 7px;" aria-describedby="dni"
+                                    <input type="text" class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;" aria-describedby="dni"
                                         value={{ $item->dni }} />
                                     <small class="form-text text-muted text-center mt-1" style="font-size: 7px">CEDULA
                                         CIUDADANIA N°</small>
@@ -76,18 +76,18 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">
+                                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
                                                         {{ $item->parroquia }}</p>
                                                     <small class="form-text text-muted text-center mt-1"
                                                         style="font-size: 7px">PARROQUIA</small>
-                                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">
+                                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
                                                         {{ $item->recinto }}</p>
                                                     <small class="form-text text-muted text-center mt-1"
                                                         style="font-size: 7px">RECINTO</small>
                                                 </td>
                                                 <td>
 
-                                                    <p class="form-control ml-3 mr-5 mb-0" style="width: 50%; height: 50px;">
+                                                    <p class="form-control ml-5 mr-1 mb-0 rounded" style="width: 40px; height: 50px;">
                                                         {{ $item->junta }}</p>
                                                     <small class="form-text text-muted text-center mt-1"
                                                         style="font-size: 7px">JRV N°</small>
