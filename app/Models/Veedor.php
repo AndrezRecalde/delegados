@@ -29,6 +29,12 @@ class Veedor extends Model
         }
     }
 
+    function scopeParroquia($query, $parroquia_id) {
+        if($parroquia_id > 0){
+            return $query->where('r.parroquia_id', $parroquia_id);
+        }
+    }
+
     function scopeRecinto($query, $recinto_id)
     {
         if($recinto_id > 0){

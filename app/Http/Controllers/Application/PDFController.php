@@ -33,6 +33,7 @@ class PDFController extends Controller
             ->join('parroquias as p', 'p.id', 'r.parroquia_id')
             ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
             ->canton($request->canton_id)
+            ->parroquia($request->parroquia_id)
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
             ->supervisor($request->supervisor_id)

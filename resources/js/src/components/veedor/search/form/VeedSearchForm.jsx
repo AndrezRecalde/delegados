@@ -10,11 +10,11 @@ import {
 } from "../../../../hooks";
 
 export const VeedSearchForm = ({ form }) => {
-    const { canton_id } = form.values;
+    const { canton_id, parroquia_id } = form.values;
     const { startSearchVeedor } = useVeedorStore();
     const { supervisores, startLoadSupervisores, startClearSupervisores } = useSupervisorStore();
     const { coordinadores, startLoadCoordinadores, startClearCoordinadores } = useCoordinadorStore();
-    const { cantones, recintos, startLoadCantones, startLoadAllRecintos, starClearStates } =
+    const { cantones, parroquias, recintos, startLoadCantones, startLoadParroquias, startLoadRecintos, starClearStates } =
         useStateStore();
 
     useEffect(() => {
@@ -31,9 +31,15 @@ export const VeedSearchForm = ({ form }) => {
     }, []);
 
     useEffect(() => {
-        startLoadAllRecintos(canton_id);
-        form.setFieldValue("recinto_id", 0);
+        startLoadParroquias(canton_id);
+        form.setFieldValue("parroquia_id", 0);
     }, [canton_id]);
+
+
+    useEffect(() => {
+        startLoadRecintos(parroquia_id);
+        form.setFieldValue("recinto_id", 0);
+    }, [parroquia_id]);
 
 
     const handleSubmit = (e) => {
@@ -51,7 +57,7 @@ export const VeedSearchForm = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Grid>
-                <Grid.Col sm={12} md={6} lg={6} xl={6}>
+                <Grid.Col sm={12} md={4} lg={4} xl={4}>
                     <Select
                         label="Selecciona el Cantón"
                         placeholder="Cantón"
@@ -67,7 +73,23 @@ export const VeedSearchForm = ({ form }) => {
                         })}
                     />
                 </Grid.Col>
-                <Grid.Col sm={12} md={6} lg={6} xl={6}>
+                <Grid.Col sm={12} md={4} lg={4} xl={4}>
+                    <Select
+                        label="Selecciona la Parroquia"
+                        placeholder="Cantón"
+                        searchable
+                        clearable
+                        nothingFound="No options"
+                        {...form.getInputProps("parroquia_id")}
+                        data={parroquias.map((parroquia) => {
+                            return {
+                                value: parroquia.id,
+                                label: parroquia.nombre_parroquia,
+                            };
+                        })}
+                    />
+                </Grid.Col>
+                <Grid.Col sm={12} md={4} lg={4} xl={4}>
                     <Select
                         label="Selecciona el Recinto"
                         placeholder="Recinto"

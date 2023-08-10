@@ -13,6 +13,7 @@ export const SearchVeedPage = () => {
     const form = useForm({
         initialValues: {
             canton_id: 0,
+            parroquia_id: 0,
             recinto_id: 0,
             coordinador_id: 0,
             supervisor_id: 0,
