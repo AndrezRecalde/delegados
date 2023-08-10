@@ -30,7 +30,7 @@
     <table>
         <tbody>
 
-            @foreach ($coordinadores->chunk(3) as $coordinador)
+            @foreach ($coordinadores->chunk(2) as $coordinador)
                 <tr>
                     @foreach ($coordinador as $item)
                         <td>
