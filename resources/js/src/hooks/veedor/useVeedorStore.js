@@ -194,6 +194,7 @@ export const useVeedorStore = () => {
             );
             window.open(url, "_blank");
         } catch (error) {
+            console.log(error);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
