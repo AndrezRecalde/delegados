@@ -38,7 +38,11 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -53,7 +57,11 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -68,7 +76,11 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -76,14 +88,20 @@ export const useDashboardStore = () => {
 
     const startLoadTotalVeedoresConfirmed = async () => {
         try {
-            const { data } = await eleccionApi.get("/totales/veedores/confirmados");
+            const { data } = await eleccionApi.get(
+                "/totales/veedores/confirmados"
+            );
             const { totalConfirmados } = data;
             dispatch(onLoadTotalConfirmados(totalConfirmados));
         } catch (error) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -98,13 +116,17 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
     };
 
-    const startLoadTotalEscaneadores = async() => {
+    const startLoadTotalEscaneadores = async () => {
         try {
             const { data } = await eleccionApi.get("/totales/escaneadores");
             const { totalEscaneadores } = data;
@@ -113,11 +135,15 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
     const startLoadTotalJuntas = async () => {
         try {
@@ -128,13 +154,17 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
     };
 
-    const startAvanceCantones = async() => {
+    const startAvanceCantones = async () => {
         dispatch(onLoading());
         try {
             const { data } = await eleccionApi.get("/avance/cantones");
@@ -144,15 +174,19 @@ export const useDashboardStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
     const startClearTotales = () => {
         dispatch(onClearTotales());
-    }
+    };
 
     return {
         isLoading,
@@ -173,6 +207,6 @@ export const useDashboardStore = () => {
         startLoadTotalEscaneadores,
         startLoadTotalJuntas,
         startClearTotales,
-        startAvanceCantones
+        startAvanceCantones,
     };
 };

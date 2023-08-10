@@ -36,6 +36,7 @@ class EscaneadorRequest extends FormRequest
         return [
             'nombres_completos.required'  =>  'El/Los nombre(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
+            'dni.unique'                  =>  'El número de cédula ya está registrado',
             'telefono.required'           =>  'El teléfono es requerido',
             'canton_id.required'          =>  'El canton es requerido',
         ];

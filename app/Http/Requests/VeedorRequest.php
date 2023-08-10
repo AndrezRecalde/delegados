@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class VeedorRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class VeedorRequest extends FormRequest
     {
         return [
             'nombres_completos' =>  'required',
-            'dni'               =>  'required',
+            'dni'               =>  ['required', Rule::unique('veedores')->ignore($this->request->get('id'))],
             'telefono'          =>  'required',
             'coordinador_id'    =>  'required',
             'canton_id'         =>  'required',
@@ -39,6 +40,7 @@ class VeedorRequest extends FormRequest
         return [
             'nombres_completos.required'  =>  'El/Los nombre(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
+            'dni.unique'                  =>  'El número de cédula ya está registrado',
             'telefono.required'           =>  'El teléfono es requerido',
             'coordinador_id.required'     =>  'El supervisor es requerido',
             'canton_id.required'          =>  'El canton es requerido',

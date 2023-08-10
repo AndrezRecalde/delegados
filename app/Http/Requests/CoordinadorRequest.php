@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class CoordinadorRequest extends FormRequest
 {
@@ -40,6 +40,7 @@ class CoordinadorRequest extends FormRequest
         return [
             'nombres_completos.required'  =>  'El/Los nombre(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
+            'dni.unique'                  =>  'El número de cédula ya esta ingresado',
             'telefono.required'           =>  'El teléfono es requerido',
             'supervisor_id.required'      =>  'El supervisor es requerido',
             'canton_id.required'          =>  'El canton es requerido',

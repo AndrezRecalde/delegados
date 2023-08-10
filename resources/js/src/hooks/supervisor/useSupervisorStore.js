@@ -27,7 +27,11 @@ export const useSupervisorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -66,7 +70,11 @@ export const useSupervisorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -94,7 +102,11 @@ export const useSupervisorStore = () => {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: error.response ? error.response.data.msg : error,
+                        text: error.response.data.msg
+                            ? error.response.data.msg
+                            : error.response.data.msg
+                            ? error.response.data.errores
+                            : Object.values(error.response.data.errores),
                         confirmButtonColor: "#c81d11",
                     });
                 }
@@ -123,7 +135,11 @@ export const useSupervisorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -144,7 +160,11 @@ export const useSupervisorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -165,7 +185,11 @@ export const useSupervisorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -194,7 +218,11 @@ export const useSupervisorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -202,7 +230,7 @@ export const useSupervisorStore = () => {
 
     const startClearSupervisores = () => {
         dispatch(onClearSupervisores());
-    }
+    };
 
     const setActivateSupervisor = (supervisor) => {
         dispatch(onSetActivateSupervisor(supervisor));

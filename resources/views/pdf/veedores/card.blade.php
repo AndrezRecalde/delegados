@@ -87,9 +87,8 @@
                                                 </td>
                                                 <td>
 
-                                                    <input type="text" class="form-control ml-3 mr-5 mb-0"
-                                                        style="width: 50%; height: 60px;" aria-describedby="dni"
-                                                        value="2 F">
+                                                    <p class="form-control ml-3 mr-5 mb-0" style="width: 50%; height: 50px;">
+                                                        {{ $item->junta }}</p>
                                                     <small class="form-text text-muted text-center mt-1"
                                                         style="font-size: 7px">JRV N°</small>
                                                 </td>

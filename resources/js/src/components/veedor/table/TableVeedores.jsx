@@ -17,15 +17,19 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
         () => [
             {
                 accessorKey: "confirmado",
-                header: "¿Confirmado?",
+                header: viewBtn === 1 ? "¿Confirmado?" : null,
                 enableColumnOrdering: false,
                 enableEditing: false,
                 enableSorting: false,
                 /* enableColumnFilter: false, */
                 size: 40,
-                Cell: ({ cell }) => (
-                    <ActivateVeedor cell={cell} handleActivar={handleActivar} />
-                ),
+                Cell: ({ cell }) =>
+                    viewBtn === 1 ? (
+                        <ActivateVeedor
+                            cell={cell}
+                            handleActivar={handleActivar}
+                        />
+                    ) : null,
             },
             {
                 accessorKey: "dni",
@@ -50,6 +54,12 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
             {
                 accessorKey: "recinto",
                 header: "Recinto",
+                wrap: true,
+            },
+            {
+                accessorFn: (row) =>
+                    row.junta !== null ? row.junta : "Sin registrar",
+                header: "Junta",
                 wrap: true,
             },
         ],

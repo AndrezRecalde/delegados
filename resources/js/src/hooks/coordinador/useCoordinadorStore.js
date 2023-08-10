@@ -27,7 +27,11 @@ export const useCoordinadorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -67,7 +71,11 @@ export const useCoordinadorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -94,7 +102,11 @@ export const useCoordinadorStore = () => {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: error.response ? error.response.data.msg : error,
+                        text: error.response.data.msg
+                            ? error.response.data.msg
+                            : error.response.data.msg
+                            ? error.response.data.errores
+                            : Object.values(error.response.data.errores),
                         confirmButtonColor: "#c81d11",
                     });
                 }
@@ -130,7 +142,11 @@ export const useCoordinadorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -151,7 +167,11 @@ export const useCoordinadorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -172,7 +192,11 @@ export const useCoordinadorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -199,7 +223,11 @@ export const useCoordinadorStore = () => {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
                 confirmButtonColor: "#c81d11",
             });
         }
@@ -207,7 +235,7 @@ export const useCoordinadorStore = () => {
 
     const startClearCoordinadores = () => {
         dispatch(onClearCoordinadores());
-    }
+    };
 
     const setActivateCoordinador = (coordinador) => {
         dispatch(onSetActivateCoordinador(coordinador));
@@ -232,6 +260,6 @@ export const useCoordinadorStore = () => {
         startExportTablePDF,
         startExportCredenciales,
         startImportCoord,
-        startClearCoordinadores
+        startClearCoordinadores,
     };
 };
