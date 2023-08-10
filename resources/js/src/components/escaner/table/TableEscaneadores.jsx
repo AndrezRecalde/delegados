@@ -35,6 +35,16 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
                 header: "Cantón",
                 wrap: true,
             },
+            {
+                accessorKey: "parroquia",
+                header: "Parroquia",
+                wrap: true,
+            },
+            {
+                accessorKey: "recinto",
+                header: "Recinto",
+                wrap: true,
+            },
         ],
         [escaneadores]
     );

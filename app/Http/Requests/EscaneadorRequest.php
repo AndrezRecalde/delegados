@@ -28,7 +28,9 @@ class EscaneadorRequest extends FormRequest
             'nombres_completos' =>  'required',
             'dni'               =>  ['required', Rule::unique('escaneadores')->ignore($this->request->get('id'))],
             'telefono'          =>  'required',
-            'canton_id'         =>  'required'
+            'canton_id'         =>  'required',
+            'parroquia_id'      =>  'required',
+            'recinto_id'        =>  'required'
         ];
     }
     public function messages(): array
@@ -39,6 +41,8 @@ class EscaneadorRequest extends FormRequest
             'dni.unique'                  =>  'El número de cédula ya está registrado',
             'telefono.required'           =>  'El teléfono es requerido',
             'canton_id.required'          =>  'El canton es requerido',
+            'parroquia_id.required'          =>  'El canton es requerido',
+            'recinto_id.required'          =>  'El canton es requerido',
         ];
     }
     protected function failedValidation(Validator $validator): HttpResponseException

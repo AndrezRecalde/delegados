@@ -15,7 +15,9 @@ class Escaneador extends Model
         'nombres_completos',
         'dni',
         'telefono',
-        'canton_id'
+        'canton_id',
+        'parroquia_id',
+        'recinto_id'
     ];
 
     function scopeCanton($query, $canton)

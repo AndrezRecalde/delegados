@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('dni')->unique();
             $table->string('telefono');
             $table->unsignedInteger('canton_id');
+            $table->unsignedInteger('parroquia_id');
+            $table->unsignedInteger('recinto_id');
             $table->timestamps();
         });
     }

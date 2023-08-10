@@ -14,12 +14,16 @@ export const ModalEscaneador = () => {
             dni: "",
             telefono: "",
             canton_id: "",
+            parroquia_id: "",
+            recinto_id: ""
         },
         validate: {
             nombres_completos: isNotEmpty("Por favor ingrese apellidos y nombres"),
             dni: isNotEmpty("Por favor ingrese número de cédula"),
             telefono: isNotEmpty("Por favor ingrese número telefónico"),
             canton_id: isNotEmpty("Por favor ingrese el cantón de asignación"),
+            parroquia_id: isNotEmpty("Por favor ingrese la parroquia"),
+            recinto_id: isNotEmpty("Por favor ingrese el recinto")
         }
     });
 
