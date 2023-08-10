@@ -36,7 +36,7 @@
                 <tr>
                     @foreach ($veedor as $item)
                         <td>
-                            <div class="card ml-0 mr-1 ml-4 mb-1 fondo" style="width: 20rem;">
+                            <div class="card ml-0 mr-1 ml-4 mb-2 fondo" style="width: 20rem;">
                                 <div class="text-center mt-4">
                                     <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" alt="cne_logo"
                                         height="180" width="180" />
