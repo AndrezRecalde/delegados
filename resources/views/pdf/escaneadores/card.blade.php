@@ -74,8 +74,17 @@
                                         {{ $item->canton }}</p>
                                     <small id="parroquia" class="form-text text-muted text-center mt-1"
                                         style="font-size: 7px">CANTÓN</small>
+                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
+                                        {{ $item->parroquia }}</p>
+                                    <small class="form-text text-muted text-center mt-1"
+                                        style="font-size: 7px">PARROQUIA</small>
+                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
+                                        {{ $item->recinto }}</p>
+                                    <small class="form-text text-muted text-center mt-1"
+                                        style="font-size: 7px">RECINTO</small>
                                 </div>
-                                <div class="card-footer text-center text-white font-weight-bold p-1" style="background-color: black;">
+                                <div class="card-footer text-center text-white font-weight-bold p-1"
+                                    style="background-color: black;">
                                     ESCANER ANTE LA JUNTA RECEPTORA DEL VOTO
                                 </div>
                             </div>
