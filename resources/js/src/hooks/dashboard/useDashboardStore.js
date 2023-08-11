@@ -176,9 +176,11 @@ export const useDashboardStore = () => {
                 title: "Oops...",
                 text: error.response.data.msg
                     ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
                 confirmButtonColor: "#c81d11",
             });
         }

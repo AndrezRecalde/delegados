@@ -11,7 +11,7 @@ export const ProgressGeneralChart = () => {
         datasets: [
             {
                 label: "Total: ",
-                data: [totalVeedores, totalJuntas.totalJuntas],
+                data: [totalVeedores, totalJuntas.totalJuntas - totalVeedores],
                 backgroundColor: [
                     "rgba(76, 49, 225, 0.8)",
                     "rgba(37, 224, 132, 0.8)",
