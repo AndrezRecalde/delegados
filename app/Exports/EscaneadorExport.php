@@ -44,8 +44,11 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
     public function collection()
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
-            ->selectRaw('esc.dni, esc.nombres_completos, c.nombre_canton as canton')
+            ->selectRaw('esc.dni, esc.nombres_completos,
+                 c.nombre_canton as canton')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
+            ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
+            ->leftJoin('recintos as r', 'r.id', 'esc.recintos_id')
             ->orderBy('c.nombre_canton', 'ASC')
             ->get();
 

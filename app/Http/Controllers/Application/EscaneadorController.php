@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Application;
 
-use App\Exports\CoordinadorExport;
+use App\Exports\EscaneadorExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EscaneadorRequest;
 use App\Imports\EscaneadorImport;
@@ -104,6 +104,6 @@ class EscaneadorController extends Controller
 
     function exportExcelCoordinadores()
     {
-        return Excel::download(new CoordinadorExport, 'escaneadores.xlsx');
+        return Excel::download(new EscaneadorExport, 'escaneadores.xlsx');
     }
 }
