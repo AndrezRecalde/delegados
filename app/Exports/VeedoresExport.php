@@ -46,7 +46,6 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
         return [
             'Cédula (10 Digitos)',
             'Nombres Completos',
-            'Telefono',
             'Canton',
             'Parroquia',
             'Recinto'
@@ -61,7 +60,7 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
     public function collection()
     {
         $veedores = Veedor::from('veedores as veed')
-            ->selectRaw('veed.dni, veed.nombres_completos, veed.telefono,
+            ->selectRaw('veed.dni, veed.nombres_completos,
                     c.nombre_canton as canton,
                     p.nombre_parroquia as parroquia,
                     r.nombre_recinto as recinto')
