@@ -227,8 +227,12 @@ class PDFController extends Controller
     function getCardsEscaneadoresPDF(Request $request)
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
-            ->selectRaw('esc.id, esc.nombres_completos, esc.dni, esc.telefono, esc.canton_id, c.nombre_canton as canton')
+            ->selectRaw('esc.id, esc.nombres_completos, esc.dni,
+             c.nombre_canton as canton, p.nombre_parroquia as parroquia,
+             r.nombre_recinto as recinto')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
+            ->join('parroquias as p', 'p.id', 'esc.parroquia_id')
+            ->join('recintos as r', 'r.id', 'esc.recinto_id')
             ->canton($request->canton_id)
             ->get();
 
