@@ -59,7 +59,7 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
                  r.nombre_recinto as recinto')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
             ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
-            ->leftJoin('recintos as r', 'r.id', 'esc.recintos_id')
+            ->leftJoin('recintos as r', 'r.id', 'esc.recinto_id')
             ->orderBy('c.nombre_canton', 'ASC')
             ->get();
 
