@@ -18,6 +18,9 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
         return [
             'A' => 50,
             'B' => 80,
+            'C' => 80,
+            'D' => 80,
+            'E' => 80,
         ];
     }
 
@@ -25,6 +28,10 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
     {
         $sheet->getStyle('A1')->getFont()->setBold(true);
         $sheet->getStyle('B1')->getFont()->setBold(true);
+        $sheet->getStyle('C1')->getFont()->setBold(true);
+        $sheet->getStyle('D1')->getFont()->setBold(true);
+        $sheet->getStyle('E1')->getFont()->setBold(true);
+
     }
 
     /**
@@ -37,7 +44,9 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
         return [
             'Cédula (10 Digitos)',
             'Nombres Completos',
-            'Canton'
+            'Canton',
+            'Parroquia',
+            'Recinto'
         ];
     }
 
@@ -45,7 +54,9 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
             ->selectRaw('esc.dni, esc.nombres_completos,
-                 c.nombre_canton as canton')
+                 c.nombre_canton as canton,
+                 p.nombre_parroquia as parroquia,
+                 r.nombre_recinto as recinto')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
             ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
             ->leftJoin('recintos as r', 'r.id', 'esc.recintos_id')
