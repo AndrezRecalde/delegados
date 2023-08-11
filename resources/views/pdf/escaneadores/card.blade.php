@@ -75,7 +75,7 @@
                                     <small id="parroquia" class="form-text text-muted text-center mt-1"
                                         style="font-size: 7px">CANTÓN</small>
                                 </div>
-                                <div class="card-footer text-muted">
+                                <div class="card-footer text-center text-white font-weight-bold p-1" style="background-color: black;">
                                     ESCANER ANTE LA JUNTA RECEPTORA DEL VOTO
                                 </div>
                             </div>
