@@ -22,8 +22,8 @@ class EscaneadorController extends Controller
                                 p.nombre_parroquia as parroquia,
                                 r.nombre_recinto as recinto')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
-            ->join('parroquias as p', 'p.id', 'esc.parroquia_id')
-            ->join('recintos as r', 'r.id', 'esc.recinto_id')
+            ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
+            ->leftJoin('recintos as r', 'r.id', 'esc.recinto_id')
             ->get();
         return response()->json(['status' => 'success', 'escaneadores' => $escaneadores], 200);
     }
