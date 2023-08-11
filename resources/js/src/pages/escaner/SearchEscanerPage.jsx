@@ -5,7 +5,7 @@ import { useEscanerStore } from "../../hooks";
 
 export const SearchEscanerPage = () => {
 
-    const { startExportTablePDF, startExportCredenciales } = useEscanerStore();
+    const { startExportTablePDF, startExportCredenciales, exportExcelVeedores } = useEscanerStore();
 
     const form = useForm({
         initialValues: {
@@ -25,7 +25,7 @@ export const SearchEscanerPage = () => {
 
     const handleExportExcel = (e) => {
         e.preventDefault();
-        console.log("clic");
+        exportExcelVeedores();
     };
 
     return (

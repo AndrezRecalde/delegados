@@ -4,7 +4,7 @@ import { CoordSearchForm, SectionExport, TableCoordinadores } from "../../compon
 import { useCoordinadorStore } from "../../hooks";
 
 export const SearchCoordPage = () => {
-    const { startExportTablePDF, startExportCredenciales } = useCoordinadorStore();
+    const { startExportTablePDF, startExportCredenciales, exportExcelCoordinadores } = useCoordinadorStore();
 
     const form = useForm({
         initialValues: {
@@ -28,6 +28,7 @@ export const SearchCoordPage = () => {
     const handleExportExcel = (e) => {
         e.preventDefault();
         console.log('clic');
+        exportExcelCoordinadores();
     }
 
     return (

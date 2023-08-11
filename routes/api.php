@@ -83,6 +83,7 @@ Route::group(
         Route::post('/coordinadores/search', [CoordinadorController::class, 'searchCoordinadores']); /* TODO FINISH */
         Route::post('/coordinadores/import', [CoordinadorController::class, 'massiveStore']); /* TODO FINISH */
         Route::post('/coordinadores/canton', [CoordinadorController::class, 'getCoordinadoresForCanton']);
+        Route::get('/coordinadores/export/excel', [CoordinadorController::class, 'exportExcelCoordinadores']);
 
         /* Veedores */
         Route::get('/veedores/listar', [VeedorController::class, 'getVeedores']);
@@ -92,6 +93,8 @@ Route::group(
         Route::post('/veedores/search', [VeedorController::class, 'searchVeedores']);
         Route::put('/veedor/update/confirmado/{id}', [VeedorController::class, 'updateConfirmado']);
         Route::post('/veedores/import', [VeedorController::class, 'massiveStore']);
+        Route::get('/veedores/export/excel', [VeedorController::class, 'exportExcelVeedores']);
+
 
         /* Escaneadores */
         Route::get('/escaneadores/listar', [EscaneadorController::class, 'getEscaneadores']);
@@ -100,6 +103,7 @@ Route::group(
         Route::delete('/escaneador/delete/{id}', [EscaneadorController::class, 'destroy']);
         Route::post('/escaneadores/search', [EscaneadorController::class, 'searchEscaneadores']);
         Route::post('/escaneadores/import', [EscaneadorController::class, 'massiveStore']);
+        Route::get('/escaneadores/export/excel', [EscaneadorController::class, 'exportExcelCoordinadores']);
 
 
         /* Exportacion de PDF */

@@ -8,7 +8,7 @@ import {
 import { useVeedorStore } from "../../hooks";
 
 export const SearchVeedPage = () => {
-    const { startExportTablePDF, startExportCredenciales } = useVeedorStore();
+    const { startExportTablePDF, startExportCredenciales, exportExcelVeedores } = useVeedorStore();
 
     const form = useForm({
         initialValues: {
@@ -32,7 +32,7 @@ export const SearchVeedPage = () => {
 
     const handleExportExcel = (e) => {
         e.preventDefault();
-        console.log("clic");
+        exportExcelVeedores();
     };
 
     return (

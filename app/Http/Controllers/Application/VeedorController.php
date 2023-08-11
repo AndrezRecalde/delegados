@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Application;
 
+use App\Exports\VeedoresExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VeedorRequest;
 use App\Http\Requests\VeedorUpdateConfirm;
@@ -124,5 +125,10 @@ class VeedorController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
         }
+    }
+
+    function exportExcelVeedores()
+    {
+        return Excel::download(new VeedoresExport, 'veedores.xlsx');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Application;
 
+use App\Exports\CoordinadorExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CoordinadorRequest;
 use App\Imports\CoordinadoresImport;
@@ -144,5 +145,10 @@ class CoordinadorController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
         }
+    }
+
+    function exportExcelCoordinadores()
+    {
+        return Excel::download(new CoordinadorExport, 'coordinadores.xlsx');
     }
 }

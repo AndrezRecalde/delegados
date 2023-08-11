@@ -234,6 +234,28 @@ export const useVeedorStore = () => {
         }
     };
 
+    const exportExcelVeedores = async() => {
+        try {
+            const response = await eleccionApi.get(
+                "/veedores/export/excel",
+                { responseType: "blob" }
+            );
+            const url = window.URL.createObjectURL(
+                new Blob([response.data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8",
+                })
+            );
+            window.open(url, "_blank");
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response ? error.response.data.msg : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
     const startClearVeedores = () => {
         dispatch(onClearVeedores());
     }
@@ -260,6 +282,7 @@ export const useVeedorStore = () => {
         startExportTablePDF,
         startExportCredenciales,
         startImportVeedores,
+        exportExcelVeedores,
         setActivateVeedor,
         setClearActivateVeedor,
         startClearVeedores

@@ -37,10 +37,12 @@ export const useCoordinadorStore = () => {
         }
     };
 
-    const startLoadCoordsForCanton = async(canton_id) => {
+    const startLoadCoordsForCanton = async (canton_id) => {
         dispatch(onLoading());
         try {
-            const { data } = await eleccionApi.post("/coordinadores/canton", {canton_id});
+            const { data } = await eleccionApi.post("/coordinadores/canton", {
+                canton_id,
+            });
             const { coordinadores } = data;
             dispatch(onCoordinadores(coordinadores));
         } catch (error) {
@@ -55,7 +57,7 @@ export const useCoordinadorStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
     const startAddCoordinador = async (coordinador) => {
         try {
@@ -253,6 +255,32 @@ export const useCoordinadorStore = () => {
         }
     };
 
+    const exportExcelCoordinadores = async () => {
+        try {
+            const response = await eleccionApi.get(
+                "/coordinadores/export/excel",
+                { responseType: "blob" }
+            );
+            const url = window.URL.createObjectURL(
+                new Blob([response.data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8",
+                })
+            );
+            window.open(url, "_blank");
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.msg
+                    ? error.response.data.errores
+                    : Object.values(error.response.data.errores),
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
     const startClearCoordinadores = () => {
         dispatch(onClearCoordinadores());
     };
@@ -281,6 +309,7 @@ export const useCoordinadorStore = () => {
         startExportTablePDF,
         startExportCredenciales,
         startImportCoord,
+        exportExcelCoordinadores,
         startClearCoordinadores,
     };
 };

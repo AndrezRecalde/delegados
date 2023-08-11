@@ -225,6 +225,28 @@ export const useEscanerStore = () => {
         }
     };
 
+    const exportExcelVeedores = async() => {
+        try {
+            const response = await eleccionApi.get(
+                "/escaneadores/export/excel",
+                { responseType: "blob" }
+            );
+            const url = window.URL.createObjectURL(
+                new Blob([response.data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset-UTF-8",
+                })
+            );
+            window.open(url, "_blank");
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response ? error.response.data.msg : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
     const startClearEscaneadores = () => {
         dispatch(onClearEscaneador());
     };
@@ -253,5 +275,6 @@ export const useEscanerStore = () => {
         startClearEscaneadores,
         setActivateEscaner,
         setClearActivateEscaner,
+        exportExcelVeedores
     };
 };
