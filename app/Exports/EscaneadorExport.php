@@ -28,21 +28,26 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
     }
 
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
 
 
     public function headings(): array
     {
         return [
-            'Nombres Completos',
             'Cédula (10 Digitos)',
+            'Nombres Completos',
+            'Canton'
         ];
     }
 
     public function collection()
     {
-        $escaneadores = Escaneador::orderBy('canton_id', 'ASC')->get(['dni', 'nombres_completos']);
+        $escaneadores = Escaneador::from('escaneadores as esc')
+            ->selectRaw('esc.dni, esc.nombres_completos, c.nombre_canton as canton')
+            ->join('cantones as c', 'c.id', 'esc.canton_id')
+            ->orderBy('c.nombre_canton', 'ASC')
+            ->get();
 
         return $escaneadores;
     }

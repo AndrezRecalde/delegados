@@ -56,7 +56,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
                     parr.nombre_parroquia as parroquia')
         ->join('cantones as c', 'c.id', 'coord.canton_id')
         ->join('parroquias as parr', 'parr.id', 'coord.parroquia_id')
-        ->distinct()
+        ->orderBy('c.nombre_canton', 'ASC')
         ->get();
 
         return $coordinadores;
