@@ -14,7 +14,7 @@
         .fondo {
             background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/08/FFF-02.jpg');
             background-repeat: no-repeat;
-            background-size: 320px 430px;
+            background-size: 320px 400px;
         }
     </style>
     <title>{{ $title }}</title>
@@ -36,8 +36,8 @@
                         <td>
                             <div class="card ml-0 mr-1 ml-4 mb-2 fondo" style="width: 20rem;">
                                 <div class="text-center mt-4">
-                                    <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" height="180"
-                                        width="180" alt="cne_logo" />
+                                    <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" height="150"
+                                        width="150" alt="cne_logo" />
                                 </div>
                                 <div class="card-body">
                                     <table>
