@@ -48,7 +48,7 @@
                                                 </td>
                                                 <td>
                                                     <img src={{ public_path('/images/psclogo.jpg') }}
-                                                        class="img-fluid mb-3 ml-2 mr-2" height="90" width="90"
+                                                        class="img-fluid mb-2 ml-2 mr-2" height="90" width="90"
                                                         alt="psc_logo" />
                                                 </td>
                                                 <td>
@@ -58,21 +58,21 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">PARTIDO SOCIAL
+                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">PARTIDO SOCIAL
                                         CRISTIANO (PSC) LISTA 6</p>
                                     <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRE
                                         DE LA ORGANIZACION POLITICA O ALIANZA</small>
-                                    <p class="form-control" style="width: 80%; font-size: 7px;">
+                                    <p class="form-control text-uppercase mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
                                         {{ Str::upper($item->nombres_completos) }}</p>
                                     <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRES
                                         APELLIDOS</small>
-                                    <input type="text" class="form-control" style="width: 80%; font-size: 7px;"
-                                        aria-describedby="dni" value={{ $item->dni }}>
-                                    <small id="dni" class="form-text text-muted text-center mt-1"
+                                    <input type="text" class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;"
+                                           value={{ $item->dni }}>
+                                    <small class="form-text text-muted text-center mt-1"
                                         style="font-size: 7px">CEDULA CIUDADANIA N°</small>
-                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">
+                                    <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
                                         {{ $item->canton }}</p>
-                                    <small id="parroquia" class="form-text text-muted text-center mt-1"
+                                    <small class="form-text text-muted text-center mt-1"
                                         style="font-size: 7px">CANTÓN</small>
                                     <p class="form-control mb-0 rounded-pill" style="width: 80%; font-size: 7px;">
                                         {{ $item->parroquia }}</p>
