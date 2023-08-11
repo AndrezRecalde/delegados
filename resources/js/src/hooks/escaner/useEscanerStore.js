@@ -225,10 +225,10 @@ export const useEscanerStore = () => {
         }
     };
 
-    const exportExcelVeedores = async() => {
+    const exportExcelEscaner = async({ canton_id }) => {
         try {
-            const response = await eleccionApi.get(
-                "/escaneadores/export/excel",
+            const response = await eleccionApi.post(
+                "/escaneadores/export/excel", {canton_id},
                 { responseType: "blob" }
             );
             const url = window.URL.createObjectURL(
@@ -275,6 +275,6 @@ export const useEscanerStore = () => {
         startClearEscaneadores,
         setActivateEscaner,
         setClearActivateEscaner,
-        exportExcelVeedores
+        exportExcelEscaner
     };
 };

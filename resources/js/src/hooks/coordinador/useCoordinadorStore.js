@@ -255,10 +255,10 @@ export const useCoordinadorStore = () => {
         }
     };
 
-    const exportExcelCoordinadores = async () => {
+    const exportExcelCoordinadores = async (values = {}) => {
         try {
-            const response = await eleccionApi.get(
-                "/coordinadores/export/excel",
+            const response = await eleccionApi.post(
+                "/coordinadores/export/excel", values,
                 { responseType: "blob" }
             );
             const url = window.URL.createObjectURL(

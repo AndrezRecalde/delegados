@@ -13,6 +13,16 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, WithStyles
 {
 
+    protected $canton_id, $parroquia_id, $recinto_id, $supervisor_id, $coordinador_id;
+
+    public function __construct(int $canton_id, int $parroquia_id, int $recinto_id, int $supervisor_id, int $coordinador_id) {
+        $this->canton_id = $canton_id;
+        $this->parroquia_id = $parroquia_id;
+        $this->recinto_id = $recinto_id;
+        $this->supervisor_id = $supervisor_id;
+        $this->coordinador_id = $coordinador_id;
+
+    }
 
     public function columnWidths(): array
     {
@@ -67,6 +77,11 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->join('parroquias as p', 'p.id', 'r.parroquia_id')
+            ->canton($this->canton_id)
+            ->parroquia($this->parroquia_id)
+            ->recinto($this->recinto_id)
+            ->supervisor($this->supervisor_id)
+            ->coordinador($this->coordinador_id)
             ->orderBy('c.nombre_canton', 'ASC')
             ->get();
 

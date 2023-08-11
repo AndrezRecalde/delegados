@@ -102,8 +102,12 @@ class EscaneadorController extends Controller
         }
     }
 
-    function exportExcelCoordinadores()
+    function exportExcelCoordinadores(Request $request)
     {
-        return Excel::download(new EscaneadorExport, 'escaneadores.xlsx');
+        return Excel::download(new EscaneadorExport(
+            $request->canton_id,
+            $request->parroquia_id,
+            $request->recinto,
+        ), 'escaneadores.xlsx');
     }
 }

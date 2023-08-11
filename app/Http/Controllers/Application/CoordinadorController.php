@@ -147,8 +147,10 @@ class CoordinadorController extends Controller
         }
     }
 
-    function exportExcelCoordinadores()
+    function exportExcelCoordinadores(Request $request)
     {
-        return Excel::download(new CoordinadorExport, 'coordinadores.xlsx');
+        return Excel::download(new CoordinadorExport(
+            $request->canton_id
+        ), 'coordinadores.xlsx');
     }
 }

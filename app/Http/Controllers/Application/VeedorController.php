@@ -127,8 +127,14 @@ class VeedorController extends Controller
         }
     }
 
-    function exportExcelVeedores()
+    function exportExcelVeedores(Request $request)
     {
-        return Excel::download(new VeedoresExport, 'veedores.xlsx');
+        return Excel::download(new VeedoresExport(
+            $request->canton_id,
+            $request->parroquia_id,
+            $request->recinto_id,
+            $request->supervisor_id,
+            $request->coordinador_id,
+        ), 'veedores.xlsx');
     }
 }

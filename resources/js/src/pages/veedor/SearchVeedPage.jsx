@@ -32,7 +32,7 @@ export const SearchVeedPage = () => {
 
     const handleExportExcel = (e) => {
         e.preventDefault();
-        exportExcelVeedores();
+        exportExcelVeedores(form.values);
     };
 
     return (

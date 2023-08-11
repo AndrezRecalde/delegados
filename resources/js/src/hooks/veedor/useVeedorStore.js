@@ -234,10 +234,10 @@ export const useVeedorStore = () => {
         }
     };
 
-    const exportExcelVeedores = async() => {
+    const exportExcelVeedores = async(values = {}) => {
         try {
-            const response = await eleccionApi.get(
-                "/veedores/export/excel",
+            const response = await eleccionApi.post(
+                "/veedores/export/excel", values,
                 { responseType: "blob" }
             );
             const url = window.URL.createObjectURL(

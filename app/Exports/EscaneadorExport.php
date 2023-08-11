@@ -12,6 +12,11 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
 class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths, WithStyles
 {
+    protected $canton_id;
+
+    public function __construct(int $canton_id) {
+        $this->canton_id = $canton_id;
+    }
 
     public function columnWidths(): array
     {
@@ -60,6 +65,7 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
             ->join('cantones as c', 'c.id', 'esc.canton_id')
             ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
             ->leftJoin('recintos as r', 'r.id', 'esc.recinto_id')
+            ->canton($this->canton_id)
             ->orderBy('c.nombre_canton', 'ASC')
             ->get();
 

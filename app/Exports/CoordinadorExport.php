@@ -13,6 +13,12 @@ use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidths, WithStyles
 {
 
+    protected $canton_id;
+
+    public function __construct(int $canton_id) {
+        $this->canton_id = $canton_id;
+    }
+
     public function columnWidths(): array
     {
         return [
@@ -56,6 +62,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
                     parr.nombre_parroquia as parroquia')
         ->join('cantones as c', 'c.id', 'coord.canton_id')
         ->join('parroquias as parr', 'parr.id', 'coord.parroquia_id')
+        ->canton($this->canton_id)
         ->orderBy('c.nombre_canton', 'ASC')
         ->get();
 

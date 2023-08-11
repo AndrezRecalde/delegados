@@ -28,7 +28,7 @@ export const SearchCoordPage = () => {
     const handleExportExcel = (e) => {
         e.preventDefault();
         console.log('clic');
-        exportExcelCoordinadores();
+        exportExcelCoordinadores(form.values);
     }
 
     return (
