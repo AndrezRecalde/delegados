@@ -34,7 +34,7 @@
                 <tr>
                     @foreach ($escaneador as $item)
                         <td>
-                            <div class="card mr-1 ml-4 mb-1 fondo" style="width: 20rem;">
+                            <div class="card ml-0 mr-1 ml-4 mb-2 fondo" style="width: 20rem;">
                                 <div class="text-center mt-4">
                                     <img src={{ public_path('/images/cneweb.png') }} class="img-fluid" height="180"
                                         width="180" alt="cne_logo" />
