@@ -62,7 +62,7 @@ export const TableAvanceRecintos = () => {
                 </td>
                 <td>{row.total_veed !== null ? row.total_veed : 0}</td>
                 <td>{row.total_juntas}</td>
-                <td>{row.total_veed.toFixed(0) * 20}</td>
+                <td>{row.total_veed !== null ? row.total_veed.toFixed(0) * 20 : 0}</td>
                 <td>
                     <Group position="apart">
                         <Text fz="xs" c="teal.7" weight={700}>
@@ -115,6 +115,16 @@ export const TableAvanceRecintos = () => {
                 </thead>
                 <tbody>{rows}</tbody>
             </Table>
+            <Table
+                withBorder
+                withColumnBorders>
+                    <tbody>
+                        <tr>
+                          <td><Text fz="xs" c="teal.7" weight={700}>TOTAL</Text></td>
+                          <td>{avanceRecintos.map(recinto => recinto.total_veed !== null ? recinto.total_veed : 0).reduce((prev, curr) => (prev + curr) * 20, 0)}</td>
+                        </tr>
+                    </tbody>
+                </Table>
         </ScrollArea>
     );
 };
