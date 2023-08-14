@@ -54,6 +54,12 @@ export const TableAvanceParroquial = () => {
                 wrap: true,
             },
             {
+                accessorFn: (row) =>
+                    row.total_veed !== null ? row.total_veed.toFixed(0) * 20 : 0,
+                header: "Monetización (20 USD)",
+                wrap: true,
+            },
+            {
                 accessorFn: (row) => {
                     let totalVeedores =
                         (parseInt(

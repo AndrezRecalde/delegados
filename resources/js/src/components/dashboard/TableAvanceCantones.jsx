@@ -39,6 +39,7 @@ export const TableAvanceCantones = () => {
         </td>
         <td>{row.total_veed !== null ? row.total_veed : 0}</td>
         <td>{row.total_juntas}</td>
+        <td>{row.total_veed !== null ? row.total_veed.toFixed(0) * 20 : 0}</td>
         <td>
           <Group position="apart">
             <Text fz="xs" c="teal.7" weight={700}>
@@ -74,6 +75,7 @@ export const TableAvanceCantones = () => {
             <th>Cantón</th>
             <th>Veedores Registrados</th>
             <th>Total Juntas</th>
+            <th>Monetización (20 USD)</th>
             <th>Progreso</th>
           </tr>
         </thead>
