@@ -1,6 +1,5 @@
 import {
     Group,
-    Loader,
     Paper,
     SimpleGrid,
     Text,
@@ -12,14 +11,13 @@ import {
     IconListDetails,
     IconScan,
     IconUserShare,
-    IconUsers,
 } from "@tabler/icons-react";
 import { useDashboardStore } from "../../hooks";
 
 const useStyles = createStyles((theme) => ({
     root: {
         /*padding: `calc(${theme.spacing.xl} * 1.5)`, */
-        marginTop: rem(25),
+        marginTop: rem(5),
         marginBottom: rem(30),
     },
 
@@ -49,8 +47,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const icons = {
-    veed_enrroled: IconUsers,
-    veed_confirmed: IconUserShare,
     supervisores: IconListCheck,
     coordinadores: IconListDetails,
     escaneadores: IconScan,
@@ -63,15 +59,11 @@ export const Stats = ({ data }) => {
     const {
         totalSupervisores,
         totalCoordinadores,
-        totalVeedores,
-        totalConfirmados,
         totalUsuarios,
         totalEscaneadores,
     } = useDashboardStore();
 
     const valores = {
-        veed_enrroled: totalVeedores,
-        veed_confirmed: totalConfirmados,
         supervisores: totalSupervisores,
         coordinadores: totalCoordinadores,
         escaneadores: totalEscaneadores,

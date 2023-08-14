@@ -14,10 +14,13 @@ import { SearchSuperPage } from "./supervisor/SearchSuperPage";
 import { UsuarioPage } from "./usuario/UsuarioPage";
 import { PasswordPage } from "./usuario/PasswordPage";
 
-import { VeedorPage } from "./veedor/VeedorPage";
-import { SearchVeedPage } from "./veedor/SearchVeedPage";
+import { VeedorPage } from "./jrv/veedor/VeedorPage";
+import { SearchVeedPage } from "./jrv/veedor/SearchVeedPage";
+import { JrvmovilPage } from "./jrv/movil/JrvmovilPage";
+import { JrvreconteoPage } from "./jrv/reconteo/JrvreconteoPage";
 
 import { DashboardPage } from "./dashboard/DashboardPage";
+import { SummaryPage } from "./dashboard/SummaryPage";
 
 export {
   AuthenticationPage,
@@ -32,5 +35,8 @@ export {
   PasswordPage,
   VeedorPage,
   SearchVeedPage,
+  JrvmovilPage,
+  JrvreconteoPage,
   DashboardPage,
+  SummaryPage
 };

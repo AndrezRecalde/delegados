@@ -8,8 +8,8 @@ import {
     SectionImport,
     TableVeedores,
     TitlePage,
-} from "../../components";
-import { useUiVeedor, useVeedorStore } from "../../hooks";
+} from "../../../components";
+import { useUiVeedor, useVeedorStore } from "../../../hooks";
 
 export const VeedorPage = () => {
     const { veedores, startLoadVeedores, startClearVeedores } =

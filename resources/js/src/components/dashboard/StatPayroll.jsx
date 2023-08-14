@@ -6,6 +6,7 @@ import {
     Badge,
     Paper,
     rem,
+    Box,
 } from "@mantine/core";
 import { IconCoins } from "@tabler/icons-react";
 import { useDashboardStore } from "../../hooks";
@@ -37,32 +38,36 @@ export function StatPayroll() {
     const { classes } = useStyles();
 
     return (
-        <Paper
-            radius="md"
-            withBorder
-            className={classes.card}
-            mt={`calc(${ICON_SIZE} / 3)`}
-        >
-            <ThemeIcon
-                className={classes.icon}
-                size={ICON_SIZE}
-                radius={ICON_SIZE}
-                color="indigo.7"
-            >
-                <IconCoins size="2rem" stroke={1.5} />
-            </ThemeIcon>
+        <Group position="center" mt="sm" mb="xl">
+            <Box w={700}>
+                <Paper
+                    radius="md"
+                    withBorder
+                    className={classes.card}
+                    mt={`calc(${ICON_SIZE} / 10)`}
+                >
+                    <ThemeIcon
+                        className={classes.icon}
+                        size={ICON_SIZE}
+                        radius={ICON_SIZE}
+                        color="indigo.7"
+                    >
+                        <IconCoins size="2rem" stroke={1.5} />
+                    </ThemeIcon>
 
-            <Text ta="center" fw={700} className={classes.title}>
-                Pago General de Delegados Confirmados
-            </Text>
-            <Text c="dimmed" ta="center" fz="lg">
-                { `${totalConfirmados * 20} USD`}
-            </Text>
+                    <Text ta="center" fw={700} className={classes.title}>
+                        Monetización general de delegados
+                    </Text>
+                    <Text c="dimmed" ta="center" fz="lg">
+                        {`${totalConfirmados * 20} USD`}
+                    </Text>
 
-            <Group position="apart" mt="md">
-                {/* <Text fz="sm">20 / 36 km</Text> */}
-                <Badge size="sm">20 de agosto</Badge>
-            </Group>
-        </Paper>
+                    <Group position="center" mt="md">
+                        {/* <Text fz="sm">20 / 36 km</Text> */}
+                        <Badge size="md" color="indigo.7">Al valor actual de 20 USD</Badge>
+                    </Group>
+                </Paper>
+            </Box>
+        </Group>
     );
 }

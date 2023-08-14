@@ -1,12 +1,14 @@
 import { useEffect } from "react";
-import { Card, Flex, Grid, Loader, Paper, SimpleGrid } from "@mantine/core";
-import { data } from "../../components/dashboard/data.json";
+import { Card, Flex, Grid, Loader, Paper } from "@mantine/core";
+import { sistema } from "../../components/dashboard/sistema.json";
+import { delegados } from "../../components/dashboard/delegados.json";
 import {
     ProgressGeneralChart,
     StatPayroll,
     Stats,
     TitlePage,
     TableAvanceCantones,
+    StatsDelegados,
 } from "../../components";
 import { useDashboardStore } from "../../hooks";
 
@@ -19,6 +21,8 @@ export const DashboardPage = () => {
         startLoadTotalCoordinadores,
         startLoadTotalVeedores,
         startLoadTotalVeedoresConfirmed,
+        startLoadTotalJrvMoviles,
+        startLoadTotalJrvReconteos,
         startLoadTotalUsuarios,
         startLoadTotalEscaneadores,
         startLoadTotalJuntas,
@@ -31,6 +35,8 @@ export const DashboardPage = () => {
         startLoadTotalCoordinadores();
         startLoadTotalVeedores();
         startLoadTotalVeedoresConfirmed();
+        startLoadTotalJrvMoviles();
+        startLoadTotalJrvReconteos();
         startLoadTotalUsuarios();
         startLoadTotalEscaneadores();
         startLoadTotalJuntas();
@@ -57,65 +63,52 @@ export const DashboardPage = () => {
             />
 
             {!isLoading ? (
-                <>
-                    <SimpleGrid
-                        cols={2}
-                        spacing="md"
-                        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
-                    >
-                        <Stats data={data} />
-                        <Grid gutter="md">
-                            <Grid.Col>
-                                <Card
-                                    withBorder
-                                    radius="md"
-                                    mt="lg"
-                                    mb="lg"
-                                    shadow="sm"
-                                    sx={{ position: "static" }}
-                                >
-                                    <Card.Section
-                                        withBorder
-                                        inheritPadding
-                                        py="lg"
-                                    >
-                                        <TitlePage
-                                            tt="capitalize"
-                                            fz={14}
-                                            fw={700}
-                                            title="Resumen de Progreso General de Delegados"
-                                        />
-                                    </Card.Section>
-                                    <Card.Section
-                                        withBorder
-                                        inheritPadding
-                                        py="lg"
-                                    >
-                                        <ProgressGeneralChart />
-                                    </Card.Section>
-                                    <Card.Section
-                                        withBorder
-                                        inheritPadding
-                                        py="lg"
-                                    >
-                                        <TitlePage
-                                            tt="capitalize"
-                                            color="indigo.7"
-                                            fw={700}
-                                            title={`${porcentajeIngreso()} % Registrado a nivel provincial`}
-                                        />
-                                    </Card.Section>
-                                </Card>
-                            </Grid.Col>
-                            <Grid.Col span={12}>
-                                <StatPayroll />
-                            </Grid.Col>
-                        </Grid>
-                    </SimpleGrid>
-                    <Paper shadow="sm" radius="md" p="md">
-                        <TableAvanceCantones />
-                    </Paper>
-                </>
+                <Grid>
+                    <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <StatsDelegados data={delegados} />
+                    </Grid.Col>
+                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Stats data={sistema} />
+                    </Grid.Col>
+                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <Card
+                            withBorder
+                            radius="md"
+                            mt={5}
+                            mb="lg"
+                            shadow="sm"
+                            sx={{ position: "static" }}
+                        >
+                            <Card.Section withBorder inheritPadding py="lg">
+                                <TitlePage
+                                    tt="capitalize"
+                                    fz={14}
+                                    fw={700}
+                                    title="Resumen de Progreso General de Delegados"
+                                />
+                            </Card.Section>
+                            <Card.Section withBorder inheritPadding py="lg">
+                                <ProgressGeneralChart />
+                            </Card.Section>
+                            <Card.Section withBorder inheritPadding py="lg">
+                                <TitlePage
+                                    tt="capitalize"
+                                    color="indigo.7"
+                                    fw={700}
+                                    title={`${porcentajeIngreso()} % Registrado a nivel provincial`}
+                                />
+                            </Card.Section>
+                        </Card>
+                    </Grid.Col>
+                    <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <StatPayroll />
+                    </Grid.Col>
+                    <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Paper shadow="sm" radius="md" p="md">
+                            <TableAvanceCantones />
+                        </Paper>
+                    </Grid.Col>
+                </Grid>
             ) : (
                 <Flex
                     mih={150}

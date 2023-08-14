@@ -39,11 +39,6 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
 
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-
-
     public function headings(): array
     {
         return [
@@ -54,6 +49,10 @@ class EscaneadorExport implements FromCollection, WithHeadings, WithColumnWidths
             'Recinto'
         ];
     }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
 
     public function collection()
     {

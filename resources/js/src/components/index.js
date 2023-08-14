@@ -32,6 +32,18 @@ import { VeedSearchForm } from "./veedor/search/form/VeedSearchForm";
 import { ModalImportVeed } from "./veedor/import/ModalImportVeed";
 import { FormImportVeed } from "./veedor/import/FormImportVeed";
 
+import { TableJrvmoviles } from "./jrvmovil/table/TableJrvmoviles";
+import { ModalJrvmovil } from "./jrvmovil/form/ModalJrvmovil";
+import { FormJrvmovil } from "./jrvmovil/form/FormJrvmovil";
+import { ModalImportJrvmovil } from "./jrvmovil/import/ModalImportJrvmovil";
+import { FormImportJrvmovil } from "./jrvmovil/import/FormImportJrvmovil";
+
+import { TableJrvreconteo } from "./reconteo/table/TableJrvreconteo";
+import { ModalJrvreconteo } from "./reconteo/form/ModalJrvreconteo";
+import { FormJrvreconteo } from "./reconteo/form/FormJrvreconteo";
+import { ModalImportJrvReconteo } from "./reconteo/import/ModalImportJrvReconteo";
+import { FormImportJrvreconteo } from "./reconteo/import/FormImportJrvreconteo";
+
 import { TableEscaneadores } from "./escaner/table/TableEscaneadores";
 import { ModalEscaneador } from "./escaner/form/ModalEscaneador";
 import { FormEscaneador } from "./escaner/form/FormEscaneador";
@@ -40,9 +52,13 @@ import { FormImportEscaneador } from "./escaner/import/FormImportEscaneador";
 import { EscSearchForm } from "./escaner/search/form/EscSearchForm";
 
 import { Stats } from "./dashboard/Stats";
+import { StatsDelegados } from "./dashboard/StatsDelegados";
 import { ProgressGeneralChart } from "./dashboard/ProgressGeneralChart";
 import { StatPayroll } from "./dashboard/StatPayroll";
 import { TableAvanceCantones } from "./dashboard/TableAvanceCantones";
+import { TableAvanceParroquial } from "./dashboard/TableAvanceParroquial";
+import { ModalAvanceRecintos } from "./dashboard/modal/ModalAvanceRecintos";
+import { TableAvanceRecintos } from "./dashboard/modal/TableAvanceRecintos";
 
 import { TableUsuarios } from "./usuario/table/TableUsuarios";
 import { ModalUsuario } from "./usuario/form/ModalUsuario";
@@ -81,6 +97,16 @@ export {
     VeedSearchForm,
     ModalImportVeed,
     FormImportVeed,
+    TableJrvmoviles,
+    ModalJrvmovil,
+    FormJrvmovil,
+    ModalImportJrvmovil,
+    FormImportJrvmovil,
+    TableJrvreconteo,
+    ModalJrvreconteo,
+    FormJrvreconteo,
+    ModalImportJrvReconteo,
+    FormImportJrvreconteo,
     TableEscaneadores,
     ModalEscaneador,
     FormEscaneador,
@@ -88,13 +114,17 @@ export {
     FormImportEscaneador,
     EscSearchForm,
     Stats,
+    StatsDelegados,
     ProgressGeneralChart,
     StatPayroll,
     TableAvanceCantones,
+    TableAvanceParroquial,
+    ModalAvanceRecintos,
+    TableAvanceRecintos,
     TableUsuarios,
     ModalUsuario,
     FormUsuario,
     ActivateUserButton,
     ModalActivateUser,
-    FormActivateUser
+    FormActivateUser,
 };

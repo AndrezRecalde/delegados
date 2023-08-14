@@ -4,11 +4,14 @@ import {
     DashboardPage,
     EscanerPage,
     HomePage,
+    JrvmovilPage,
+    JrvreconteoPage,
     PasswordPage,
     SearchCoordPage,
     SearchEscanerPage,
     SearchSuperPage,
     SearchVeedPage,
+    SummaryPage,
     SupervisorPage,
     UsuarioPage,
     VeedorPage,
@@ -21,6 +24,8 @@ export const PrivatePages = () => {
             <Container size="xl">
                 <Routes>
                     <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route path="/dashboard/summary" element={<SummaryPage />} />
+
                     <Route path="usuarios" element={<UsuarioPage />} />
                     <Route path="change-password" element={<PasswordPage />} />
 
@@ -30,8 +35,12 @@ export const PrivatePages = () => {
                     <Route path="coordinadores" element={<CoordinadorPage />} />
                     <Route path="/export/coordinadores" element={<SearchCoordPage />} />
 
-                    <Route path="veedores" element={<VeedorPage />} />
-                    <Route path="/export/veedores" element={<SearchVeedPage />} />
+                    <Route path="/jrv/delegados" element={<VeedorPage />} />
+                    <Route path="/export/delegados" element={<SearchVeedPage />} />
+
+                    <Route path="/jrv/moviles" element={<JrvmovilPage />} />
+
+                    <Route path="/jrv/reconteos" element={<JrvreconteoPage />} />
 
                     <Route path="escaneadores" element={<EscanerPage />} />
                     <Route path="/export/escaneadores" element={<SearchEscanerPage />} />

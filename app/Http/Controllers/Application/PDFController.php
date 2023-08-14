@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Application;
 use App\Http\Controllers\Controller;
 use App\Models\Coordinador;
 use App\Models\Escaneador;
+use App\Models\Jrvmovil;
+use App\Models\Reconteo;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
 use App\Models\Veedor;
@@ -244,5 +246,33 @@ class PDFController extends Controller
         $pdf = PDF::loadView('pdf.escaneadores.card', $data);
 
         return $pdf->download('escaneadores.pdf');
+    }
+
+    function getCardsJrvmovilesPDF()
+    {
+        $jrvmoviles = Jrvmovil::get(['id', 'dni', 'nombres_completos']);;
+
+        $data = [
+            'title'     =>  'Reporte de JRV Moviles',
+            'jrvmoviles'  =>  $jrvmoviles
+        ];
+
+        $pdf = PDF::loadView('pdf.jrvmoviles.card', $data);
+
+        return $pdf->download('jrvmoviles.pdf');
+    }
+
+    function getCardsJrvReconteosPDF()
+    {
+        $reconteos = Reconteo::get(['id', 'dni', 'nombres_completos']);
+
+        $data = [
+            'title'     =>  'Reporte de JRV Moviles',
+            'reconteos'  =>  $reconteos
+        ];
+
+        $pdf = PDF::loadView('pdf.reconteos.card', $data);
+
+        return $pdf->download('reconteos.pdf');
     }
 }

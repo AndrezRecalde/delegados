@@ -1,15 +1,5 @@
 {
-    "data": [
-        {
-            "title": "Veedores Incriptos",
-            "icon": "veed_enrroled",
-            "value": "veed_enrroled"
-        },
-        {
-            "title": "Veedores Confirmados",
-            "icon": "veed_confirmed",
-            "value": "veed_confirmed"
-        },
+    "sistema": [
         {
             "title": "Supervisores",
             "icon": "supervisores",

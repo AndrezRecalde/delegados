@@ -3,8 +3,10 @@
 use App\Http\Controllers\Application\CoordinadorController;
 use App\Http\Controllers\Application\DashboardController;
 use App\Http\Controllers\Application\EscaneadorController;
+use App\Http\Controllers\Application\JrmovilController;
 use App\Http\Controllers\Application\JuntaController;
 use App\Http\Controllers\Application\PDFController;
+use App\Http\Controllers\Application\ReconteoController;
 use App\Http\Controllers\Application\RoleController;
 use App\Http\Controllers\Application\StateController;
 use App\Http\Controllers\Application\SupervisorController;
@@ -39,10 +41,18 @@ Route::group(
         Route::get('/totales/coordinadores',  [DashboardController::class, 'getTotalCoordinadores']);
         Route::get('/totales/veedores',  [DashboardController::class, 'getTotalVeedores']);
         Route::get('/totales/veedores/confirmados',  [DashboardController::class, 'getTotalVeedoresConfirmed']);
+        Route::get('/totales/jrv/moviles',  [DashboardController::class, 'getTotalJrvMoviles']);
+        Route::get('/totales/jrv/reconteos',  [DashboardController::class, 'getTotalJrvReconteos']);
+
+
         Route::get('/totales/usuarios',  [DashboardController::class, 'getTotalUsuarios']);
         Route::get('/totales/escaneadores',  [DashboardController::class, 'getTotalEscaneadores']);
         Route::get('/totales/juntas',  [DashboardController::class, 'getTotalJuntas']);
         Route::get('/avance/cantones',  [DashboardController::class, 'getAvanceCantones']);
+        Route::get('/avance/parroquias',  [DashboardController::class, 'getAvanceParroquial']);
+        Route::post('/avance/recintos',  [DashboardController::class, 'getAvanceRecintos']);
+
+
 
 
         /* Usuarios */
@@ -105,6 +115,21 @@ Route::group(
         Route::post('/escaneadores/import', [EscaneadorController::class, 'massiveStore']);
         Route::post('/escaneadores/export/excel', [EscaneadorController::class, 'exportExcelCoordinadores']);
 
+        /* JrvMoviles */
+        Route::get('/jrvmoviles/listar', [JrmovilController::class, 'getJrvmoviles']);
+        Route::post('/jrvmovil/create',  [JrmovilController::class, 'store']);
+        Route::put('/jrvmovil/update/{id}',   [JrmovilController::class, 'update']);
+        Route::delete('/jrvmovil/delete/{id}', [JrmovilController::class, 'destroy']);
+        Route::post('/jrvmoviles/import', [JrmovilController::class, 'massiveStore']);
+        Route::get('/jrvmoviles/export/excel', [JrmovilController::class, 'exportExcelJrvmoviles']);
+
+        /* Jrv Reconteo */
+        Route::get('/reconteos/listar', [ReconteoController::class, 'getJrvReconteos']);
+        Route::post('/reconteo/create',  [ReconteoController::class, 'store']);
+        Route::put('/reconteo/update/{id}',   [ReconteoController::class, 'update']);
+        Route::delete('/reconteo/delete/{id}', [ReconteoController::class, 'destroy']);
+        Route::post('/reconteos/import', [ReconteoController::class, 'massiveStore']);
+        Route::get('/reconteos/export/excel', [ReconteoController::class, 'exportExcelReconteos']);
 
         /* Exportacion de PDF */
         Route::post('/exportar/pdf/cards/veedores', [PDFController::class, 'generateCardsVeedoresPDF']);
@@ -115,5 +140,9 @@ Route::group(
         Route::post('/exportar/pdf/table/supervisores', [PDFController::class, 'getTableSupervisoresPDF']);
         Route::post('/exportar/pdf/cards/escaneadores', [PDFController::class, 'getCardsEscaneadoresPDF']);
         Route::post('/exportar/pdf/table/escaneadores', [PDFController::class, 'getTableEscaneadoresPDF']);
+        Route::post('/exportar/pdf/cards/jrvmoviles', [PDFController::class, 'getCardsJrvmovilesPDF']);
+        Route::post('/exportar/pdf/cards/reconteos', [PDFController::class, 'getCardsJrvReconteosPDF']);
+
+
     }
 );

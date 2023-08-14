@@ -2,14 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     onClearTotales,
     onLoadAvanceCantones,
+    onLoadAvanceParroquias,
+    onLoadAvanceRecintos,
     onLoadTotalConfirmados,
     onLoadTotalCoordinadores,
     onLoadTotalEscaneadores,
+    onLoadTotalJrvMoviles,
+    onLoadTotalJrvReconteo,
     onLoadTotalJuntas,
     onLoadTotalSupervisores,
     onLoadTotalUsuarios,
     onLoadTotalVeedores,
     onLoading,
+    onSetActivateParroquia,
 } from "../../store/app/dashboard/dashboardSlice";
 import Swal from "sweetalert2";
 import eleccionApi from "../../api/eleccionApi";
@@ -21,10 +26,15 @@ export const useDashboardStore = () => {
         totalCoordinadores,
         totalVeedores,
         totalConfirmados,
+        totalJrvMoviles,
+        totalJrvReconteo,
         totalUsuarios,
         totalEscaneadores,
         totalJuntas,
         avanceCantones,
+        avanceParroquias,
+        avanceRecintos,
+        activateParroquia,
     } = useSelector((state) => state.dashboard);
 
     const dispatch = useDispatch();
@@ -115,6 +125,52 @@ export const useDashboardStore = () => {
         }
     };
 
+    const startLoadTotalJrvMoviles = async () => {
+        try {
+            const { data } = await eleccionApi.get(
+                "/totales/jrv/moviles"
+            );
+            const { totalJrvMoviles } = data;
+            dispatch(onLoadTotalJrvMoviles(totalJrvMoviles));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
+    const startLoadTotalJrvReconteos = async() => {
+        try {
+            const { data } = await eleccionApi.get(
+                "/totales/jrv/reconteos"
+            );
+            const { totalJrvReconteos } = data;
+            dispatch(onLoadTotalJrvReconteo(totalJrvReconteos));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
     const startLoadTotalUsuarios = async () => {
         try {
             const { data } = await eleccionApi.get("/totales/usuarios");
@@ -200,6 +256,64 @@ export const useDashboardStore = () => {
         }
     };
 
+    const startAvanceParroquias = async () => {
+        dispatch(onLoading());
+        try {
+            const { data } = await eleccionApi.get("/avance/parroquias");
+            const { avanceParroquias } = data;
+            dispatch(onLoadAvanceParroquias(avanceParroquias));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
+    const startAvanceRecintos = async ({ parroquia_id }) => {
+        dispatch(onLoading());
+        try {
+            const { data } = await eleccionApi.post("/avance/recintos", {
+                parroquia_id,
+            });
+            const { avanceRecintos } = data;
+            dispatch(onLoadAvanceRecintos(avanceRecintos));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
+    const setActivateParroquia = (parroquia) => {
+        dispatch(onSetActivateParroquia(parroquia));
+    };
+
+    const setClearActivateParroquia = () => {
+        dispatch(onSetActivateParroquia(null));
+    };
+
+    const setClearAvanceRecintos = () => {
+        dispatch(onLoadAvanceRecintos([]));
+    }
+
     const startClearTotales = () => {
         dispatch(onClearTotales());
     };
@@ -210,19 +324,31 @@ export const useDashboardStore = () => {
         totalCoordinadores,
         totalVeedores,
         totalConfirmados,
+        totalJrvMoviles,
+        totalJrvReconteo,
         totalUsuarios,
         totalEscaneadores,
         totalJuntas,
         avanceCantones,
+        avanceParroquias,
+        avanceRecintos,
+        activateParroquia,
 
         startLoadTotalSupervisores,
         startLoadTotalCoordinadores,
         startLoadTotalVeedores,
         startLoadTotalVeedoresConfirmed,
+        startLoadTotalJrvMoviles,
+        startLoadTotalJrvReconteos,
         startLoadTotalUsuarios,
         startLoadTotalEscaneadores,
         startLoadTotalJuntas,
         startClearTotales,
         startAvanceCantones,
+        startAvanceParroquias,
+        startAvanceRecintos,
+        setActivateParroquia,
+        setClearActivateParroquia,
+        setClearAvanceRecintos
     };
 };

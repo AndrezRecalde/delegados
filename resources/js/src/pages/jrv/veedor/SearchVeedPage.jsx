@@ -4,11 +4,16 @@ import {
     SectionExport,
     TableVeedores,
     VeedSearchForm,
-} from "../../components";
-import { useVeedorStore } from "../../hooks";
+} from "../../../components";
+import { useVeedorStore } from "../../../hooks";
+
 
 export const SearchVeedPage = () => {
-    const { startExportTablePDF, startExportCredenciales, exportExcelVeedores } = useVeedorStore();
+    const {
+        startExportTablePDF,
+        startExportCredenciales,
+        exportExcelVeedores,
+    } = useVeedorStore();
 
     const form = useForm({
         initialValues: {

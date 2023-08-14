@@ -25,5 +25,5 @@ export const ProgressGeneralChart = () => {
         ],
     };
 
-    return <Doughnut height={270} data={data} options={{ maintainAspectRatio: false }} />;
+    return <Doughnut height={290} data={data} options={{ maintainAspectRatio: false }} />;
 };

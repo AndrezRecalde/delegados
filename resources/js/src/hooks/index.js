@@ -11,23 +11,33 @@ import { useEscanerStore } from "./escaner/useEscanerStore";
 import { useUiEscaner } from "./escaner/useUiEscaner";
 import { useStateStore } from "./state/useStateStore";
 import { useDashboardStore } from "./dashboard/useDashboardStore";
+import { useUiDashboard } from "./dashboard/useUiDashboard";
 import { useRoleStore } from "./role/useRoleStore";
 import { useJuntaStore } from "./junta/useJuntaStore";
+import { useJrvmovilStore } from "./jrvmovil/useJrvmovilStore";
+import { useUiJrvmovil } from "./jrvmovil/useUiJrvmovil";
+import { useReconteoStore } from "./reconteo/useReconteoStore";
+import { useUiReconteo } from "./reconteo/useUiReconteo";
 
 export {
-  useAuthStore,
-  useUsuarioStore,
-  useUiUsuario,
-  useSupervisorStore,
-  useUiSupervisor,
-  useCoordinadorStore,
-  useUiCoordinador,
-  useVeedorStore,
-  useUiVeedor,
-  useEscanerStore,
-  useUiEscaner,
-  useStateStore,
-  useDashboardStore,
-  useRoleStore,
-  useJuntaStore
+    useAuthStore,
+    useUsuarioStore,
+    useUiUsuario,
+    useSupervisorStore,
+    useUiSupervisor,
+    useCoordinadorStore,
+    useUiCoordinador,
+    useVeedorStore,
+    useUiVeedor,
+    useEscanerStore,
+    useUiEscaner,
+    useStateStore,
+    useDashboardStore,
+    useUiDashboard,
+    useRoleStore,
+    useJuntaStore,
+    useJrvmovilStore,
+    useUiJrvmovil,
+    useReconteoStore,
+    useUiReconteo,
 };

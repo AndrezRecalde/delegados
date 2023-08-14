@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Application;
 use App\Http\Controllers\Controller;
 use App\Models\Coordinador;
 use App\Models\Escaneador;
+use App\Models\Jrvmovil;
 use App\Models\Recinto;
+use App\Models\Reconteo;
 use App\Models\Supervisor;
 use App\Models\User;
 use App\Models\Veedor;
@@ -40,6 +42,18 @@ class DashboardController extends Controller
         return response()->json(['status' => 'success', 'totalConfirmados' => $totalConfirmados], 200);
     }
 
+    function getTotalJrvMoviles() : JsonResponse
+    {
+        $totalJrvMoviles = Jrvmovil::count();
+        return response()->json(['status' => 'success', 'totalJrvMoviles' => $totalJrvMoviles], 200);
+    }
+
+    function getTotalJrvReconteos() : JsonResponse
+    {
+        $totalJrvReconteos = Reconteo::count();
+        return response()->json(['status' => 'success', 'totalJrvReconteos' => $totalJrvReconteos], 200);
+    }
+
     function getTotalUsuarios(): JsonResponse
     {
         $totalUsuarios = User::count();
@@ -65,6 +79,18 @@ class DashboardController extends Controller
     {
         $avanceCantones = DB::select('CALL getAvanceCantones()');
         return response()->json(['status' => 'success', 'avanceCantones' => $avanceCantones], 200);
+    }
+
+    function getAvanceParroquial() : JsonResponse
+    {
+        $avanceParroquias = DB::select('CALL getAvanceParroquia()');
+        return response()->json(['status' => 'success', 'avanceParroquias' => $avanceParroquias], 200);
+    }
+
+    function getAvanceRecintos(Request $request) : JsonResponse
+    {
+        $avanceRecintos = DB::select('CALL getAvanceRecinto(?)', [$request->parroquia_id]);
+        return response()->json(['status' => 'success', 'avanceRecintos' => $avanceRecintos], 200);
     }
 
     /* function getTotalPayroll(): JsonResponse

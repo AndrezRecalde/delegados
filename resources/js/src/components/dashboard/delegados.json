@@ -1,0 +1,24 @@
+{
+    "delegados": [
+        {
+            "title": "Delegados Incriptos",
+            "icon": "veed_enrroled",
+            "value": "veed_enrroled"
+        },
+        {
+            "title": "Delegados Confirmados",
+            "icon": "veed_confirmed",
+            "value": "veed_confirmed"
+        },
+        {
+            "title": "Delegados Móviles",
+            "icon": "veed_moviles",
+            "value": "veed_moviles"
+        },
+        {
+            "title": "Delegados Reconteo",
+            "icon": "veed_reconteo",
+            "value": "veed_reconteo"
+        }
+    ]
+}
