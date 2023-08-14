@@ -122,8 +122,8 @@ export const TableAvanceRecintos = () => {
                 withColumnBorders>
                     <tbody>
                         <tr>
-                          <td><Text fz="xs" c="teal.7" weight={700}>TOTAL</Text></td>
-                          <td>{totales * 20}</td>
+                          <td><Text fz="xs" c="teal.7" weight={700}>TOTAL (20 USD)</Text></td>
+                          <td>{totales * 20} USD</td>
                         </tr>
                     </tbody>
                 </Table>
