@@ -35,6 +35,8 @@ export const TableAvanceRecintos = () => {
       }
     }, []);
 
+    const totales = avanceRecintos?.map(recinto => recinto.total_veed !== null ? recinto.total_veed : 0).reduce((prev, curr) => prev + curr, 0);
+
 
     const rows = avanceRecintos.map((row) => {
         let totalVeedores =
@@ -121,7 +123,7 @@ export const TableAvanceRecintos = () => {
                     <tbody>
                         <tr>
                           <td><Text fz="xs" c="teal.7" weight={700}>TOTAL</Text></td>
-                          <td>{avanceRecintos.map(recinto => recinto.total_veed !== null ? recinto.total_veed : 0).reduce((prev, curr) => { let total = prev + curr; return total * 20 })}</td>
+                          <td>{totales * 20}</td>
                         </tr>
                     </tbody>
                 </Table>
