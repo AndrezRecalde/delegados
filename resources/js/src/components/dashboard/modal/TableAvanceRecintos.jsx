@@ -62,7 +62,7 @@ export const TableAvanceRecintos = () => {
                 </td>
                 <td>{row.total_veed !== null ? row.total_veed : 0}</td>
                 <td>{row.total_juntas}</td>
-                <td>{totalVeedores.toFixed(0) * 20}</td>
+                <td>{row.total_veed.toFixed(0) * 20}</td>
                 <td>
                     <Group position="apart">
                         <Text fz="xs" c="teal.7" weight={700}>
