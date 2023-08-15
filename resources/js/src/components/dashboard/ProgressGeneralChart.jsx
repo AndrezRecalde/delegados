@@ -15,7 +15,7 @@ export const ProgressGeneralChart = () => {
             ctx.fillStyle = totalVeedores > totalJuntas ? '#4263eb' : '#4ff4a2';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(`${((data.datasets[0].data[0] * 100) / data.datasets[0].data[1])} %`, chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
+            ctx.fillText(`${((totalVeedores * 100) / totalJuntas.totalJuntas).toFixed(2)} %`, chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
         }
     }
 
