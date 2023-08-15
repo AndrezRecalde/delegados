@@ -33,13 +33,12 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export function StatPayroll() {
+export function StatPayrollDelegados() {
     const { totalConfirmados } = useDashboardStore();
     const { classes } = useStyles();
 
     return (
-        <Group position="center" mt="sm" mb="xl">
-            <Box w={700}>
+            <Box w={600}>
                 <Paper
                     radius="md"
                     withBorder
@@ -68,6 +67,5 @@ export function StatPayroll() {
                     </Group>
                 </Paper>
             </Box>
-        </Group>
     );
 }

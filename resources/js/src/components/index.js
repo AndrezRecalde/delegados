@@ -54,7 +54,8 @@ import { EscSearchForm } from "./escaner/search/form/EscSearchForm";
 import { Stats } from "./dashboard/Stats";
 import { StatsDelegados } from "./dashboard/StatsDelegados";
 import { ProgressGeneralChart } from "./dashboard/ProgressGeneralChart";
-import { StatPayroll } from "./dashboard/StatPayroll";
+import { StatPayrollDelegados } from "./dashboard/StatPayrollDelegados";
+import { StatPayrollCoords } from "./dashboard/StatPayrollCoords";
 import { TableAvanceCantones } from "./dashboard/TableAvanceCantones";
 import { TableAvanceParroquial } from "./dashboard/TableAvanceParroquial";
 import { ModalAvanceRecintos } from "./dashboard/modal/ModalAvanceRecintos";
@@ -116,7 +117,8 @@ export {
     Stats,
     StatsDelegados,
     ProgressGeneralChart,
-    StatPayroll,
+    StatPayrollDelegados,
+    StatPayrollCoords,
     TableAvanceCantones,
     TableAvanceParroquial,
     ModalAvanceRecintos,

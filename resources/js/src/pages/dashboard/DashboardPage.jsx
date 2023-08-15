@@ -4,11 +4,12 @@ import { sistema } from "../../components/dashboard/sistema.json";
 import { delegados } from "../../components/dashboard/delegados.json";
 import {
     ProgressGeneralChart,
-    StatPayroll,
     Stats,
     TitlePage,
     TableAvanceCantones,
     StatsDelegados,
+    StatPayrollDelegados,
+    StatPayrollCoords,
 } from "../../components";
 import { useDashboardStore } from "../../hooks";
 
@@ -94,14 +95,18 @@ export const DashboardPage = () => {
                                 <TitlePage
                                     tt="capitalize"
                                     color="indigo.7"
+                                    ta="center"
                                     fw={700}
-                                    title={`${porcentajeIngreso()} % Registrado a nivel provincial`}
+                                    title={`Faltan ${totalJuntas.totalJuntas} delegados de ingresar`}
                                 />
                             </Card.Section>
                         </Card>
                     </Grid.Col>
-                    <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <StatPayroll />
+                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <StatPayrollDelegados />
+                    </Grid.Col>
+                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                        <StatPayrollCoords />
                     </Grid.Col>
                     <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Paper shadow="sm" radius="md" p="md">

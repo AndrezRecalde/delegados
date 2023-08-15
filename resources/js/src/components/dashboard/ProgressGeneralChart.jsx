@@ -6,6 +6,19 @@ export const ProgressGeneralChart = () => {
     const { totalVeedores, totalJuntas } = useDashboardStore();
     ChartJS.register(ArcElement, Tooltip, Legend);
 
+    const textCenter = {
+        id: 'textCenter',
+        beforeDatasetsDraw(chart, args, pluginOptions){
+            const { ctx, data } = chart;
+            ctx.save();
+            ctx.font = 'bolder 20px sans-serif';
+            ctx.fillStyle = totalVeedores > totalJuntas ? '#4263eb' : '#4ff4a2';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(`${((data.datasets[0].data[0] * 100) / data.datasets[0].data[1])} %`, chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
+        }
+    }
+
     const data = {
         labels: ["Veedores Registrados", "Total Juntas"],
         datasets: [
@@ -23,7 +36,8 @@ export const ProgressGeneralChart = () => {
                 borderWidth: 1,
             },
         ],
+
     };
 
-    return <Doughnut height={290} data={data} options={{ maintainAspectRatio: false }} />;
+    return <Doughnut height={290} data={data} plugins={[textCenter]} options={{ maintainAspectRatio: false }} />;
 };
