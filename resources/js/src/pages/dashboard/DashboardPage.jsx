@@ -97,7 +97,7 @@ export const DashboardPage = () => {
                                     color="indigo.7"
                                     ta="center"
                                     fw={700}
-                                    title={`Faltan ${totalJuntas.totalJuntas} delegados de ingresar`}
+                                    title={`Faltan ${totalJuntas.totalJuntas - totalVeedores} delegados de ingresar`}
                                 />
                             </Card.Section>
                         </Card>
