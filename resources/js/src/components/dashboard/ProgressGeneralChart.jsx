@@ -12,7 +12,7 @@ export const ProgressGeneralChart = () => {
             const { ctx, data } = chart;
             ctx.save();
             ctx.font = 'bolder 20px sans-serif';
-            ctx.fillStyle = totalVeedores > (totalVeedores - totalJuntas.totalJuntas) ? '#4263eb' : '#4ff4a2';
+            ctx.fillStyle = totalVeedores > (totalJuntas.totalJuntas - totalVeedores) ? '#4263eb' : '#4ff4a2';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(`${((totalVeedores * 100) / totalJuntas.totalJuntas).toFixed(2)} %`, chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
