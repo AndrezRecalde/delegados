@@ -11,7 +11,7 @@ export const ProgressGeneralChart = () => {
         beforeDatasetsDraw(chart, args, pluginOptions){
             const { ctx, data } = chart;
             ctx.save();
-            ctx.font = 'bolder 20px sans-serif';
+            ctx.font = 'bolder 15px sans-serif';
             ctx.fillStyle = '#4263eb';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
