@@ -10,8 +10,10 @@ import {
     StatsDelegados,
     StatPayrollDelegados,
     StatPayrollCoords,
+    ModalAvanceRecintos,
 } from "../../components";
 import { useDashboardStore } from "../../hooks";
+import { ModalAvanceParroquia } from "../../components/dashboard/modal/parroquia/ModalAvanceParroquia";
 
 export const DashboardPage = () => {
     const {
@@ -64,56 +66,63 @@ export const DashboardPage = () => {
             />
 
             {!isLoading ? (
-                <Grid>
-                    <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <StatsDelegados data={delegados} />
-                    </Grid.Col>
-                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
-                        <Stats data={sistema} />
-                    </Grid.Col>
-                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
-                        <Card
-                            withBorder
-                            radius="md"
-                            mt={5}
-                            mb="lg"
-                            shadow="sm"
-                            sx={{ position: "static" }}
-                        >
-                            <Card.Section withBorder inheritPadding py="lg">
-                                <TitlePage
-                                    tt="capitalize"
-                                    fz={14}
-                                    fw={700}
-                                    title="Resumen de Progreso General de Delegados"
-                                />
-                            </Card.Section>
-                            <Card.Section withBorder inheritPadding py="lg">
-                                <ProgressGeneralChart />
-                            </Card.Section>
-                            <Card.Section withBorder inheritPadding py="lg">
-                                <TitlePage
-                                    tt="capitalize"
-                                    color="indigo.7"
-                                    ta="center"
-                                    fw={700}
-                                    title={`Faltan ${totalJuntas.totalJuntas - totalVeedores} delegados de ingresar`}
-                                />
-                            </Card.Section>
-                        </Card>
-                    </Grid.Col>
-                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
-                        <StatPayrollDelegados />
-                    </Grid.Col>
-                    <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
-                        <StatPayrollCoords />
-                    </Grid.Col>
-                    <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <Paper shadow="sm" radius="md" p="md">
-                            <TableAvanceCantones />
-                        </Paper>
-                    </Grid.Col>
-                </Grid>
+                <>
+                    <Grid>
+                        <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <StatsDelegados data={delegados} />
+                        </Grid.Col>
+                        <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <Stats data={sistema} />
+                        </Grid.Col>
+                        <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <Card
+                                withBorder
+                                radius="md"
+                                mt={5}
+                                mb="lg"
+                                shadow="sm"
+                                sx={{ position: "static" }}
+                            >
+                                <Card.Section withBorder inheritPadding py="lg">
+                                    <TitlePage
+                                        tt="capitalize"
+                                        fz={14}
+                                        fw={700}
+                                        title="Resumen de Progreso General de Delegados"
+                                    />
+                                </Card.Section>
+                                <Card.Section withBorder inheritPadding py="lg">
+                                    <ProgressGeneralChart />
+                                </Card.Section>
+                                <Card.Section withBorder inheritPadding py="lg">
+                                    <TitlePage
+                                        tt="capitalize"
+                                        color="indigo.7"
+                                        ta="center"
+                                        fw={700}
+                                        title={`Faltan ${
+                                            totalJuntas.totalJuntas -
+                                            totalVeedores
+                                        } delegados de ingresar`}
+                                    />
+                                </Card.Section>
+                            </Card>
+                        </Grid.Col>
+                        <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                            <StatPayrollDelegados />
+                        </Grid.Col>
+                        <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                            <StatPayrollCoords />
+                        </Grid.Col>
+                        <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <Paper shadow="sm" radius="md" p="md">
+                                <TableAvanceCantones />
+                            </Paper>
+                        </Grid.Col>
+                    </Grid>
+                    <ModalAvanceParroquia />
+                    <ModalAvanceRecintos />
+                </>
             ) : (
                 <Flex
                     mih={150}

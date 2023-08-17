@@ -14,6 +14,9 @@ import {
     onLoadTotalUsuarios,
     onLoadTotalVeedores,
     onLoading,
+    onLoadingTableParr,
+    onLoadingTableRec,
+    onSetActivateCanton,
     onSetActivateParroquia,
 } from "../../store/app/dashboard/dashboardSlice";
 import Swal from "sweetalert2";
@@ -22,6 +25,8 @@ import eleccionApi from "../../api/eleccionApi";
 export const useDashboardStore = () => {
     const {
         isLoading,
+        isLoadingTableParr,
+        isLoadingTableRec,
         totalSupervisores,
         totalCoordinadores,
         totalVeedores,
@@ -34,6 +39,7 @@ export const useDashboardStore = () => {
         avanceCantones,
         avanceParroquias,
         avanceRecintos,
+        activateCanton,
         activateParroquia,
     } = useSelector((state) => state.dashboard);
 
@@ -257,7 +263,7 @@ export const useDashboardStore = () => {
     };
 
     const startAvanceParroquias = async () => {
-        dispatch(onLoading());
+        dispatch(onLoadingTableParr());
         try {
             const { data } = await eleccionApi.get("/avance/parroquias");
             const { avanceParroquias } = data;
@@ -278,8 +284,30 @@ export const useDashboardStore = () => {
         }
     };
 
+    const startAvanceParroquia = async ({ id }) => {
+        dispatch(onLoadingTableParr());
+        try {
+            const { data } = await eleccionApi.post("/avance/parroquia", { canton_id: id });
+            const { avanceParroquias } = data;
+            dispatch(onLoadAvanceParroquias(avanceParroquias));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    }
+
     const startAvanceRecintos = async ({ parroquia_id }) => {
-        dispatch(onLoading());
+        dispatch(onLoadingTableRec());
         try {
             const { data } = await eleccionApi.post("/avance/recintos", {
                 parroquia_id,
@@ -302,13 +330,26 @@ export const useDashboardStore = () => {
         }
     };
 
+    const setActivateCanton = (canton) => {
+        dispatch(onSetActivateCanton(canton));
+    };
+
+
     const setActivateParroquia = (parroquia) => {
         dispatch(onSetActivateParroquia(parroquia));
+    };
+
+    const setClearActivateCanton = () => {
+        dispatch(onSetActivateCanton(null));
     };
 
     const setClearActivateParroquia = () => {
         dispatch(onSetActivateParroquia(null));
     };
+
+    const setClearAvanceParroquias = () => {
+        dispatch(onLoadAvanceParroquias([]));
+    }
 
     const setClearAvanceRecintos = () => {
         dispatch(onLoadAvanceRecintos([]));
@@ -320,6 +361,8 @@ export const useDashboardStore = () => {
 
     return {
         isLoading,
+        isLoadingTableParr,
+        isLoadingTableRec,
         totalSupervisores,
         totalCoordinadores,
         totalVeedores,
@@ -332,6 +375,7 @@ export const useDashboardStore = () => {
         avanceCantones,
         avanceParroquias,
         avanceRecintos,
+        activateCanton,
         activateParroquia,
 
         startLoadTotalSupervisores,
@@ -346,9 +390,13 @@ export const useDashboardStore = () => {
         startClearTotales,
         startAvanceCantones,
         startAvanceParroquias,
+        startAvanceParroquia,
         startAvanceRecintos,
+        setActivateCanton,
         setActivateParroquia,
+        setClearActivateCanton,
         setClearActivateParroquia,
+        setClearAvanceParroquias,
         setClearAvanceRecintos
     };
 };

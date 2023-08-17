@@ -1,6 +1,6 @@
 import { Modal, useMantineTheme } from "@mantine/core";
-import { useDashboardStore, useUiDashboard } from "../../../hooks";
-import { TableAvanceRecintos, TitlePage } from "../../../components";
+import { useDashboardStore, useUiDashboard } from "../../../../hooks";
+import { TableAvanceRecintos, TitlePage } from "../../..";
 
 export const ModalAvanceRecintos = () => {
     const theme = useMantineTheme();

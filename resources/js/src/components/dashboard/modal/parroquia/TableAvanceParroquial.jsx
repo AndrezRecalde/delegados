@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
     Group,
     NavLink,
@@ -8,7 +8,7 @@ import {
     rem,
 } from "@mantine/core";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
-import { useDashboardStore, useUiDashboard } from "../../hooks";
+import { useDashboardStore, useUiDashboard } from "../../../../hooks";
 
 const useStyles = createStyles((theme) => ({
     progressBar: {
@@ -25,9 +25,17 @@ const useStyles = createStyles((theme) => ({
 export const TableAvanceParroquial = () => {
     const { classes, theme } = useStyles();
 
-    const { isLoading, avanceParroquias, setActivateParroquia } =
+    const { isLoadingTableParr, activateCanton, avanceParroquias, setActivateParroquia, startAvanceParroquia, setClearActivateParroquia } =
         useDashboardStore();
     const { modalActionAvanceRecinto } =  useUiDashboard();
+
+    useEffect(() => {
+        startAvanceParroquia(activateCanton);
+
+      return () => {
+        setClearActivateParroquia();
+      }
+    }, []);
 
     const columns = useMemo(
         () => [
@@ -131,7 +139,7 @@ export const TableAvanceParroquial = () => {
         data: avanceParroquias, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
         enableColumnOrdering: true,
         enablePagination: true,
-        state: { showProgressBars: isLoading },
+        state: { showProgressBars: isLoadingTableParr },
     });
 
     return <MantineReactTable table={table} />;

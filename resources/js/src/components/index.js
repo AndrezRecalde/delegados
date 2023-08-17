@@ -57,9 +57,9 @@ import { ProgressGeneralChart } from "./dashboard/ProgressGeneralChart";
 import { StatPayrollDelegados } from "./dashboard/StatPayrollDelegados";
 import { StatPayrollCoords } from "./dashboard/StatPayrollCoords";
 import { TableAvanceCantones } from "./dashboard/TableAvanceCantones";
-import { TableAvanceParroquial } from "./dashboard/TableAvanceParroquial";
-import { ModalAvanceRecintos } from "./dashboard/modal/ModalAvanceRecintos";
-import { TableAvanceRecintos } from "./dashboard/modal/TableAvanceRecintos";
+import { TableAvanceParroquial } from "./dashboard/modal/parroquia/TableAvanceParroquial";
+import { ModalAvanceRecintos } from "./dashboard/modal/recinto/ModalAvanceRecintos";
+import { TableAvanceRecintos } from "./dashboard/modal/recinto/TableAvanceRecintos";
 
 import { TableUsuarios } from "./usuario/table/TableUsuarios";
 import { ModalUsuario } from "./usuario/form/ModalUsuario";

@@ -4,6 +4,8 @@ export const dashboardSlice = createSlice({
     name: "dashboard",
     initialState: {
         isLoading: false,
+        isLoadingTableParr: false,
+        isLoadingTableRec: false,
         totalSupervisores: 0,
         totalCoordinadores: 0,
         totalVeedores: 0,
@@ -16,12 +18,19 @@ export const dashboardSlice = createSlice({
         avanceCantones: [],
         avanceParroquias: [],
         avanceRecintos: [],
+        activateCanton: null,
         activateParroquia: null,
         /* errores: undefined */
     },
     reducers: {
         onLoading: (state) => {
             state.isLoading = true;
+        },
+        onLoadingTableParr: (state) => {
+            state.isLoadingTableParr = true;
+        },
+        onLoadingTableRec: (state) => {
+            state.isLoadingTableRec = true;
         },
         onLoadTotalSupervisores: (state, { payload }) => {
             state.totalSupervisores = payload;
@@ -56,11 +65,14 @@ export const dashboardSlice = createSlice({
         },
         onLoadAvanceParroquias: (state, { payload }) => {
             state.avanceParroquias = payload;
-            state.isLoading = false;
+            state.isLoadingTableParr = false;
         },
         onLoadAvanceRecintos: (state, { payload }) => {
             state.avanceRecintos = payload;
-            state.isLoading = false;
+            state.isLoadingTableRec = false;
+        },
+        onSetActivateCanton: (state, { payload }) => {
+            state.activateCanton = payload;
         },
         onSetActivateParroquia: (state, { payload }) => {
             state.activateParroquia = payload;
@@ -79,6 +91,7 @@ export const dashboardSlice = createSlice({
             state.avanceCantones = [];
             state.avanceParroquias = [];
             state.avanceRecintos = [];
+            state.activateCanton = null;
             state.activateParroquia = null;
             /* state.errores = udnefined; */
         }
@@ -87,6 +100,8 @@ export const dashboardSlice = createSlice({
 
 export const {
     onLoading,
+    onLoadingTableParr,
+    onLoadingTableRec,
     onLoadTotalSupervisores,
     onLoadTotalCoordinadores,
     onLoadTotalVeedores,
@@ -99,6 +114,7 @@ export const {
     onLoadAvanceCantones,
     onLoadAvanceParroquias,
     onLoadAvanceRecintos,
+    onSetActivateCanton,
     onSetActivateParroquia,
     onClearTotales
 } = dashboardSlice.actions;

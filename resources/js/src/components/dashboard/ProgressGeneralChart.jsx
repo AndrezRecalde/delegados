@@ -15,7 +15,7 @@ export const ProgressGeneralChart = () => {
             ctx.fillStyle = '#4263eb';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText(`${((totalVeedores * 100) / totalJuntas.totalJuntas).toFixed(2)} %`, chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
+            ctx.fillText(`${((parseInt(totalVeedores) * 100) / parseInt(totalJuntas.totalJuntas)).toFixed(2)} %`, chart.getDatasetMeta(0).data[0].x,chart.getDatasetMeta(0).data[0].y);
         }
     }
 
@@ -33,7 +33,7 @@ export const ProgressGeneralChart = () => {
                     "rgba(38, 7, 204, 0.8)",
                     "rgba(7, 175, 93, 0.8)",
                 ],
-                borderWidth: 1,
+                borderWidth: 1.5,
             },
         ],
 

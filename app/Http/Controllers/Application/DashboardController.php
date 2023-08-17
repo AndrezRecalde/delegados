@@ -87,6 +87,12 @@ class DashboardController extends Controller
         return response()->json(['status' => 'success', 'avanceParroquias' => $avanceParroquias], 200);
     }
 
+    function getAvanceParroquiaxCanton(Request $request) : JsonResponse
+    {
+        $avanceParroquias = DB::select('CALL getAvanceParroquiaxCanton(?)', [$request->canton_id]);
+        return response()->json(['status' => 'success', 'avanceParroquias' => $avanceParroquias], 200);
+    }
+
     function getAvanceRecintos(Request $request) : JsonResponse
     {
         $avanceRecintos = DB::select('CALL getAvanceRecinto(?)', [$request->parroquia_id]);

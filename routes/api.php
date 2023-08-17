@@ -50,6 +50,7 @@ Route::group(
         Route::get('/totales/juntas',  [DashboardController::class, 'getTotalJuntas']);
         Route::get('/avance/cantones',  [DashboardController::class, 'getAvanceCantones']);
         Route::get('/avance/parroquias',  [DashboardController::class, 'getAvanceParroquial']);
+        Route::post('/avance/parroquia',  [DashboardController::class, 'getAvanceParroquiaxCanton']);
         Route::post('/avance/recintos',  [DashboardController::class, 'getAvanceRecintos']);
 
 

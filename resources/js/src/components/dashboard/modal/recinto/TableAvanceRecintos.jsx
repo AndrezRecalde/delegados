@@ -7,8 +7,8 @@ import {
     createStyles,
     rem,
 } from "@mantine/core";
-import { useDashboardStore } from "../../../hooks";
 import { useEffect } from "react";
+import { useDashboardStore } from "../../../../hooks";
 
 const useStyles = createStyles((theme) => ({
     progressBar: {
