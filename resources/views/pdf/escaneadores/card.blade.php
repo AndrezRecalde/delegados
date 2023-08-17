@@ -14,7 +14,7 @@
         .fondo {
             background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/08/FFF-02.jpg');
             background-repeat: no-repeat;
-            background-size: 320px 480px;
+            background-size: 320px 450px;
         }
     </style>
     <title>{{ $title }}</title>
