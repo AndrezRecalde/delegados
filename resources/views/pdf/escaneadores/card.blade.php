@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="card-footer text-center text-white font-weight-bold p-1"
                                     style="background-color: black;">
-                                    ESCANER ANTE LA JUNTA RECEPTORA DEL VOTO
+                                    DELEGADO/A </br> CENTRO DE DIGITALIZACIÓN DE ACTAS (CDA)
                                 </div>
                             </div>
                         </td>
