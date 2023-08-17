@@ -84,7 +84,7 @@
                                         style="font-size: 7px">RECINTO</small>
                                 </div>
                                 <div class="card-footer text-center text-white font-weight-bold p-1"
-                                    style="font-size: 14px; background-color: black;">
+                                    style="font-size: 13px; background-color: black;">
                                     DELEGADO/A </br> CENTRO DE DIGITALIZACIÓN DE ACTAS (CDA)
                                 </div>
                             </div>
