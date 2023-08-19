@@ -77,6 +77,8 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->join('parroquias as p', 'p.id', 'r.parroquia_id')
+            ->join('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
+            ->join('supervisores as super', 'super.id', 'coord.supervisor_id')
             ->canton($this->canton_id)
             ->parroquia($this->parroquia_id)
             ->recinto($this->recinto_id)
