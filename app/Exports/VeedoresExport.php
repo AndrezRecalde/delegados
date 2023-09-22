@@ -33,6 +33,7 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
             'D' => 80,
             'E' => 80,
             'F' => 90,
+            'G' => 90,
         ];
     }
 
@@ -44,7 +45,7 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
         $sheet->getStyle('D1')->getFont()->setBold(true);
         $sheet->getStyle('E1')->getFont()->setBold(true);
         $sheet->getStyle('F1')->getFont()->setBold(true);
-
+        $sheet->getStyle('G1')->getFont()->setBold(true);
     }
 
     /**
@@ -58,7 +59,8 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
             'Nombres Completos',
             'Canton',
             'Parroquia',
-            'Recinto'
+            'Recinto',
+            'Coordinador'
         ];
     }
 
@@ -73,7 +75,8 @@ class VeedoresExport implements FromCollection, WithHeadings, WithColumnWidths, 
             ->selectRaw('veed.dni, veed.nombres_completos,
                     c.nombre_canton as canton,
                     p.nombre_parroquia as parroquia,
-                    r.nombre_recinto as recinto')
+                    r.nombre_recinto as recinto,
+                    coord.nombres_completos as coordinador')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->join('parroquias as p', 'p.id', 'r.parroquia_id')
