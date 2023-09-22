@@ -28,6 +28,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
             'D' => 90,
             'E' => 150,
             'F' => 90,
+            'G' => 90
         ];
     }
 
@@ -39,6 +40,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
         $sheet->getStyle('D1')->getFont()->setBold(true);
         $sheet->getStyle('E1')->getFont()->setBold(true);
         $sheet->getStyle('F1')->getFont()->setBold(true);
+        $sheet->getStyle('G1')->getFont()->setBold(true);
     }
 
     /**
@@ -50,6 +52,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
         return [
             'Cédula (10 Dígitos)',
             'Nombres Completos',
+            'Teléfono',
             'Canton',
             'Parroquia',
             'Supervisor',
@@ -59,7 +62,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
     public function collection()
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-        ->selectRaw('coord.dni, coord.nombres_completos,
+        ->selectRaw('coord.dni, coord.nombres_completos, coord.telefono,
                     c.nombre_canton as canton,
                     parr.nombre_parroquia as parroquia,
                     super.nombres_completos as supervisor')
