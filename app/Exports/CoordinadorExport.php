@@ -55,6 +55,7 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
             'Teléfono',
             'Canton',
             'Parroquia',
+            'Recinto',
             'Supervisor',
         ];
     }
@@ -65,8 +66,11 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
         ->selectRaw('coord.dni, coord.nombres_completos, coord.telefono,
                     c.nombre_canton as canton,
                     parr.nombre_parroquia as parroquia,
+                    rec.nombre_recinto as recinto,
                     super.nombres_completos as supervisor')
         ->join('cantones as c', 'c.id', 'coord.canton_id')
+        ->join('recinto_coord as rc', 'rc.coordinador_id', 'coord.id')
+        ->join('recintos as rec', 'rec.id', 'rc.recinto_id')
         ->join('parroquias as parr', 'parr.id', 'coord.parroquia_id')
         ->join('supervisores as super', 'super.id', 'coord.supervisor_id')
         ->canton($this->canton_id)
