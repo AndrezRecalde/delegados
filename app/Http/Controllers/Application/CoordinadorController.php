@@ -29,6 +29,7 @@ class CoordinadorController extends Controller
             ->join('supervisores as s', 's.id', 'coord.supervisor_id')
             ->join('cantones as c', 'c.id', 'coord.canton_id')
             ->join('parroquias as p', 'p.id', 'coord.parroquia_id')
+            ->orderBy('coord.id', 'DESC')
             ->get();
         return response()->json(['status' => 'success', 'coordinadores' => $coordinadores], 200);
     }
@@ -50,6 +51,7 @@ class CoordinadorController extends Controller
             ->join('cantones as c', 'c.id', 'coord.canton_id')
             ->join('parroquias as p', 'p.id', 'coord.parroquia_id')
             ->canton($request->canton_id)
+            ->orderBy('coord.id', 'DESC')
             ->get();
 
         return response()->json(['status' => 'success', 'coordinadores' => $coordinadores], 200);
@@ -114,6 +116,7 @@ class CoordinadorController extends Controller
             ->parroquia($request->parroquia_id)
             ->recinto($request->recinto_id)
             ->supervisor($request->supervisor_id)
+            ->orderBy('coord.id', 'DESC')
             ->distinct()
             ->get();
 

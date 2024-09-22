@@ -17,7 +17,7 @@ export const ModalAvanceParroquia = () => {
         <Modal
             opened={isOpenModalAvanceParroquia}
             onClose={handleCloseModalAvance}
-            title={<TitlePage title="Avance de Parroquias" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Avance de Parroquias</TitlePage>}
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

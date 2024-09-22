@@ -9,6 +9,12 @@
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
+    <style>
+        body {
+            font-family: 'poppins', sans-serif;
+        }
+    </style>
+
     <title>{{ $title }}</title>
 </head>
 

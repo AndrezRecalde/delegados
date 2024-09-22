@@ -8,19 +8,20 @@ import { useEffect } from "react";
 
 export const AppRouter = () => {
   const { checkAuthToken } = useAuthStore();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     checkAuthToken();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-  
+
 
   return (
     <Routes>
       <Route
         path="/auth/login/*"
         element={
-          <PublicRoute>
+          <PublicRoute token={token}>
             <Routes>
               <Route path="/" element={<AuthenticationPage />} />
             </Routes>
@@ -30,7 +31,7 @@ export const AppRouter = () => {
       <Route
         path="/*"
         element={
-          <PrivateRoute>
+          <PrivateRoute token={token}>
             <PrivatePages />
           </PrivateRoute>
         }

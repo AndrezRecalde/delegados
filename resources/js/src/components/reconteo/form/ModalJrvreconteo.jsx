@@ -29,9 +29,14 @@ export const ModalJrvreconteo = () => {
 
     return (
         <Modal
+            centered
             opened={isOpenModalReconteo}
             onClose={handleCloseModalJrvreconteo}
-            title={<TitlePage title="JRV Reconteo" fz={14} fw={700} />}
+            title={
+                <TitlePage ta="left" order={3}>
+                    JRV Reconteo
+                </TitlePage>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class SupervisorController extends Controller
 {
-    function getSupervisores(): JsonResponse
+    function getSupervisores(Request $request): JsonResponse
     {
         $supervisores = Supervisor::from('supervisores as s')
             ->selectRaw('s.id, s.nombres_completos, s.dni, s.email, s.telefono,
@@ -23,6 +23,8 @@ class SupervisorController extends Controller
                 }
             ])
             ->join('cantones as c', 'c.id', 's.canton_id')
+            ->canton($request->canton_id)
+            ->orderBy('s.id', 'DESC')
             ->get();
         return response()->json(['status' => 'success', 'supervisores' => $supervisores], 200);
     }
@@ -39,6 +41,7 @@ class SupervisorController extends Controller
             ])
             ->join('cantones as c', 'c.id', 's.canton_id')
             ->canton($request->canton_id)
+            ->orderBy('s.id', 'DESC')
             ->get();
         return response()->json(['status' => 'success', 'supervisores' => $supervisores], 200);
     }

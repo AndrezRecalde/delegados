@@ -15,28 +15,36 @@ export const ModalSupervisor = () => {
             email: "",
             telefono: "",
             canton_id: "",
-            parroquia_id: ""
+            parroquia_id: "",
         },
         validate: {
-            nombres_completos: isNotEmpty("Por favor ingresa los apellidos y nombres"),
+            nombres_completos: isNotEmpty(
+                "Por favor ingresa los apellidos y nombres"
+            ),
             dni: isNotEmpty("Por favor ingresa el # de cédula"),
-            telefono: isNotEmpty("Por favor ingresa el número de teléfono"),
+            //telefono: isNotEmpty("Por favor ingresa el número de teléfono"),
             canton_id: isNotEmpty("Por favor ingresa el cantón"),
-            parroquia_id: isNotEmpty("Por favor ingresa uno o varias parroquias")
-        }
+            parroquia_id: isNotEmpty(
+                "Por favor ingresa uno o varias parroquias"
+            ),
+        },
     });
 
     const handleCloseModalSuper = () => {
         form.reset();
         setClearActivateSupervisor();
         modalActionSupervisor(0);
-    }
+    };
 
     return (
         <Modal
             opened={isOpenModalSupervisor}
             onClose={handleCloseModalSuper}
-            title={<TitlePage title="Supervisor" fz={14} fw={700} />}
+            title={
+                <TitlePage ta="left" order={3}>
+                    Supervisor
+                </TitlePage>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

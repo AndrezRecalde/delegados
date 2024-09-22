@@ -17,7 +17,7 @@ import { useDashboardStore } from "../../hooks";
 const useStyles = createStyles((theme) => ({
     root: {
         /*padding: `calc(${theme.spacing.xl} * 1.5)`, */
-        marginTop: rem(5),
+        //marginTop: rem(5),
         marginBottom: rem(30),
     },
 

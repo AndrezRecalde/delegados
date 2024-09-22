@@ -11,7 +11,7 @@ import {
   rem,
 } from '@mantine/core';
 import { IconCalendarStats, IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   control: {
@@ -47,6 +47,13 @@ const useStyles = createStyles((theme) => ({
     },
   },
 
+  linkActive: {
+    /* estilos para el tab activo */
+    fontWeight: 700,
+    backgroundColor: theme.colors.indigo[3],
+    color: theme.colors.dark[4],
+},
+
   chevron: {
     transition: 'transform 200ms ease',
   },
@@ -59,10 +66,15 @@ export function LinksGroup({ icon:Icon, label, initiallyOpened, links }) {
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(initiallyOpened || false);
   const ChevronIcon = theme.dir === 'ltr' ? IconChevronRight : IconChevronLeft;
+  const location = useLocation();
+
+  const isActive = (link) => {
+    return location.pathname === link;
+}
   const items = (hasLinks ? links : []).map((link) => (
     <Text
       component={Link}
-      className={classes.link}
+      className={`${classes.link} ${isActive(link.link) ? classes.linkActive : ''}`}
       to={link.link}
       key={link.label}
       /* onClick={(event) => event.preventDefault()} */

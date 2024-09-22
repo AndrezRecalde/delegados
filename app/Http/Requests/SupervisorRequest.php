@@ -28,7 +28,7 @@ class SupervisorRequest extends FormRequest
             'nombres_completos' => 'required',
             'dni'               =>  ['required', Rule::unique('supervisores')->ignore($this->request->get('id'))],
             'email'             =>  '',
-            'telefono'          =>  'required',
+            'telefono'          =>  '',
             'canton_id'         =>  'required',
             'parroquia_id'      =>  'required'
         ];
@@ -38,7 +38,6 @@ class SupervisorRequest extends FormRequest
         return [
             'nombres_completos.required'  => 'El/Los nombre(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
-            'telefono.required'           =>  'El teléfono es requerido',
             'canton_id.required'          =>  'Seleccione un cantón',
             'parroquia_id.required'       =>  'Seleccione una o varias parroquias'
         ];

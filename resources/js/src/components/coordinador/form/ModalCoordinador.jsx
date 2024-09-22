@@ -45,7 +45,7 @@ export const ModalCoordinador = () => {
         <Modal
             opened={isOpenModalCoordinador}
             onClose={handleCloseModalCoord}
-            title={<TitlePage title="Coordinador" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Coordinador</TitlePage>}
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

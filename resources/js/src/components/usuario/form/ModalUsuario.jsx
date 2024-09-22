@@ -25,14 +25,18 @@ export const ModalUsuario = () => {
         form.reset();
         setClearActivateUsuario();
         modalActionUsuario(0);
-
-    }
+    };
 
     return (
         <Modal
+            centered
             opened={isOpenModalUser}
             onClose={handleCloseModalUsuario}
-            title={<TitlePage title="Usuario" fz={14} fw={700} />}
+            title={
+                <TitlePage ta="left" order={3}>
+                    Usuario
+                </TitlePage>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"
@@ -41,7 +45,7 @@ export const ModalUsuario = () => {
                 opacity: 0.55,
                 blur: 3,
             }}
-            size="xl"
+            size="lg"
             radius="md"
         >
             <FormUsuario form={form} />

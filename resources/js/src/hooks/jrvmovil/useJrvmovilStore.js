@@ -1,42 +1,38 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onAddJrvmovil,
+    //onAddJrvmovil,
     onClearJrvmovil,
     onDeleteJrvmovil,
+    onExport,
     onJrvmoviles,
+    onLoadErrores,
+    onLoading,
+    onLoadMessage,
     onSetActivateJrvmovil,
-    onUpdateJrvmovil,
+    //onUpdateJrvmovil,
 } from "../../store/app/jrvmovil/jrvmovilSlice";
 
 import eleccionApi from "../../api/eleccionApi";
-import Swal from "sweetalert2";
+import { useErrorException } from "../../hooks";
 
 export const useJrvmovilStore = () => {
-    const { isLoading, jrvmoviles, activateJrvmovil, errores } = useSelector(
+    const { isLoading, isExport, jrvmoviles, activateJrvmovil, errores } = useSelector(
         (state) => state.jrvmovil
     );
+
+    const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
 
     const startLoadJrvmoviles = async () => {
         try {
+            dispatch(onLoading(true));
             const { data } = await eleccionApi.get("/jrvmoviles/listar");
             const { jrvmoviles } = data;
             dispatch(onJrvmoviles(jrvmoviles));
         } catch (error) {
-            console.log(error)
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -47,13 +43,10 @@ export const useJrvmovilStore = () => {
                     `/jrvmovil/update/${jrvmovil.id}`,
                     jrvmovil
                 );
-                dispatch(onUpdateJrvmovil({ ...jrvmovil }));
-                Swal.fire({
-                    icon: "success",
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
+                dispatch(onLoadMessage(data));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
                 startLoadJrvmoviles();
                 return;
             }
@@ -61,85 +54,50 @@ export const useJrvmovilStore = () => {
                 "/jrvmovil/create",
                 jrvmovil
             );
-            dispatch(onAddJrvmovil({ ...jrvmovil }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadJrvmoviles();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startDeleteJrvmovil = async (jrvmovil) => {
-        Swal.fire({
-            icon: "warning",
-            text: `¿Estas seguro de eliminar ${jrvmovil.nombres_completos}?`,
-            showDenyButton: true,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await eleccionApi.delete(`/jrvmovil/delete/${jrvmovil.id}`);
-                    Swal.fire("¡Eliminado!", "", "success");
-                    dispatch(onDeleteJrvmovil(jrvmovil));
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: error.response.data.msg
-                            ? error.response.data.msg
-                            : error.response.data.msg
-                            ? error.response.data.errores
-                            : Object.values(error.response.data.errores),
-                        confirmButtonColor: "#c81d11",
-                    });
-                }
-            }
-        });
+        try {
+            const { data } = await eleccionApi.delete(
+                `/jrvmovil/delete/${jrvmovil.id}`
+            );
+            dispatch(onDeleteJrvmovil());
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
     };
 
     const startExportCredenciales = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/cards/jrvmoviles",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
-        } catch (error) {
-            console.log(error)
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
             });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -156,25 +114,14 @@ export const useJrvmovilStore = () => {
                     },
                 }
             );
-            Swal.fire({
-                icon: "info",
-                text: data.msg,
-                confirmButtonColor: "#c81d11",
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadJrvmoviles();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -190,18 +137,8 @@ export const useJrvmovilStore = () => {
             );
             window.open(url, "_blank");
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -215,10 +152,11 @@ export const useJrvmovilStore = () => {
 
     const startClearJrvmoviles = () => {
         dispatch(onClearJrvmovil());
-    }
+    };
 
     return {
         isLoading,
+        isExport,
         jrvmoviles,
         activateJrvmovil,
         errores,
@@ -231,6 +169,6 @@ export const useJrvmovilStore = () => {
         exportExcelJrvmoviles,
         setActivateJrvmovil,
         setClearActivateJrvmovil,
-        startClearJrvmoviles
+        startClearJrvmoviles,
     };
 };

@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onAddUsuario,
+    //onAddUsuario,
     onClearUsuarios,
     onDeleteUsuario,
+    onLoadErrores,
     onLoading,
+    onLoadMessage,
     onSetActivateUsuario,
-    onUpdateUsuario,
+    //onUpdateUsuario,
     onUsuarios,
 } from "../../store/app/usuario/usuarioSlice";
-import Swal from "sweetalert2";
+import { useErrorException } from "../../hooks";
 import eleccionApi from "../../api/eleccionApi";
 
 export const useUsuarioStore = () => {
@@ -16,25 +18,19 @@ export const useUsuarioStore = () => {
         (state) => state.usuario
     );
 
+    const { ExceptionMessageError } = useErrorException(onLoadErrores);
+
     const dispatch = useDispatch();
 
     const startLoadUsuarios = async () => {
-        dispatch(onLoading());
+        dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.get("/usuarios/listar");
             const { usuarios } = data;
             dispatch(onUsuarios(usuarios));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -45,37 +41,23 @@ export const useUsuarioStore = () => {
                     `/usuario/update/${usuario.id}`,
                     usuario
                 );
-                dispatch(onUpdateUsuario({ ...usuario }));
-                Swal.fire({
-                    icon: "success",
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
+                dispatch(onLoadMessage(data));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
                 startLoadUsuarios();
                 return;
             }
 
             const { data } = await eleccionApi.post("/usuario/create", usuario);
-            dispatch(onAddUsuario({ ...usuario }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadUsuarios();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -85,25 +67,14 @@ export const useUsuarioStore = () => {
                 `/usuario/update/activo/${usuario.id}`,
                 usuario
             );
-            dispatch(onUpdateUsuario({ ...usuario }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadUsuarios();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -112,70 +83,35 @@ export const useUsuarioStore = () => {
     };
 
     const startDeleteUsuario = async (usuario) => {
-        Swal.fire({
-            icon: "info",
-            text: `Estas seguro de eliminar ${usuario.nombres_completos}?`,
-            showDenyButton: true,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await eleccionApi.delete(`/usuario/delete/${usuario.id}`);
-                    Swal.fire("¡Eliminado!", "", "success");
-                    dispatch(onDeleteUsuario(usuario));
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: error.response.data.msg
-                            ? error.response.data.msg
-                            : error.response.data.msg
-                            ? error.response.data.errores
-                            : Object.values(error.response.data.errores),
-                        confirmButtonColor: "#c81d11",
-                    });
-                }
-            }
-        });
+        try {
+            const { data } = await eleccionApi.delete(
+                `/usuario/delete/${usuario.id}`
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            dispatch(onDeleteUsuario());
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
     };
 
     const startUpdatePassword = async (usuario, password) => {
-        Swal.fire({
-            icon: "warning",
-            title: `¿Estas seguro de cambiar la contraseña?`,
-            showDenyButton: true,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    const { data } = await eleccionApi.put(
-                        `/usuario/update/password/${usuario.id}`,
-                        { password }
-                    );
-                    Swal.fire({
-                        icon: "success",
-                        title: data.msg,
-                        showConfirmButton: false,
-                        timer: 1000,
-                    });
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: error.response.data.msg
-                            ? error.response.data.msg
-                            : error.response.data.msg
-                            ? error.response.data.errores
-                            : Object.values(error.response.data.errores),
-                        confirmButtonColor: "#c81d11",
-                    });
-                }
-            }
-        });
+        try {
+            const { data } = await eleccionApi.put(
+                `/usuario/update/password/${usuario.id}`,
+                { password }
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
     };
 
     const startClearUsuarios = () => {

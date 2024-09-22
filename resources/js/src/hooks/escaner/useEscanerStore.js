@@ -1,19 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onAddEscaneador,
+    //onAddEscaneador,
     onClearEscaneador,
     onDeleteEscaneador,
     onEscaneadores,
+    onExport,
+    onLoadErrores,
     onLoading,
+    onLoadMessage,
     onSetActivateEscaneador,
-    onUpdateEscaneador,
+    //onUpdateEscaneador,
 } from "../../store/app/escaneador/escaneadorSlice";
-import Swal from "sweetalert2";
 import eleccionApi from "../../api/eleccionApi";
+import { useErrorException } from "../../hooks";
 
 export const useEscanerStore = () => {
-    const { isLoading, escaneadores, activateEscaneador, errores } =
-        useSelector((state) => state.escaner);
+    const {
+        isLoading,
+        isExport,
+        escaneadores,
+        activateEscaneador,
+        message,
+        errores,
+    } = useSelector((state) => state.escaner);
+
+    const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
 
@@ -24,16 +35,8 @@ export const useEscanerStore = () => {
             const { escaneadores } = data;
             dispatch(onEscaneadores(escaneadores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -44,13 +47,10 @@ export const useEscanerStore = () => {
                     `/escaneador/update/${escaner.id}`,
                     escaner
                 );
-                dispatch(onUpdateEscaneador({ ...escaner }));
-                Swal.fire({
-                    icon: "success",
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
+                dispatch(onLoadMessage(data));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
                 startLoadEscaneres();
                 return;
             }
@@ -58,58 +58,32 @@ export const useEscanerStore = () => {
                 "/escaneador/create",
                 escaner
             );
-            dispatch(onAddEscaneador({ ...escaner }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadEscaneres();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startDeleteEscaner = async (escaner) => {
-        Swal.fire({
-            icon: "warning",
-            text: `¿Estas seguro de eliminar ${escaner.nombres_completos}?`,
-            showDenyButton: true,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await eleccionApi.delete(
-                        `/escaneador/delete/${escaner.id}`
-                    );
-                    Swal.fire("¡Eliminado!", "", "success");
-                    dispatch(onDeleteEscaneador(escaner));
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: error.response.data.msg
-                            ? error.response.data.msg
-                            : error.response.data.msg
-                            ? error.response.data.errores
-                            : Object.values(error.response.data.errores),
-                        confirmButtonColor: "#c81d11",
-                    });
-                }
-            }
-        });
+        try {
+            const { data } = await eleccionApi.delete(
+                `/escaneador/delete/${escaner.id}`
+            );
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            dispatch(onDeleteEscaneador());
+            setClearActivateEscaner();
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
     };
 
     const startSearchEscaneador = async ({ canton_id }) => {
@@ -117,80 +91,52 @@ export const useEscanerStore = () => {
             const { data } = await eleccionApi.post("/escaneadores/search", {
                 canton_id,
             });
-            if (data.status === "error") {
-                Swal.fire({
-                    icon: "error",
-                    text: "¡No hay datos en esa zona de busqueda!",
-                    showConfirmButton: false,
-                    timer: 1200,
-                });
-            } else {
-                const { escaneadores } = data;
-                dispatch(onEscaneadores(escaneadores));
-            }
+
+            const { escaneadores } = data;
+            dispatch(onEscaneadores(escaneadores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startExportTablePDF = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/table/escaneadores",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
-        } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
             });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startExportCredenciales = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/cards/escaneadores",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
-        } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
             });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -207,32 +153,23 @@ export const useEscanerStore = () => {
                     },
                 }
             );
-            Swal.fire({
-                icon: "info",
-                text: data.msg,
-                confirmButtonColor: "#c81d11",
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadEscaneres();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
-    const exportExcelEscaner = async({ canton_id }) => {
+    const exportExcelEscaner = async ({ canton_id }) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
-                "/escaneadores/export/excel", {canton_id},
+                "/escaneadores/export/excel",
+                { canton_id },
                 { responseType: "blob" }
             );
             const url = window.URL.createObjectURL(
@@ -241,21 +178,12 @@ export const useEscanerStore = () => {
                 })
             );
             window.open(url, "_blank");
+            dispatch(onExport(false));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.errores
-                    ? Object.values(error.response.data.errores)
-                    : error.message
-                    ? error.message
-                    : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
-    }
+    };
 
     const startClearEscaneadores = () => {
         dispatch(onClearEscaneador());
@@ -271,8 +199,10 @@ export const useEscanerStore = () => {
 
     return {
         isLoading,
+        isExport,
         escaneadores,
         activateEscaneador,
+        message,
         errores,
 
         startLoadEscaneres,
@@ -285,6 +215,6 @@ export const useEscanerStore = () => {
         startClearEscaneadores,
         setActivateEscaner,
         setClearActivateEscaner,
-        exportExcelEscaner
+        exportExcelEscaner,
     };
 };

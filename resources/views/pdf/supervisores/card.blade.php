@@ -10,10 +10,19 @@
     {{-- <link href="{{ public_path('/bootstrap/css/bootstrap.css') }}" rel="stylesheet" type="text/css"> --}}
 
     <style>
+        body {
+            font-family: 'poppins', sans-serif;
+        }
+
         .fondo {
             background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2023/08/FFF-02.jpg');
             background-repeat: no-repeat;
             background-size: 320px 400px;
+        }
+
+        p, small {
+            margin: 0;
+            padding: 0;
         }
     </style>
 
@@ -64,11 +73,11 @@
                                     <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRE
                                         DE LA ORGANIZACION POLITICA O ALIANZA</small>
 
-                                    <p class="form-control" style="width: 80%; font-size: 7px;">
+                                    <p class="form-control mb-0" style="width: 80%; font-size: 7px;">
                                         {{ $item->nombres_completos }}</p>
                                     <small class="form-text text-muted text-center mt-1" style="font-size: 7px">NOMBRES
                                         APELLIDOS</small>
-                                    <input type="text" class="form-control" style="width: 80%; font-size: 7px;"
+                                    <input type="text" class="form-control mb-0" style="width: 80%; font-size: 7px;"
                                         aria-describedby="dni" value={{ $item->dni }}>
                                     <small id="dni" class="form-text text-muted text-center mt-1"
                                         style="font-size: 7px">CEDULA CIUDADANIA N°</small>

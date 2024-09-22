@@ -1,17 +1,69 @@
+import { useEffect } from "react";
 import { Card } from "@mantine/core";
-import { EscSearchForm, SectionExport, TableEscaneadores } from "../../components";
+import {
+    EscSearchForm,
+    SectionExport,
+    TableEscaneadores,
+} from "../../components";
 import { useForm } from "@mantine/form";
 import { useEscanerStore } from "../../hooks";
+import Swal from "sweetalert2";
 
 export const SearchEscanerPage = () => {
-
-    const { startExportTablePDF, startExportCredenciales, exportExcelEscaner } = useEscanerStore();
+    const {
+        startExportTablePDF,
+        startExportCredenciales,
+        exportExcelEscaner,
+        isExport,
+        message,
+        errores,
+    } = useEscanerStore();
 
     const form = useForm({
         initialValues: {
             canton_id: 0,
         },
     });
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
 
     const handleExportPDF = (e) => {
         e.preventDefault();

@@ -6,9 +6,17 @@ import {
     TableSupervisores,
 } from "../../components";
 import { useSupervisorStore } from "../../hooks";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const SearchSuperPage = () => {
-    const { startExportTablePDF, startExportCrendenciales } = useSupervisorStore();
+    const {
+        startExportTablePDF,
+        startExportCrendenciales,
+        isExport,
+        message,
+        errores,
+    } = useSupervisorStore();
 
     const form = useForm({
         initialValues: {
@@ -16,6 +24,46 @@ export const SearchSuperPage = () => {
             parroquia_id: 0,
         },
     });
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+    }, [errores]);
 
     const handleExportPDF = (e) => {
         e.preventDefault();
@@ -29,7 +77,7 @@ export const SearchSuperPage = () => {
 
     const handleExportExcel = (e) => {
         e.preventDefault();
-        console.log('clic');
+        console.log("clic");
     };
 
     return (

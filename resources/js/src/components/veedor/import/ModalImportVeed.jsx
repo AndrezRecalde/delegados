@@ -27,7 +27,7 @@ export const ModalImportVeed = () => {
         <Modal
             opened={isOpenModalFileVeedor}
             onClose={handleCloseModalImport}
-            title={<TitlePage title="Importar Delegados" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Importar Delegados</TitlePage>}
             centered
             overlayProps={{
                 color:

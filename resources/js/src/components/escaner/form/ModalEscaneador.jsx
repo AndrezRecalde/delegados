@@ -15,29 +15,36 @@ export const ModalEscaneador = () => {
             telefono: "",
             canton_id: "",
             parroquia_id: "",
-            recinto_id: ""
+            recinto_id: "",
         },
         validate: {
-            nombres_completos: isNotEmpty("Por favor ingrese apellidos y nombres"),
+            nombres_completos: isNotEmpty(
+                "Por favor ingrese apellidos y nombres"
+            ),
             dni: isNotEmpty("Por favor ingrese número de cédula"),
             telefono: isNotEmpty("Por favor ingrese número telefónico"),
             canton_id: isNotEmpty("Por favor ingrese el cantón de asignación"),
             parroquia_id: isNotEmpty("Por favor ingrese la parroquia"),
-            recinto_id: isNotEmpty("Por favor ingrese el recinto")
-        }
+            recinto_id: isNotEmpty("Por favor ingrese el recinto"),
+        },
     });
 
     const handleCloseModalEscaner = () => {
         form.reset();
         setClearActivateEscaner();
         modalActionEscaner(0);
-    }
+    };
 
     return (
         <Modal
+            centered
             opened={isOpenModalEscaneador}
             onClose={handleCloseModalEscaner}
-            title={<TitlePage title="Escaneador" fz={14} fw={700} />}
+            title={
+                <TitlePage ta="left" order={3}>
+                    Escaneador
+                </TitlePage>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

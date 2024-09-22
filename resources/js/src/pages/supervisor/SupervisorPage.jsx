@@ -1,57 +1,66 @@
-import { Card } from "@mantine/core";
 import {
     InfoHeader,
     ModalImportSuperv,
     ModalSupervisor,
-    SectionImport,
     TableSupervisores,
     TitlePage,
 } from "../../components";
-import { useSupervisorStore, useUiSupervisor } from "../../hooks";
+import { useSupervisorStore } from "../../hooks";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const SupervisorPage = () => {
-    const { supervisores, startLoadSupervisores, startClearSupervisores } =
-        useSupervisorStore();
-    const { modalActionImportSuper } = useUiSupervisor();
+    const {
+        supervisores,
+        startLoadSupervisores,
+        startClearSupervisores,
+        message,
+        errores,
+    } = useSupervisorStore();
 
     useEffect(() => {
-        startLoadSupervisores();
+        startLoadSupervisores({});
 
         return () => {
             startClearSupervisores();
         };
     }, []);
 
-    const handleImportSuperv = (e) => {
-        e.preventDefault();
-        modalActionImportSuper(1);
-    };
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
 
     return (
         <>
-            <TitlePage title="Supervisores" color="dark" fz={18} fw={700} />
+            <TitlePage ta="left" order={3}>
+                Lista Supervisores
+            </TitlePage>
             <InfoHeader
                 texto={`Existen ${supervisores.length} supervisores a nivel de la provincia de Esmeraldas.`}
             />
-            <Card
-                withBorder
-                radius="md"
-                mt="lg"
-                mb="lg"
-                shadow="sm"
-                sx={{ position: "static" }}
-            >
-                <Card.Section withBorder inheritPadding py="lg">
-                    <SectionImport
-                        title="Lista de Supervisores"
-                        handleOpen={handleImportSuperv}
-                    />
-                </Card.Section>
-                <Card.Section>
-                    <TableSupervisores />
-                </Card.Section>
-            </Card>
+
+            <TableSupervisores />
             <ModalSupervisor />
             <ModalImportSuperv />
         </>

@@ -27,7 +27,7 @@ export const ModalImportEscaneador = () => {
         <Modal
             opened={isOpenModalImportEscaner}
             onClose={handleCloseModalImport}
-            title={<TitlePage title="Importar Escaneadores" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Importar Escaneadores</TitlePage>}
             centered
             overlayProps={{
                 color:

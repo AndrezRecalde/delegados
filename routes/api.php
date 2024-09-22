@@ -78,7 +78,7 @@ Route::group(
 
 
         /* Supervisores */
-        Route::get('/supervisores/listar', [SupervisorController::class, 'getSupervisores']);
+        Route::post('/supervisores/listar', [SupervisorController::class, 'getSupervisores']);
         Route::post('/supervisor/create',  [SupervisorController::class, 'store']);
         Route::put('/supervisor/update/{id}',   [SupervisorController::class, 'update']);
         Route::delete('/supervisor/delete/{id}', [SupervisorController::class, 'destroy']);

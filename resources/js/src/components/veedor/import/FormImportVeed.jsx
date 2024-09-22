@@ -1,4 +1,4 @@
-import { Box, Center, FileInput, Flex, Grid, Group, ThemeIcon, rem } from "@mantine/core";
+import { Box, Center, FileInput, Flex, Group, Stack, ThemeIcon, rem } from "@mantine/core";
 import { IconCsv, IconDatabaseImport, IconFileImport } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
 import { useUiVeedor, useVeedorStore } from "../../../hooks";
@@ -65,8 +65,7 @@ export const FormImportVeed = ({ form }) => {
             })}
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <Grid>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+            <Stack>
                     <Flex
                         mih={50}
                         gap="md"
@@ -84,8 +83,6 @@ export const FormImportVeed = ({ form }) => {
                             <IconFileImport size={30} />
                         </ThemeIcon>
                     </Flex>
-                </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <FileInput
                         mt="md"
                         label="Importar archivo"
@@ -96,9 +93,8 @@ export const FormImportVeed = ({ form }) => {
                         valueComponent={ValueComponent}
                         {...form.getInputProps("veedores_import")}
                     />
-                </Grid.Col>
-            </Grid>
-            <BtnSubmit icon={IconDatabaseImport} texto="Importar datos" />
+            </Stack>
+            <BtnSubmit IconSection={IconDatabaseImport}>Importar datos</BtnSubmit>
         </Box>
     );
 };

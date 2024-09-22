@@ -5,6 +5,8 @@ import { BtnAdd } from "./elements/BtnAdd";
 import { BtnSubmit } from "./elements/BtnSubmit";
 import { SectionExport } from "./elements/export/SectionExport";
 import { SectionImport } from "./elements/card/SectionImport";
+import { AlertSection } from "./elements/alert/AlertSection";
+import { Logo } from "./elements/Logo";
 
 import { AuthForm } from "./auth/AuthForm";
 
@@ -76,6 +78,8 @@ export {
     BtnSubmit,
     SectionExport,
     SectionImport,
+    AlertSection,
+    Logo,
     AuthForm,
     TableSupervisores,
     ModalSupervisor,

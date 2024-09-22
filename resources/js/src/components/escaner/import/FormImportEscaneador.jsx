@@ -1,10 +1,22 @@
-import { Box, Center, FileInput, Flex, Grid, Group, ThemeIcon, rem } from "@mantine/core";
-import { IconCsv, IconDatabaseImport, IconFileImport } from "@tabler/icons-react";
+import {
+    Box,
+    Center,
+    FileInput,
+    Flex,
+    Group,
+    Stack,
+    ThemeIcon,
+    rem,
+} from "@mantine/core";
+import {
+    IconCsv,
+    IconDatabaseImport,
+    IconFileImport,
+} from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
 import { useEscanerStore, useUiEscaner } from "../../../hooks";
 
 export const FormImportEscaneador = ({ form }) => {
-
     const { startImportEscaneadores } = useEscanerStore();
     const { modalActionEscaner } = useUiEscaner();
 
@@ -14,7 +26,6 @@ export const FormImportEscaneador = ({ form }) => {
         form.reset();
         modalActionEscaner(0);
     };
-
 
     function Value({ file }) {
         return (
@@ -69,40 +80,36 @@ export const FormImportEscaneador = ({ form }) => {
             })}
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <Grid>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
-                    <Flex
-                        mih={50}
-                        gap="md"
-                        justify="center"
-                        align="center"
-                        direction="column"
-                        wrap="wrap"
+            <Stack>
+                <Flex
+                    mih={50}
+                    gap="md"
+                    justify="center"
+                    align="center"
+                    direction="column"
+                    wrap="wrap"
+                >
+                    <ThemeIcon
+                        variant="light"
+                        radius="xl"
+                        size="lg"
+                        color="teal.7"
                     >
-                        <ThemeIcon
-                            variant="light"
-                            radius="xl"
-                            size="lg"
-                            color="teal.7"
-                        >
-                            <IconFileImport size={30} />
-                        </ThemeIcon>
-                    </Flex>
-                </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
-                    <FileInput
-                        mt="md"
-                        label="Importar archivo"
-                        description="Importar archivos de formato CSV"
-                        placeholder="Importar archivo"
-                        withAsterisk
-                        accept="text/csv"
-                        valueComponent={ValueComponent}
-                        {...form.getInputProps("escaneadores_import")}
-                    />
-                </Grid.Col>
-            </Grid>
-            <BtnSubmit icon={IconDatabaseImport} texto="Importar datos" />
+                        <IconFileImport size={30} />
+                    </ThemeIcon>
+                </Flex>
+                <FileInput
+                    mt="md"
+                    label="Importar archivo"
+                    description="Importar archivos de formato CSV"
+                    placeholder="Importar archivo"
+                    withAsterisk
+                    accept="text/csv"
+                    valueComponent={ValueComponent}
+                    {...form.getInputProps("escaneadores_import")}
+                />
+                <BtnSubmit IconSection={IconDatabaseImport}>Importar datos</BtnSubmit>
+            </Stack>
         </Box>
     );
 };

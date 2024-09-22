@@ -29,9 +29,14 @@ export const ModalJrvmovil = () => {
 
     return (
         <Modal
+            centered
             opened={isOpenModalJrvmovil}
             onClose={handleCloseModalJrvmovil}
-            title={<TitlePage title="JRV Móvil" fz={14} fw={700} />}
+            title={
+                <TitlePage ta="left" order={3}>
+                    JRV Móvil
+                </TitlePage>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

@@ -1,6 +1,11 @@
 import { Box, Grid, MultiSelect, Select, TextInput } from "@mantine/core";
 import { BtnSubmit } from "../../elements/BtnSubmit";
-import { useCoordinadorStore, useStateStore, useSupervisorStore, useUiCoordinador } from "../../../hooks";
+import {
+    useCoordinadorStore,
+    useStateStore,
+    useSupervisorStore,
+    useUiCoordinador,
+} from "../../../hooks";
 import { useEffect } from "react";
 import { IconChecks } from "@tabler/icons-react";
 
@@ -8,7 +13,7 @@ export const FormCoordinador = ({ form }) => {
     const { canton_id, parroquia_id } = form.values;
     const { startAddCoordinador, activateCoordinador } = useCoordinadorStore();
     const { modalActionCoordinador } = useUiCoordinador();
-    const { supervisores, startLoadSupervisoresForCanton } = useSupervisorStore();
+    const { supervisores, startLoadSupervisores } = useSupervisorStore();
     const {
         cantones,
         parroquias,
@@ -23,10 +28,8 @@ export const FormCoordinador = ({ form }) => {
     }, []);
 
     useEffect(() => {
-        startLoadSupervisoresForCanton(canton_id);
-
+        startLoadSupervisores({ canton_id });
     }, [canton_id]);
-
 
     useEffect(() => {
         if (activateCoordinador !== null) {
@@ -44,7 +47,10 @@ export const FormCoordinador = ({ form }) => {
         startLoadParroquias(canton_id);
         form.setFieldValue(
             "parroquia_id",
-            activateCoordinador?.parroquia_id ?? activateCoordinador?.parroquias?.map(parroquias => parroquias.id)
+            activateCoordinador?.parroquia_id ??
+                activateCoordinador?.parroquias?.map(
+                    (parroquias) => parroquias.id
+                )
         );
     }, [canton_id]);
 
@@ -52,10 +58,10 @@ export const FormCoordinador = ({ form }) => {
         startLoadRecintos(parroquia_id);
         form.setFieldValue(
             "recinto_id",
-            activateCoordinador?.recinto_id ?? activateCoordinador?.recintos?.map(recinto => recinto.id)
+            activateCoordinador?.recinto_id ??
+                activateCoordinador?.recintos?.map((recinto) => recinto.id)
         );
     }, [parroquia_id]);
-
 
     const handleSubmit = () => {
         startAddCoordinador(form.values);
@@ -73,7 +79,7 @@ export const FormCoordinador = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Grid>
-            <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <Select
                         label="Seleccione el cantón"
                         placeholder="Cantón"
@@ -107,13 +113,21 @@ export const FormCoordinador = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <TextInput
+                        placeholder="Número de cédula"
+                        label="Cédula"
+                        withAsterisk
+                        {...form.getInputProps("dni")}
+                    />
+                </Grid.Col>
+                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                    <TextInput
                         placeholder="Apellidos y nombres del coordinador"
                         label="Apellidos y Nombres"
                         withAsterisk
                         {...form.getInputProps("nombres_completos")}
                     />
                 </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                <Grid.Col sm={12} md={12} lg={6} xl={6}>
                     <TextInput
                         placeholder="Correo electrónico (opcional)"
                         label="Correo electrónico"
@@ -122,17 +136,8 @@ export const FormCoordinador = ({ form }) => {
                 </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={6} xl={6}>
                     <TextInput
-                        placeholder="Número de cédula"
-                        label="Cédula"
-                        withAsterisk
-                        {...form.getInputProps("dni")}
-                    />
-                </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={6} xl={6}>
-                    <TextInput
-                        placeholder="Número de teléfono"
+                        placeholder="Número de teléfono (opcional)"
                         label="Teléfono"
-                        withAsterisk
                         {...form.getInputProps("telefono")}
                     />
                 </Grid.Col>
@@ -170,7 +175,7 @@ export const FormCoordinador = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit icon={IconChecks} texto="Agregar Coordinador" />
+            <BtnSubmit IconSection={IconChecks}>Guardar</BtnSubmit>
         </Box>
     );
 };

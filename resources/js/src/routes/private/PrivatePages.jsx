@@ -21,7 +21,7 @@ import { Container } from "@mantine/core";
 export const PrivatePages = () => {
     return (
         <HomePage>
-            <Container size="xl">
+            <Container size="xxl">
                 <Routes>
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route path="/dashboard/summary" element={<SummaryPage />} />

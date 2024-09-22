@@ -4,19 +4,23 @@ export const jrvmovilSlice = createSlice({
     name: "jrvmovil",
     initialState: {
         isLoading: false,
+        isExport: false,
         jrvmoviles: [],
         activateJrvmovil: null,
+        message: undefined,
         errores: undefined,
     },
     reducers: {
-        onLoading: (state) => {
-            state.isLoading = true;
-            state.errores = undefined;
+        onLoading: (state, { payload }) => {
+            state.isLoading = payload;
+        },
+        onExport: (state, { payload }) => {
+            state.isExport = payload;
         },
         onJrvmoviles: (state, { payload }) => {
             state.jrvmoviles = payload;
             state.errores = undefined;
-            state.isLoading;
+            state.isLoading = false;
         },
         onAddJrvmovil: (state, { payload }) => {
             state.jrvmoviles.push(payload);
@@ -47,23 +51,31 @@ export const jrvmovilSlice = createSlice({
             state.errores = undefined;
             state.isLoading = false;
         },
+        onLoadMessage: (state, { payload }) => {
+            state.message = payload;
+        },
+        onLoadErrores: (state, { payload }) => {
+            state.errores = payload;
+        },
         onClearJrvmovil: (state) => {
             state.jrvmoviles = [];
+            state.activateJrvmovil = null;
+            state.isLoading = false;
+            state.isExport = false;
             state.errores = undefined;
-        },
-        onErrores: (state, { payload }) => {
-            state.errores = payload;
         },
     },
 });
 
 export const {
     onLoading,
+    onExport,
     onJrvmoviles,
     onAddJrvmovil,
     onUpdateJrvmovil,
     onDeleteJrvmovil,
     onSetActivateJrvmovil,
     onClearJrvmovil,
-    onErrores,
+    onLoadMessage,
+    onLoadErrores,
 } = jrvmovilSlice.actions;

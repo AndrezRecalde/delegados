@@ -52,11 +52,12 @@ export function User() {
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
     const { user, startLogout } = useAuthStore();
+    let usuario = JSON.parse(localStorage.getItem("service_user"));
 
     const navigate = useNavigate();
 
     const iniciales = () => {
-        let n = user.nombres_completos.slice(0, 1);
+        let n = usuario?.nombres_completos.slice(0, 1);
         return n;
     };
 

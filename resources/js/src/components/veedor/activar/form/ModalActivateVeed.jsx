@@ -18,7 +18,7 @@ export const ModalActivateVeed = () => {
         <Modal
             opened={isOpenActiveVeedor}
             onClose={handleCloseModal}
-            title={<TitlePage title="Confirmar Delegado" fw={700} />}
+            title={<TitlePage ta="left" order={3}>Confirmar Delegado</TitlePage>}
             centered
             overlayProps={{
                 color:

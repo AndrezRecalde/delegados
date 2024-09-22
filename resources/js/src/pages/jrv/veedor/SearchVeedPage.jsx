@@ -6,13 +6,17 @@ import {
     VeedSearchForm,
 } from "../../../components";
 import { useVeedorStore } from "../../../hooks";
-
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const SearchVeedPage = () => {
     const {
         startExportTablePDF,
         startExportCredenciales,
         exportExcelVeedores,
+        isExport,
+        message,
+        errores,
     } = useVeedorStore();
 
     const form = useForm({
@@ -24,6 +28,46 @@ export const SearchVeedPage = () => {
             supervisor_id: 0,
         },
     });
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
 
     const handleExportPDF = (e) => {
         e.preventDefault();

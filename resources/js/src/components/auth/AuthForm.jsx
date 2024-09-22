@@ -1,111 +1,95 @@
 import { useEffect } from "react";
-import { isNotEmpty, useForm } from "@mantine/form";
+import { useForm } from "@mantine/form";
 import {
-  Box,
-  Button,
-  Card,
-  Checkbox,
-  Grid,
-  Group,
-  Image,
-  PasswordInput,
-  TextInput,
+    Box,
+    Button,
+    Checkbox,
+    Group,
+    LoadingOverlay,
+    PasswordInput,
+    Stack,
+    TextInput,
 } from "@mantine/core";
 import { useAuthStore } from "../../hooks";
-import { TitlePage } from "../../components";
-import Swal from "sweetalert2";
-import logo from "../../assets/images/7533464_2.png";
-import { IconKey } from "@tabler/icons-react";
+import { AlertSection, BtnSubmit } from "../../components";
+import {
+    IconChevronsRight,
+    IconInfoCircle,
+    IconKey,
+} from "@tabler/icons-react";
 
 export const AuthForm = () => {
-  const { startLogin, errores } = useAuthStore();
+    const { isLoading, validate, startLogin, errores } = useAuthStore();
 
-  const form = useForm({
-    initialValues: {
-      dni: "",
-      password: "",
-    },
-    validate: {
-      dni: isNotEmpty("Por favor ingrese su número de cedula"),
-      password: isNotEmpty("Por favor ingrese su contraseña"),
-    },
-  });
+    const form = useForm({
+        initialValues: {
+            dni: "",
+            password: "",
+            remember: true,
+        },
+    });
 
-  const { dni, password } = form.values;
+    useEffect(() => {
+        if (validate !== undefined) {
+            form.setErrors(validate);
+            return;
+        }
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    startLogin({ dni, password });
-  };
+        return () => {
+            form.clearErrors();
+        };
+    }, [validate]);
 
-  useEffect(() => {
-    if (errores !== undefined) {
-      Swal.fire("Error", errores, "error");
-    }
-  }, [errores]);
+    const handleLogin = (e) => {
+        e.preventDefault();
+        startLogin(form.values);
+    };
 
-  return (
-    <Box
-      component="form"
-      mx="auto"
-      onSubmit={form.onSubmit((_, e) => handleLogin(e))}
-    >
-      <Grid justify="center">
-        <Grid.Col sm={7} md={7} lg={7} xl={7}>
-          <Card
-            withBorder
-            shadow="lg"
-            p="lg"
-            radius="md"
-            sx={{ position: "static" }}
-            mt={100}
-          >
-            <Card.Section withBorder inheritPadding py="xs">
-              <Group position="apart">
-                <TitlePage fw={700} title="Sistema de Delegación del Voto" />
-              </Group>
-            </Card.Section>
-            <Card.Section inheritPadding mt="xl" pb="lg">
-              <Image
-                maw={220}
-                mx="auto"
-                mt="md"
-                mb="md"
-                radius="xs"
-                src={logo}
-                alt="logo"
-              />
-              <TextInput
-                label="Número de cedula"
-                placeholder="ejemp: 0800223344"
-                withAsterisk
-                {...form.getInputProps("dni")}
-              />
-              <PasswordInput
-                label="Contraseña"
-                placeholder="Tu contraseña"
-                mt="md"
-                withAsterisk
-                {...form.getInputProps("password")}
-              />
-              <Checkbox label="Mantenme conectado" mt="xl" color="indigo.7" />
-            </Card.Section>
-            <Card.Section inheritPadding mt="md" pb="md">
-              <Group position="center">
-                <Button
-                  leftIcon={<IconKey size="1.1rem" />}
-                  radius="md"
-                  variant="filled"
-                  color="indigo.7"
-                  type="submit"
+    return (
+        <Box
+            pos="relative"
+            component="form"
+            onSubmit={form.onSubmit((_, e) => handleLogin(e))}
+        >
+            <LoadingOverlay zIndex={1000} visible={isLoading} />
+            <Stack>
+                <TextInput
+                    withAsterisk
+                    label="Número de cedula"
+                    placeholder="ejemp: 0800223344"
+                    {...form.getInputProps("dni")}
+                />
+                <PasswordInput
+                    withAsterisk
+                    label="Contraseña"
+                    placeholder="Tu contraseña"
+                    {...form.getInputProps("password")}
+                />
+                <Checkbox
+                    label="Mantenme conectado"
+                    color="indigo.7"
+                    {...form.getInputProps("remember", {
+                        type: "checkbox",
+                    })}
+                />
+                {errores ? (
+                    <AlertSection
+                        variant="light"
+                        color="red.8"
+                        icon={IconInfoCircle}
+                        title="Error"
+                    >
+                        {errores}
+                    </AlertSection>
+                ) : null}
+                <BtnSubmit
+                    IconSection={IconChevronsRight}
+                    loading={isLoading}
+                    disabled={isLoading}
                 >
-                  Autenticarse
-                </Button>
-              </Group>
-            </Card.Section>
-          </Card>
-        </Grid.Col>
-      </Grid>
-    </Box>
-  );
+                    Autenticarse
+                </BtnSubmit>
+            </Stack>
+        </Box>
+    );
 };

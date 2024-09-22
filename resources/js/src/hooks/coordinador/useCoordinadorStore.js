@@ -1,44 +1,41 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onAddCoordinador,
+    //onAddCoordinador,
     onClearCoordinadores,
     onCoordinadores,
     onDeleteCoordinador,
+    onExport,
+    onLoadErrores,
     onLoading,
+    onLoadMessage,
     onSetActivateCoordinador,
-    onUpdateCoordinador,
+    //onUpdateCoordinador,
 } from "../../store/app/coordinador/coordinadorSlice";
-import Swal from "sweetalert2";
+import { useErrorException } from "../../hooks";
 import eleccionApi from "../../api/eleccionApi";
 
 export const useCoordinadorStore = () => {
-    const { isLoading, coordinadores, activateCoordinador, errores } =
+    const { isLoading, isExport, coordinadores, activateCoordinador, message, errores } =
         useSelector((state) => state.coordinador);
+
+    const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
 
     const startLoadCoordinadores = async () => {
-        dispatch(onLoading());
+        dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.get("/coordinadores/listar");
             const { coordinadores } = data;
             dispatch(onCoordinadores(coordinadores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startLoadCoordsForCanton = async (canton_id) => {
-        dispatch(onLoading());
+        dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.post("/coordinadores/canton", {
                 canton_id,
@@ -46,16 +43,8 @@ export const useCoordinadorStore = () => {
             const { coordinadores } = data;
             dispatch(onCoordinadores(coordinadores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -66,13 +55,10 @@ export const useCoordinadorStore = () => {
                     `/coordinador/update/${coordinador.id}`,
                     coordinador
                 );
-                dispatch(onUpdateCoordinador({ ...coordinador }));
-                Swal.fire({
-                    icon: "success",
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
+                dispatch(onLoadMessage(data));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
                 startLoadCoordinadores();
                 return;
             }
@@ -80,60 +66,32 @@ export const useCoordinadorStore = () => {
                 "/coordinador/create",
                 coordinador
             );
-            dispatch(onAddCoordinador({ ...coordinador }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadCoordinadores();
         } catch (error) {
             console.log(error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            ExceptionMessageError(error);
         }
     };
 
     const startDeleteCoordinador = async (coordinador) => {
-        Swal.fire({
-            icon: "warning",
-            text: `¿Estas seguro de eliminar ${coordinador.nombres_completos}?`,
-            showDenyButton: true,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await eleccionApi.delete(
-                        `/coordinador/delete/${coordinador.id}`
-                    );
-                    Swal.fire("¡Eliminado!", "", "success");
-                    dispatch(onDeleteCoordinador(coordinador));
-                    setClearActivateCoordinador();
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: error.response.data.msg
-                            ? error.response.data.msg
-                            : error.response.data.msg
-                            ? error.response.data.errores
-                            : Object.values(error.response.data.errores),
-                        confirmButtonColor: "#c81d11",
-                    });
-                }
-            }
-        });
+        try {
+            const { data } = await eleccionApi.delete(
+                `/coordinador/delete/${coordinador.id}`
+            );
+            dispatch(onDeleteCoordinador(coordinador));
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            setClearActivateCoordinador();
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
     };
 
     const startSearchCoordinador = async ({
@@ -143,84 +101,58 @@ export const useCoordinadorStore = () => {
         supervisor_id,
     }) => {
         try {
+            dispatch(onLoading(true));
             const { data } = await eleccionApi.post("/coordinadores/search", {
                 canton_id,
                 parroquia_id,
                 recinto_id,
                 supervisor_id,
             });
-            if (data.status === "error") {
-                Swal.fire({
-                    icon: "error",
-                    text: "¡No hay datos en esa zona de busqueda!",
-                    showConfirmButton: false,
-                    timer: 1200,
-                });
-            } else {
-                const { coordinadores } = data;
-                dispatch(onCoordinadores(coordinadores));
-            }
+            const { coordinadores } = data;
+            dispatch(onCoordinadores(coordinadores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startExportTablePDF = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/table/coordinadores",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
-        } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
             });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startExportCredenciales = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/cards/coordinadores",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
-        } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
             });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -235,30 +167,23 @@ export const useCoordinadorStore = () => {
                     },
                 }
             );
-            Swal.fire({
-                icon: "info",
-                text: data.msg,
-                confirmButtonColor: "#c81d11",
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadCoordinadores();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const exportExcelCoordinadores = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
-                "/coordinadores/export/excel", values,
+                "/coordinadores/export/excel",
+                values,
                 { responseType: "blob" }
             );
             const url = window.URL.createObjectURL(
@@ -267,17 +192,10 @@ export const useCoordinadorStore = () => {
                 })
             );
             window.open(url, "_blank");
+            dispatch(onExport(false));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                    ? error.response.data.msg
-                    : error.response.data.msg
-                    ? error.response.data.errores
-                    : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -295,8 +213,10 @@ export const useCoordinadorStore = () => {
 
     return {
         isLoading,
+        isExport,
         coordinadores,
         activateCoordinador,
+        message,
         errores,
 
         startLoadCoordinadores,

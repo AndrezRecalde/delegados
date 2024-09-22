@@ -25,6 +25,7 @@ class VeedorController extends Controller
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
+            ->orderBy('veed.id', 'DESC')
             ->get();
 
         return response()->json(['status' => 'success', 'veedores' => $veedores], 200);
@@ -62,17 +63,16 @@ class VeedorController extends Controller
         }
     }
 
-    function updateConfirmado(VeedorUpdateConfirm $request, int $id) : JsonResponse
+    function updateConfirmado(VeedorUpdateConfirm $request, int $id): JsonResponse
     {
         $veedor = Veedor::find($id);
 
-        if($veedor) {
+        if ($veedor) {
             $veedor->update($request->validated());
             return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
         } else {
             return response()->json(['status' => 'error', 'msg' => 'No encontrado'], 404);
         }
-
     }
 
     function searchVeedores(Request $request): JsonResponse
@@ -95,6 +95,7 @@ class VeedorController extends Controller
                         c.nombre_canton as canton,
                         r.nombre_recinto as recinto,
                         veed.confirmado, veed.junta_id, j.junta_nombre as junta')
+            ->orderBy('veed.id', 'DESC')
             ->get();
 
         if (sizeof($veedores) >= 1) {
@@ -107,14 +108,13 @@ class VeedorController extends Controller
     function massiveStore(Request $request)
     {
         try {
-            if(!$request->hasFile('veedores_import')) {
+            if (!$request->hasFile('veedores_import')) {
                 return response()->json(['status' => 'error', 'msg' => 'El archivo no existe'], 500);
             }
 
             Excel::import(new VeedoresImport, $request->file('veedores_import'));
             return response()->json(['status' => 'success', 'msg' => 'Archivo subido con éxito'], 201);
-
-        } catch (\Maatwebsite\Excel\Validators $e){
+        } catch (\Maatwebsite\Excel\Validators $e) {
             $failures = $e->failures();
             foreach ($failures as $failure) {
                 $failure->row();

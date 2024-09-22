@@ -1,20 +1,23 @@
 import { useEffect } from "react";
-import { Card } from "@mantine/core";
 import {
     InfoHeader,
     ModalActivateVeed,
     ModalImportVeed,
     ModalVeedor,
-    SectionImport,
     TableVeedores,
     TitlePage,
 } from "../../../components";
-import { useUiVeedor, useVeedorStore } from "../../../hooks";
+import { useVeedorStore } from "../../../hooks";
+import Swal from "sweetalert2";
 
 export const VeedorPage = () => {
-    const { veedores, startLoadVeedores, startClearVeedores } =
-        useVeedorStore();
-    const { modalActionFileVeedor } = useUiVeedor();
+    const {
+        veedores,
+        startLoadVeedores,
+        startClearVeedores,
+        message,
+        errores,
+    } = useVeedorStore();
 
     useEffect(() => {
         startLoadVeedores();
@@ -24,35 +27,41 @@ export const VeedorPage = () => {
         };
     }, []);
 
-    const handleImportVeed = (e) => {
-        e.preventDefault();
-        modalActionFileVeedor(1);
-    };
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
 
     return (
         <>
-            <TitlePage title="Veedores" color="dark" fz={18} fw={700} />
+            <TitlePage ta="left" order={3}>
+                Delegados de la Junta
+            </TitlePage>
             <InfoHeader
                 texto={`Existen ${veedores.length} delegados registrados a nivel de la provincia de Esmeraldas.`}
             />
-            <Card
-                withBorder
-                radius="md"
-                mt="lg"
-                mb="lg"
-                shadow="sm"
-                sx={{ position: "static" }}
-            >
-                <Card.Section withBorder inheritPadding py="lg">
-                    <SectionImport
-                        title="Lista de Veedores"
-                        handleOpen={handleImportVeed}
-                    />
-                </Card.Section>
-                <Card.Section>
-                    <TableVeedores />
-                </Card.Section>
-            </Card>
+
+            <TableVeedores />
             <ModalVeedor />
             <ModalActivateVeed />
             <ModalImportVeed />

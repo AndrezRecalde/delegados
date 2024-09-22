@@ -1,17 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Text } from "@mantine/core";
+import { Title } from "@mantine/core";
 
-export const TitlePage = ({
-    color = "dimmed",
-    tt = "uppercase",
-    ta = "left",
-    fw,
-    fz = 15,
-    title,
-}) => {
+export const TitlePage = ({ order = 1, ta, children, ...props }) => {
     return (
-        <Text c={color} fz={fz} tt={tt} ta={ta} fw={fw}>
-            {title}
-        </Text>
+        <Title ta={ta} order={order} {...props}>
+            {children}
+        </Title>
     );
 };

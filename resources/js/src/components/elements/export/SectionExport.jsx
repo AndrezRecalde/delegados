@@ -5,7 +5,7 @@ import { IconCards, IconFileDownload, IconFileTypePdf } from "@tabler/icons-reac
 export const SectionExport = ({ title, handleExportCrendencial, handleExportPDF, handleExportExcel }) => {
     return (
         <Group position="apart">
-            <TitlePage title={title} fw={700} />
+            <TitlePage ta="left" order={3}>{title}</TitlePage>
             <Group>
                 <Button
                     variant="light"

@@ -28,7 +28,7 @@ export const ModalImportCoord = () => {
         <Modal
             opened={isOpenModalImportCoord}
             onClose={handleCloseModalImport}
-            title={<TitlePage title="Importar Coordinadores" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Importar Coordinadores</TitlePage>}
             centered
             overlayProps={{
                 color:

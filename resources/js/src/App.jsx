@@ -17,9 +17,9 @@ function App() {
       <MantineProvider
         theme={{
           colorScheme,
-          fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-          fontFamilyMonospace: "Monaco, Courier, monospace",
-          headings: { fontFamily: "Greycliff CF, sans-serif" },
+          fontFamily: "Poppins, Greycliff CF, sans-serif",
+          fontFamilyMonospace: "Poppins, Greycliff CF, sans-serif",
+          headings: { fontFamily: "Poppins, Greycliff CF, sans-serif" },
         }}
         withGlobalStyles
         withNormalizeCSS

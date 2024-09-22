@@ -18,9 +18,9 @@ class EscaneadorController extends Controller
         $escaneadores = Escaneador::from('escaneadores as esc')
             ->selectRaw('esc.id, esc.nombres_completos, esc.dni,
                                  esc.telefono, esc.canton_id,
-                                c.nombre_canton as canton,
-                                p.nombre_parroquia as parroquia,
-                                r.nombre_recinto as recinto')
+                                 c.nombre_canton as canton,
+                                 esc.parroquia_id, p.nombre_parroquia as parroquia,
+                                 esc.recinto_id, r.nombre_recinto as recinto')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
             ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
             ->leftJoin('recintos as r', 'r.id', 'esc.recinto_id')

@@ -56,6 +56,7 @@ const useStyles = createStyles((theme) => ({
         padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
         borderRadius: theme.radius.sm,
         fontWeight: 500,
+        cursor: "pointer",
 
         "&:hover": {
             backgroundColor:
@@ -190,13 +191,13 @@ export const NavbarSegmented = ({ opened }) => {
             </Navbar.Section>
 
             <Navbar.Section className={classes.footer}>
-                <a href="#" className={classes.link} onClick={startLogout}>
+                <a className={classes.link} onClick={startLogout}>
                     <IconLogout
                         className={classes.linkIcon}
                         stroke={1.9}
                         color="red"
                     />
-                    <TitlePage tt="capitalize" fw={500} fz={18} title="Salir" />
+                    <TitlePage ta="left" order={3}>Salir</TitlePage>
                 </a>
             </Navbar.Section>
         </Navbar>

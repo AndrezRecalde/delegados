@@ -1,10 +1,4 @@
-import {
-    Box,
-    Card,
-    Container,
-    Grid,
-    PasswordInput,
-} from "@mantine/core";
+import { Box, Card, Container, Grid, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { BtnSubmit, TitlePage } from "../../components";
@@ -56,7 +50,7 @@ export const PasswordPage = () => {
                     sx={{ position: "static" }}
                 >
                     <Card.Section withBorder inheritPadding py="lg">
-                        <TitlePage title="Cambio de contraseña" fw={700} />
+                        <TitlePage ta="left" order={5}>Cambio de contraseña</TitlePage>
                     </Card.Section>
                     <Card.Section inheritPadding py="lg">
                         <Grid justify="center">
@@ -78,11 +72,10 @@ export const PasswordPage = () => {
                             </Grid.Col>
                         </Grid>
                     </Card.Section>
-                    <Card.Section>
-                        <BtnSubmit
-                            icon={IconLockShare}
-                            texto="Cambiar Contraseña"
-                        />
+                    <Card.Section inheritPadding py="lg">
+                        <BtnSubmit IconSection={IconLockShare}>
+                            Cambiar Contraseña
+                        </BtnSubmit>
                     </Card.Section>
                 </Card>
             </Box>

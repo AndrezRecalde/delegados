@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
-import { ActionsTable, BtnAdd } from "../../../components";
+import { ActionsTable, BtnAdd, SectionImport } from "../../../components";
 import { useSupervisorStore, useUiSupervisor } from "../../../hooks";
+import { Group } from "@mantine/core";
 
 export const TableSupervisores = ({ viewBtn = 1 }) => {
     const {
@@ -11,7 +12,7 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
         setActivateSupervisor,
         setClearActivateSupervisor,
     } = useSupervisorStore();
-    const { modalActionSupervisor } = useUiSupervisor();
+    const { modalActionSupervisor, modalActionImportSuper } = useUiSupervisor();
 
     const columns = useMemo(
         () => [
@@ -34,6 +35,7 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
                 accessorKey: "canton",
                 header: "Cantón",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) =>
@@ -42,6 +44,7 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
                     ),
                 header: "Parroquia",
                 wrap: true,
+                //filterVariant: "autocomplete",
             },
         ],
         [supervisores]
@@ -69,9 +72,15 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
         modalActionSupervisor(1);
     };
 
+    const handleImportSuperv = (e) => {
+        e.preventDefault();
+        modalActionImportSuper(1);
+    };
+
     const table = useMantineReactTable({
         columns,
         data: supervisores,
+        enableFacetedValues: true,
         enableColumnOrdering: true,
         enableRowActions: true,
         positionActionsColumn: viewBtn === 1 ? "last" : null,
@@ -86,7 +95,10 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
             ) : null,
         renderTopToolbarCustomActions: () =>
             viewBtn === 1 ? (
-                <BtnAdd title="Agregar Supervisor" handleAdd={handleOpen} />
+                <Group>
+                    <BtnAdd title="Agregar Supervisor" handleAdd={handleOpen} />
+                    <SectionImport handleOpen={handleImportSuperv} />
+                </Group>
             ) : null,
     });
 

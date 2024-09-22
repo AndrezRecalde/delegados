@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     title: {
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+        fontFamily: `${theme.fontFamily}`,
         lineHeight: 1,
     },
 }));
@@ -38,7 +38,7 @@ export const StatPayrollCoords = () => {
     const { classes } = useStyles();
 
     return (
-        <Box w={600}>
+        <Box>
             <Paper
                 radius="md"
                 withBorder

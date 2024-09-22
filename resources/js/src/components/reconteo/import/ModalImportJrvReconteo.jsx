@@ -29,7 +29,7 @@ export const ModalImportJrvReconteo = () => {
         <Modal
             opened={isOpenModalImportReconteo}
             onClose={handleCloseModalImport}
-            title={<TitlePage title="Importar JRV Reconteo" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Importar JRV Reconteo</TitlePage>}
             centered
             overlayProps={{
                 color:

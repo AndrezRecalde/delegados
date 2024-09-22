@@ -1,17 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const escaneadorSlice = createSlice({
-    name: "escaneadorSlice",
+    name: "escaneador",
     initialState: {
         isLoading: false,
+        isExport: false,
         escaneadores: [],
         activateEscaneador: null,
+        message: undefined,
         errores: undefined,
     },
     reducers: {
         onLoading: (state) => {
             state.isLoading = true;
-            state.errores = undefined;
+        },
+        onExport: (state, { payload }) => {
+            state.isExport = payload;
         },
         onEscaneadores: (state, { payload }) => {
             state.escaneadores = payload;
@@ -50,9 +54,15 @@ export const escaneadorSlice = createSlice({
         },
         onClearEscaneador: (state) => {
             state.escaneadores = [];
+            state.activateEscaneador = null,
+            state.isLoading = false;
+            state.isExport = false;
             state.errores = undefined;
         },
-        onErrores: (state, { payload }) => {
+        onLoadMessage: (state, { payload }) => {
+            state.message = payload;
+        },
+        onLoadErrores: (state, { payload }) => {
             state.errores = payload;
         },
     },
@@ -60,11 +70,13 @@ export const escaneadorSlice = createSlice({
 
 export const {
     onLoading,
+    onExport,
     onEscaneadores,
     onAddEscaneador,
     onUpdateEscaneador,
     onDeleteEscaneador,
     onSetActivateEscaneador,
     onClearEscaneador,
-    onErrores,
+    onLoadMessage,
+    onLoadErrores,
 } = escaneadorSlice.actions;

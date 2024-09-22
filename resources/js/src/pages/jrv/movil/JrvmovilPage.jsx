@@ -10,6 +10,7 @@ import {
 } from "../../../components";
 import { useJrvmovilStore, useUiJrvmovil } from "../../../hooks";
 import { IconCards, IconFileDownload } from "@tabler/icons-react";
+import Swal from "sweetalert2";
 
 export const JrvmovilPage = () => {
     const {
@@ -18,6 +19,9 @@ export const JrvmovilPage = () => {
         startExportCredenciales,
         exportExcelJrvmoviles,
         startClearJrvmoviles,
+        isExport,
+        message,
+        errores
     } = useJrvmovilStore();
     const { modalActionImportJrvmovil } = useUiJrvmovil();
 
@@ -28,6 +32,46 @@ export const JrvmovilPage = () => {
             startClearJrvmoviles();
         };
     }, []);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
 
     const handleImportVeed = (e) => {
         e.preventDefault();
@@ -46,7 +90,9 @@ export const JrvmovilPage = () => {
 
     return (
         <>
-            <TitlePage title="JRV Moviles" color="dark" fz={18} fw={700} />
+            <TitlePage ta="left" order={3}>
+                JRV Móviles
+            </TitlePage>
             <InfoHeader
                 texto={`Existen ${jrvmoviles.length} delegados moviles registrados a nivel de la provincia de Esmeraldas.`}
             />
@@ -59,11 +105,11 @@ export const JrvmovilPage = () => {
                 sx={{ position: "static" }}
             >
                 <Card.Section withBorder inheritPadding py="lg">
-                    <SectionImport
-                        title="Lista de JRV Moviles"
-                        handleOpen={handleImportVeed}
-                    />
                     <Group>
+                        <SectionImport
+                            title="Lista de JRV Moviles"
+                            handleOpen={handleImportVeed}
+                        />
                         <Button
                             variant="light"
                             color="teal.7"

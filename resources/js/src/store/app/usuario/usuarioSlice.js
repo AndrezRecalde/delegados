@@ -6,12 +6,12 @@ export const usuarioSlice = createSlice({
     isLoading: false,
     usuarios: [],
     activeUsuario: null,
+    message: undefined,
     errores: undefined,
   },
   reducers: {
-    onLoading: (state) => {
-      state.isLoading = true;
-      state.errores = undefined;
+    onLoading: (state, { payload }) => {
+      state.isLoading = payload;
     },
     onUsuarios: (state, { payload }) => {
       state.usuarios = payload;
@@ -47,12 +47,16 @@ export const usuarioSlice = createSlice({
       state.errores = undefined;
       state.isLoading = false;
     },
-    onErrores: (state, { payload }) => {
+    onLoadMessage: (state, { payload }) => {
+        state.message = payload;
+    },
+    onLoadErrores: (state, { payload }) => {
       state.errores = payload;
     },
     onClearUsuarios: (state) => {
       state.usuarios = [];
       state.activeUsuario = null;
+      state.isLoading = false;
       state.errores = undefined;
     },
   },
@@ -65,6 +69,7 @@ export const {
   onUpdateUsuario,
   onDeleteUsuario,
   onSetActivateUsuario,
-  onErrores,
+  onLoadMessage,
+  onLoadErrores,
   onClearUsuarios,
 } = usuarioSlice.actions;

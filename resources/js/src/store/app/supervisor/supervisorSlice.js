@@ -4,14 +4,18 @@ export const supervisorSlice = createSlice({
   name: "supervisor",
   initialState: {
     isLoading: false,
+    isExport: false,
     supervisores: [],
     activateSupervisor: null,
+    message: undefined,
     errores: undefined,
   },
   reducers: {
-    onLoading: (state) => {
-      state.isLoading = true;
-      state.errores = undefined;
+    onLoading: (state, { payload }) => {
+      state.isLoading = payload;
+    },
+    onExport: (state, { payload }) => {
+        state.isExport = payload;
     },
     onSupervisores: (state, { payload }) => {
       state.supervisores = payload;
@@ -47,13 +51,17 @@ export const supervisorSlice = createSlice({
       state.errores = undefined;
       state.isLoading = false;
     },
-    onErrores: (state, { payload }) => {
+    onLoadMessage: (state, { payload }) => {
+        state.message = payload;
+    },
+    onLoadErrores: (state, { payload }) => {
       state.errores = payload;
     },
     onClearSupervisores: (state) => {
       state.supervisores = [];
       state.activateSupervisor = null;
       state.isLoading = false;
+      state.isExport = false;
       state.errores = undefined;
     },
   },
@@ -61,11 +69,13 @@ export const supervisorSlice = createSlice({
 
 export const {
   onLoading,
+  onExport,
   onSupervisores,
   onAddSupervisor,
   onUpdateSupervisor,
   onDeleteSupervisor,
   onSetActivateSupervisor,
-  onErrores,
+  onLoadMessage,
+  onLoadErrores,
   onClearSupervisores,
 } = supervisorSlice.actions;

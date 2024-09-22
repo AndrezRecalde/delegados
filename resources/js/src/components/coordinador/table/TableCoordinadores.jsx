@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from "react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { useCoordinadorStore, useUiCoordinador } from "../../../hooks";
-import { ActionsTable, BtnAdd } from "../../../components";
+import { ActionsTable, BtnAdd, SectionImport } from "../../../components";
+import { Group } from "@mantine/core";
 
 export const TableCoordinadores = ({ viewBtn = 1 }) => {
-    const { modalActionCoordinador } = useUiCoordinador();
+    const { modalActionCoordinador, modalActionImportCoord } = useUiCoordinador();
     const {
         coordinadores,
         isLoading,
@@ -24,6 +25,7 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                 accessorKey: "nombres_completos",
                 header: "Coordinador",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "telefono",
@@ -34,10 +36,12 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                 accessorKey: "canton",
                 header: "Cantón",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "parroquia",
                 header: "Parroquia",
+                filterVariant: "autocomplete",
                 wrap: true,
             },
             {
@@ -52,6 +56,7 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                 accessorKey: "supervisor",
                 header: "Supervisor",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
         ],
         [coordinadores]
@@ -79,9 +84,15 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
         modalActionCoordinador(1);
     };
 
+    const handleImportCoord = (e) => {
+        e.preventDefault();
+        modalActionImportCoord(1);
+    };
+
     const table = useMantineReactTable({
         columns,
         data: coordinadores,
+        enableFacetedValues: true,
         enableColumnOrdering: true,
         enableRowActions: true,
         positionActionsColumn: viewBtn === 1 ? "last" : null,
@@ -96,7 +107,10 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
             ) : null,
         renderTopToolbarCustomActions: () =>
             viewBtn === 1 ? (
-                <BtnAdd title="Agregar Coordinador" handleAdd={handleOpen} />
+                <Group>
+                    <BtnAdd title="Agregar Coordinador" handleAdd={handleOpen} />
+                    <SectionImport handleOpen={handleImportCoord} />
+                </Group>
             ) : null,
     });
 

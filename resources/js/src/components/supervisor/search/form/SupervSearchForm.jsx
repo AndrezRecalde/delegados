@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Grid, Select } from "@mantine/core";
+import { Box, Select, SimpleGrid } from "@mantine/core";
 import { IconDatabase } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../../components";
 import { useStateStore, useSupervisorStore } from "../../../../hooks";
@@ -7,16 +7,20 @@ import { useStateStore, useSupervisorStore } from "../../../../hooks";
 export const SupervSearchForm = ({ form }) => {
     const { canton_id } = form.values;
     const { startSearchSupervisores } = useSupervisorStore();
-    const { cantones, startLoadCantones, parroquias, startLoadParroquias, starClearStates } = useStateStore();
-
+    const {
+        cantones,
+        startLoadCantones,
+        parroquias,
+        startLoadParroquias,
+        starClearStates,
+    } = useStateStore();
 
     useEffect(() => {
         startLoadCantones();
 
         return () => {
             starClearStates();
-        }
-
+        };
     }, []);
 
     useEffect(() => {
@@ -27,7 +31,7 @@ export const SupervSearchForm = ({ form }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         startSearchSupervisores(form.values);
-    }
+    };
 
     return (
         <Box
@@ -38,41 +42,47 @@ export const SupervSearchForm = ({ form }) => {
             })}
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
-            <Grid>
-                <Grid.Col sm={12} md={6} lg={6} xl={6}>
-                    <Select
-                        label="Selecciona el Cantón"
-                        placeholder="Cantón"
-                        searchable
-                        clearable
-                        nothingFound="No options"
-                        {...form.getInputProps("canton_id")}
-                        data={cantones.map((canton) => {
-                            return {
-                                value: canton.id,
-                                label: canton.nombre_canton,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-                <Grid.Col sm={12} md={6} lg={6} xl={6}>
-                    <Select
-                        label="Selecciona el Parroquia"
-                        placeholder="Parroquia"
-                        searchable
-                        clearable
-                        nothingFound="No options"
-                        {...form.getInputProps("parroquia_id")}
-                        data={parroquias.map((parroquia) => {
-                            return {
-                                value: parroquia.id,
-                                label: parroquia.nombre_parroquia,
-                            };
-                        })}
-                    />
-                </Grid.Col>
-            </Grid>
-            <BtnSubmit icon={IconDatabase} texto="Filtrar Supervisores" />
+            <SimpleGrid
+                cols={4}
+                spacing="lg"
+                breakpoints={[
+                    { minWidth: 'sm', cols: 1 },
+                    { minWidth: 'md', cols: 2 },
+                    { minWidth: 1200, cols: 2 },
+                  ]}
+            >
+                <Select
+                    label="Selecciona el Cantón"
+                    placeholder="Cantón"
+                    searchable
+                    clearable
+                    nothingFound="No options"
+                    {...form.getInputProps("canton_id")}
+                    data={cantones.map((canton) => {
+                        return {
+                            value: canton.id,
+                            label: canton.nombre_canton,
+                        };
+                    })}
+                />
+                <Select
+                    label="Selecciona el Parroquia"
+                    placeholder="Parroquia"
+                    searchable
+                    clearable
+                    nothingFound="No options"
+                    {...form.getInputProps("parroquia_id")}
+                    data={parroquias.map((parroquia) => {
+                        return {
+                            value: parroquia.id,
+                            label: parroquia.nombre_parroquia,
+                        };
+                    })}
+                />
+            </SimpleGrid>
+            <BtnSubmit IconSection={IconDatabase}>
+                Filtrar Supervisores
+            </BtnSubmit>
         </Box>
     );
 };

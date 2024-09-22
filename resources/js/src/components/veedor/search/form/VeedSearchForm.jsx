@@ -19,7 +19,7 @@ export const VeedSearchForm = ({ form }) => {
 
     useEffect(() => {
         startLoadCantones();
-        startLoadSupervisores();
+        startLoadSupervisores({});
         startLoadCoordinadores();
 
         return () => {
@@ -76,7 +76,7 @@ export const VeedSearchForm = ({ form }) => {
                 <Grid.Col sm={12} md={4} lg={4} xl={4}>
                     <Select
                         label="Selecciona la Parroquia"
-                        placeholder="Cantón"
+                        placeholder="Parroquia"
                         searchable
                         clearable
                         nothingFound="No options"
@@ -138,7 +138,7 @@ export const VeedSearchForm = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit icon={IconDatabase} texto="Filtrar Delegados" />
+            <BtnSubmit IconSection={IconDatabase}>Filtrar Delegados</BtnSubmit>
         </Box>
     );
 };

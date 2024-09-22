@@ -20,7 +20,7 @@ export const CoordSearchForm = ({ form }) => {
 
     useEffect(() => {
         startLoadCantones();
-        startLoadSupervisores();
+        startLoadSupervisores({});
 
         return () => {
             startClearSupervisores();
@@ -119,7 +119,7 @@ export const CoordSearchForm = ({ form }) => {
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit icon={IconDatabase} texto="Filtrar Coordinadores" />
+            <BtnSubmit IconSection={IconDatabase}>Filtrar Coordinadores</BtnSubmit>
         </Box>
     );
 };

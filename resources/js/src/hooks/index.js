@@ -1,4 +1,5 @@
 import { useAuthStore } from "./auth/useAuthStore";
+import { useErrorException } from "./error/useErrorException";
 import { useUsuarioStore } from "./usuario/useUsuarioStore";
 import { useUiUsuario } from "./usuario/useUiUsuario";
 import { useSupervisorStore } from "./supervisor/useSupervisorStore";
@@ -21,6 +22,7 @@ import { useUiReconteo } from "./reconteo/useUiReconteo";
 
 export {
     useAuthStore,
+    useErrorException,
     useUsuarioStore,
     useUiUsuario,
     useSupervisorStore,

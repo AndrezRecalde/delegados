@@ -17,7 +17,7 @@ export const ModalActivateUser = () => {
         <Modal
             opened={isOpenModalActivateUser}
             onClose={handleCloseModal}
-            title={<TitlePage title="Activar Usuario" fw={700} />}
+            title={<TitlePage ta="center" order={5}>Activar Usuario</TitlePage>}
             centered
             overlayProps={{
                 color:

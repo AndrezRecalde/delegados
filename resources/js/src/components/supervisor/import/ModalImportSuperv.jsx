@@ -27,7 +27,7 @@ export const ModalImportSuperv = () => {
         <Modal
             opened={isOpenModalImportSuper}
             onClose={handleCloseModalImport}
-            title={<TitlePage title="Importar Supervisores" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Importar Supervisores</TitlePage>}
             centered
             overlayProps={{
                 color:

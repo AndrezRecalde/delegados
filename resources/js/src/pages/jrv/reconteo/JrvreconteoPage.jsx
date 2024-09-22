@@ -10,10 +10,19 @@ import {
 } from "../../../components";
 import { useReconteoStore, useUiReconteo } from "../../../hooks";
 import { IconCards, IconFileDownload } from "@tabler/icons-react";
+import Swal from "sweetalert2";
 
 export const JrvreconteoPage = () => {
-    const { reconteos, startLoadJrvReconteos, startClearJrvReconteos, startExportCredenciales, startExcelJrvReconteo } =
-        useReconteoStore();
+    const {
+        reconteos,
+        startLoadJrvReconteos,
+        startClearJrvReconteos,
+        startExportCredenciales,
+        startExcelJrvReconteo,
+        isExport,
+        errores,
+        message,
+    } = useReconteoStore();
 
     const { modalActionImportReconteo } = useUiReconteo();
 
@@ -24,6 +33,46 @@ export const JrvreconteoPage = () => {
             startClearJrvReconteos();
         };
     }, []);
+
+    useEffect(() => {
+        if (isExport === true) {
+            Swal.fire({
+                icon: "warning",
+                text: "Un momento porfavor, se está exportando",
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        } else {
+            Swal.close(); // Cierra el modal cuando isExport es false
+        }
+    }, [isExport]);
+
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
 
     const handleImportVeed = (e) => {
         e.preventDefault();
@@ -42,7 +91,9 @@ export const JrvreconteoPage = () => {
 
     return (
         <>
-            <TitlePage title="JRV de Reconteo" color="dark" fz={18} fw={700} />
+            <TitlePage ta="left" order={3}>
+                JRV de Reconteo
+            </TitlePage>
             <InfoHeader
                 texto={`Existen ${reconteos.length} delegados de reconteo registrados a nivel de la provincia de Esmeraldas.`}
             />
@@ -55,11 +106,11 @@ export const JrvreconteoPage = () => {
                 sx={{ position: "static" }}
             >
                 <Card.Section withBorder inheritPadding py="lg">
-                    <SectionImport
-                        title="Lista de JRV Reconteo"
-                        handleOpen={handleImportVeed}
-                    />
                     <Group>
+                        <SectionImport
+                            title="Lista de JRV Reconteo"
+                            handleOpen={handleImportVeed}
+                        />
                         <Button
                             variant="light"
                             color="teal.7"

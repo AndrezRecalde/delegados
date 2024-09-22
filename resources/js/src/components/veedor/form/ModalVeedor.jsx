@@ -22,7 +22,7 @@ export const ModalVeedor = () => {
         validate: {
             nombres_completos: isNotEmpty("Por favor ingrese apellidos y nombres"),
             dni: isNotEmpty("Por favor ingrese número de cédula"),
-            telefono: isNotEmpty("Por favor ingrese número telefónico"),
+            //telefono: isNotEmpty("Por favor ingrese número telefónico"),
             coordinador_id: isNotEmpty("Por favor seleccione el coordinador"),
             canton_id: isNotEmpty("Por favor ingrese el cantón de residencia"),
             recinto_id: isNotEmpty("Por favor ingrese el recinto electoral donde vota")
@@ -39,7 +39,7 @@ export const ModalVeedor = () => {
         <Modal
             opened={isOpenModalVeedor}
             onClose={handleCloseModalVeedor}
-            title={<TitlePage title="Veedor" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Delegado</TitlePage>}
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

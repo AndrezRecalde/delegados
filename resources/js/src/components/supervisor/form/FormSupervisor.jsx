@@ -12,12 +12,8 @@ export const FormSupervisor = ({ form }) => {
     const { canton_id } = form.values;
     const { startAddSupervisor, activateSupervisor } = useSupervisorStore();
     const { modalActionSupervisor } = useUiSupervisor();
-    const {
-        cantones,
-        parroquias,
-        startLoadCantones,
-        startLoadParroquias,
-    } = useStateStore();
+    const { cantones, parroquias, startLoadCantones, startLoadParroquias } =
+        useStateStore();
 
     useEffect(() => {
         startLoadCantones();
@@ -27,10 +23,12 @@ export const FormSupervisor = ({ form }) => {
         startLoadParroquias(canton_id);
         form.setFieldValue(
             "parroquia_id",
-            activateSupervisor?.parroquia_id ?? activateSupervisor?.parroquias.map(parroquias => parroquias.id)
+            activateSupervisor?.parroquia_id ??
+                activateSupervisor?.parroquias.map(
+                    (parroquias) => parroquias.id
+                )
         );
     }, [canton_id]);
-
 
     useEffect(() => {
         if (activateSupervisor !== null) {
@@ -63,25 +61,25 @@ export const FormSupervisor = ({ form }) => {
             <Grid>
                 <Grid.Col sm={12} md={12} lg={12} xl={12}>
                     <TextInput
+                        placeholder="Número de cédula"
+                        label="Cédula"
+                        withAsterisk
+                        {...form.getInputProps("dni")}
+                    />
+                </Grid.Col>
+                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                    <TextInput
                         placeholder="Apellidos y nombres del supervisor"
                         label="Apellidos y Nombres"
                         withAsterisk
                         {...form.getInputProps("nombres_completos")}
                     />
                 </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                <Grid.Col sm={12} md={12} lg={6} xl={6}>
                     <TextInput
                         placeholder="Correo electrónico (opcional)"
                         label="Correo electrónico"
                         {...form.getInputProps("email")}
-                    />
-                </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={6} xl={6}>
-                    <TextInput
-                        placeholder="Número de cédula"
-                        label="Cédula"
-                        withAsterisk
-                        {...form.getInputProps("dni")}
                     />
                 </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={6} xl={6}>
@@ -100,11 +98,11 @@ export const FormSupervisor = ({ form }) => {
                         withAsterisk
                         nothingFound="No options"
                         {...form.getInputProps("canton_id")}
-                        data={cantones.map(canton => {
+                        data={cantones.map((canton) => {
                             return {
                                 value: canton.id,
-                                label: canton.nombre_canton
-                            }
+                                label: canton.nombre_canton,
+                            };
                         })}
                     />
                 </Grid.Col>
@@ -117,16 +115,16 @@ export const FormSupervisor = ({ form }) => {
                         radius="md"
                         withAsterisk
                         {...form.getInputProps("parroquia_id")}
-                        data={parroquias.map(parroquia => {
+                        data={parroquias.map((parroquia) => {
                             return {
                                 value: parroquia.id,
-                                label: parroquia.nombre_parroquia
-                            }
+                                label: parroquia.nombre_parroquia,
+                            };
                         })}
                     />
                 </Grid.Col>
             </Grid>
-            <BtnSubmit icon={IconChecks} texto="Agregar Supervisor" />
+            <BtnSubmit IconSection={IconChecks}>Agregar Supervisor</BtnSubmit>
         </Box>
     );
 };

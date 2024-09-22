@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo } from "react";
 import {
+    Box,
     Group,
     NavLink,
     Progress,
+    Stack,
     Text,
     createStyles,
     rem,
@@ -25,16 +27,27 @@ const useStyles = createStyles((theme) => ({
 export const TableAvanceParroquial = () => {
     const { classes, theme } = useStyles();
 
-    const { isLoadingTableParr, activateCanton, avanceParroquias, setActivateParroquia, startAvanceParroquia, setClearActivateParroquia } =
-        useDashboardStore();
-    const { modalActionAvanceRecinto } =  useUiDashboard();
+    const {
+        isLoadingTableParr,
+        activateCanton,
+        avanceParroquias,
+        setActivateParroquia,
+        startAvanceParroquia,
+        setClearActivateParroquia,
+    } = useDashboardStore();
+    const { modalActionAvanceRecinto } = useUiDashboard();
+
+    const totalVeedSum = useMemo(
+        () => avanceParroquias?.reduce((acc, item) => acc + item.total_veed, 0),
+        [avanceParroquias]
+    );
 
     useEffect(() => {
         startAvanceParroquia(activateCanton);
 
-      return () => {
-        setClearActivateParroquia();
-      }
+        return () => {
+            setClearActivateParroquia();
+        };
     }, []);
 
     const columns = useMemo(
@@ -43,6 +56,7 @@ export const TableAvanceParroquial = () => {
                 accessorKey: "nombre_parroquia",
                 header: "Parroquia",
                 wrap: true,
+                filterVariant: "autocomplete",
                 Cell: ({ cell }) => (
                     <NavLink
                         onClick={() => activateParroquia(cell.row.original)}
@@ -63,9 +77,17 @@ export const TableAvanceParroquial = () => {
             },
             {
                 accessorFn: (row) =>
-                    row.total_veed !== null ? row.total_veed.toFixed(0) * 20 : 0,
+                    row.total_veed !== null
+                        ? row.total_veed.toFixed(0) * 20
+                        : 0,
                 header: "Monetización (20 USD)",
                 wrap: true,
+                Footer: () => (
+                    <Stack>
+                        Total:
+                        <Box color="orange">{totalVeedSum * 20} USD</Box>
+                    </Stack>
+                ),
             },
             {
                 accessorFn: (row) => {
@@ -126,7 +148,7 @@ export const TableAvanceParroquial = () => {
                 wrap: true,
             },
         ],
-        []
+        [avanceParroquias]
     );
 
     const activateParroquia = useCallback((selected) => {
@@ -137,6 +159,7 @@ export const TableAvanceParroquial = () => {
     const table = useMantineReactTable({
         columns,
         data: avanceParroquias, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+        enableFacetedValues: true,
         enableColumnOrdering: true,
         enablePagination: true,
         state: { showProgressBars: isLoadingTableParr },

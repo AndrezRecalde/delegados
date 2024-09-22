@@ -1,36 +1,36 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-    onAddVeedor,
+    //onAddVeedor,
     onClearVeedores,
     onDeleteVeedor,
+    onExport,
+    onLoadErrores,
     onLoading,
+    onLoadMessage,
     onSetActivateVeedor,
-    onUpdateVeedor,
+    //onUpdateVeedor,
     onVeedores,
 } from "../../store/app/veedor/veedorSlice";
-import Swal from "sweetalert2";
 import eleccionApi from "../../api/eleccionApi";
+import { useErrorException } from "../../hooks";
 
 export const useVeedorStore = () => {
-    const { isLoading, veedores, activateVeedor, errores } = useSelector(
-        (state) => state.veedor
-    );
+    const { isLoading, isExport, veedores, activateVeedor, message, errores } =
+        useSelector((state) => state.veedor);
+
+    const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
     const dispatch = useDispatch();
 
     const startLoadVeedores = async () => {
-        dispatch(onLoading());
+        dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.get("/veedores/listar");
             const { veedores } = data;
             dispatch(onVeedores(veedores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -41,65 +41,40 @@ export const useVeedorStore = () => {
                     `/veedor/update/${veedor.id}`,
                     veedor
                 );
-                dispatch(onUpdateVeedor({ ...veedor }));
-                Swal.fire({
-                    icon: "success",
-                    title: data.msg,
-                    showConfirmButton: false,
-                    timer: 1000,
-                });
+                dispatch(onLoadMessage(data));
+                setTimeout(() => {
+                    dispatch(onLoadMessage(undefined));
+                }, 40);
                 startLoadVeedores();
                 return;
             }
 
             const { data } = await eleccionApi.post("/veedor/create", veedor);
-            dispatch(onAddVeedor({ ...veedor }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadVeedores();
         } catch (error) {
-            console.log(error)
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response.data.msg
-                        ? error.response.data.msg
-                        : error.response.data.msg
-                        ? error.response.data.errores
-                        : Object.values(error.response.data.errores),
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startDeleteVeedor = async (veedor) => {
-        Swal.fire({
-            icon: "warning",
-            text: `¿Estas seguro de eliminar ${veedor.nombres_completos}?`,
-            showDenyButton: true,
-            confirmButtonColor: "#3085d6",
-            confirmButtonText: "Si",
-            denyButtonText: "No",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                try {
-                    await eleccionApi.delete(`/veedor/delete/${veedor.id}`);
-                    Swal.fire("¡Eliminado!", "", "success");
-                    startLoadVeedores();
-                } catch (error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: error.response ? error.response.data.msg : error,
-                        confirmButtonColor: "#c81d11",
-                    });
-                }
-            }
-        });
+        try {
+            const { data } = await eleccionApi.delete(
+                `/veedor/delete/${veedor.id}`
+            );
+            dispatch(onDeleteVeedor());
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+        }
     };
 
     const startUpdateConfirmVeed = async (veedor) => {
@@ -108,22 +83,15 @@ export const useVeedorStore = () => {
                 `/veedor/update/confirmado/${veedor.id}`,
                 veedor
             );
-            dispatch(onUpdateVeedor({ ...veedor }));
-            Swal.fire({
-                icon: "success",
-                title: data.msg,
-                showConfirmButton: false,
-                timer: 1000,
-            });
-            dispatch(onDeleteVeedor(veedor));
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
+            //dispatch(onDeleteVeedor(veedor));
             setClearActivateVeedor();
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
@@ -134,73 +102,59 @@ export const useVeedorStore = () => {
         coordinador_id,
     }) => {
         try {
+            dispatch(onLoading(true));
             const { data } = await eleccionApi.post("/veedores/search", {
                 canton_id,
                 recinto_id,
                 supervisor_id,
                 coordinador_id,
             });
-            if (data.status === "error") {
-                Swal.fire({
-                    icon: "error",
-                    text: "¡No hay datos en esa zona de busqueda!",
-                    showConfirmButton: false,
-                    timer: 1200,
-                });
-            } else {
-                const { veedores } = data;
-                dispatch(onVeedores(veedores));
-            }
+
+            const { veedores } = data;
+            dispatch(onVeedores(veedores));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startExportTablePDF = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/table/veedores",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
-        } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
             });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
     const startExportCredenciales = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
                 "/exportar/pdf/cards/veedores",
                 values,
                 { responseType: "blob" }
             );
-            const url = window.URL.createObjectURL(
-                new Blob([response.data], { type: "application/pdf" })
-            );
-            window.open(url, "_blank");
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
         } catch (error) {
             console.log(error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
-            });
+            ExceptionMessageError(error);
         }
     };
 
@@ -217,27 +171,23 @@ export const useVeedorStore = () => {
                     },
                 }
             );
-            Swal.fire({
-                icon: "info",
-                text: data.msg,
-                confirmButtonColor: "#c81d11",
-            });
+            dispatch(onLoadMessage(data));
+            setTimeout(() => {
+                dispatch(onLoadMessage(undefined));
+            }, 40);
             startLoadVeedores();
         } catch (error) {
-            //console.log(error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
     };
 
-    const exportExcelVeedores = async(values = {}) => {
+    const exportExcelVeedores = async (values = {}) => {
         try {
+            dispatch(onExport(true));
             const response = await eleccionApi.post(
-                "/veedores/export/excel", values,
+                "/veedores/export/excel",
+                values,
                 { responseType: "blob" }
             );
             const url = window.URL.createObjectURL(
@@ -246,19 +196,16 @@ export const useVeedorStore = () => {
                 })
             );
             window.open(url, "_blank");
+            dispatch(onExport(false));
         } catch (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: error.response ? error.response.data.msg : error,
-                confirmButtonColor: "#c81d11",
-            });
+            console.log(error);
+            ExceptionMessageError(error);
         }
-    }
+    };
 
     const startClearVeedores = () => {
         dispatch(onClearVeedores());
-    }
+    };
 
     const setActivateVeedor = (veedor) => {
         dispatch(onSetActivateVeedor(veedor));
@@ -270,8 +217,10 @@ export const useVeedorStore = () => {
 
     return {
         isLoading,
+        isExport,
         veedores,
         activateVeedor,
+        message,
         errores,
 
         startLoadVeedores,
@@ -285,6 +234,6 @@ export const useVeedorStore = () => {
         exportExcelVeedores,
         setActivateVeedor,
         setClearActivateVeedor,
-        startClearVeedores
+        startClearVeedores,
     };
 };

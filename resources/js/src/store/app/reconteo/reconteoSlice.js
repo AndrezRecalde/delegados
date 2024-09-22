@@ -4,14 +4,18 @@ export const reconteoSlice = createSlice({
     name: "reconteo",
     initialState: {
         isLoading: false,
+        isExport: false,
         reconteos: [],
         activateReconteo: null,
+        message: undefined,
         errores: undefined,
     },
     reducers: {
         onLoading: (state) => {
             state.isLoading = true;
-            state.errores = undefined;
+        },
+        onExport: (state, { payload }) => {
+            state.isExport = payload;
         },
         onReconteos: (state, { payload }) => {
             state.reconteos = payload;
@@ -49,9 +53,15 @@ export const reconteoSlice = createSlice({
         },
         onClearReconteos: (state) => {
             state.reconteos = [];
+            state.activateReconteo = null;
+            state.isLoading = false;
+            state.isExport = false;
             state.errores = undefined;
         },
-        onErrores: (state, { payload }) => {
+        onLoadMessage: (state, { payload }) => {
+            state.message = payload;
+        },
+        onLoadErrores: (state, { payload }) => {
             state.errores = payload;
         },
     },
@@ -59,11 +69,13 @@ export const reconteoSlice = createSlice({
 
 export const {
     onLoading,
+    onExport,
     onReconteos,
     onAddReconteo,
     onUpdateReconteo,
     onDeleteReconteo,
     onSetActivateReconteo,
     onClearReconteos,
-    onErrores,
+    onLoadMessage,
+    onLoadErrores,
 } = reconteoSlice.actions;

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Flex, Grid, Loader, Paper } from "@mantine/core";
+import { Card, Divider, Flex, Grid, Loader, Paper } from "@mantine/core";
 import { sistema } from "../../components/dashboard/sistema.json";
 import { delegados } from "../../components/dashboard/delegados.json";
 import {
@@ -58,13 +58,10 @@ export const DashboardPage = () => {
 
     return (
         <>
-            <TitlePage
-                tt="capitalize"
-                fz={18}
-                fw={700}
-                title={`Bienvenido al sistema de Delegados del Voto`}
-            />
-
+            <TitlePage ta="left" order={3}>
+                Bienvenido al sistema de Delegados del Voto
+            </TitlePage>
+            <Divider my="md" />
             {!isLoading ? (
                 <>
                     <Grid>
@@ -78,46 +75,36 @@ export const DashboardPage = () => {
                             <Card
                                 withBorder
                                 radius="md"
-                                mt={5}
                                 mb="lg"
                                 shadow="sm"
                                 sx={{ position: "static" }}
                             >
                                 <Card.Section withBorder inheritPadding py="lg">
-                                    <TitlePage
-                                        tt="capitalize"
-                                        fz={14}
-                                        fw={700}
-                                        title="Resumen de Progreso General de Delegados"
-                                    />
+                                    <TitlePage ta="center" order={5}>
+                                        Resumen de Progreso General de Delegados
+                                    </TitlePage>
                                 </Card.Section>
                                 <Card.Section withBorder inheritPadding py="lg">
                                     <ProgressGeneralChart />
                                 </Card.Section>
                                 <Card.Section withBorder inheritPadding py="lg">
-                                    <TitlePage
-                                        tt="capitalize"
-                                        color="indigo.7"
-                                        ta="center"
-                                        fw={700}
-                                        title={`Faltan ${
-                                            totalJuntas.totalJuntas -
-                                            totalVeedores
-                                        } delegados de ingresar`}
-                                    />
+                                    <TitlePage ta="center" order={5}>
+                                        Faltan{" "}
+                                        {totalJuntas.totalJuntas -
+                                            totalVeedores}{" "}
+                                        delegados de ingresar
+                                    </TitlePage>
                                 </Card.Section>
                             </Card>
                         </Grid.Col>
-                        <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
                             <StatPayrollDelegados />
                         </Grid.Col>
-                        <Grid.Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                        <Grid.Col xs={12} sm={12} md={6} lg={6} xl={6}>
                             <StatPayrollCoords />
                         </Grid.Col>
                         <Grid.Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Paper shadow="sm" radius="md" p="md">
-                                <TableAvanceCantones />
-                            </Paper>
+                            <TableAvanceCantones />
                         </Grid.Col>
                     </Grid>
                     <ModalAvanceParroquia />

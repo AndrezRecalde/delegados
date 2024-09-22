@@ -7,7 +7,6 @@ export const BtnAdd = ({ title, handleAdd }) => {
             color="indigo.7"
             onClick={(e) => handleAdd(e)}
             variant="light"
-            radius="md"
             leftIcon={<IconPencilPlus />}
         >
             {title}

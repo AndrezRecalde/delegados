@@ -3,6 +3,7 @@ import { Badge, useMantineTheme } from "@mantine/core";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
 import { ActionsTable, ActivateUserButton, BtnAdd } from "../../../components";
 import { useUiUsuario, useUsuarioStore } from "../../../hooks";
+import Swal from "sweetalert2";
 
 export const TableUsuarios = () => {
     const theme = useMantineTheme();
@@ -87,7 +88,19 @@ export const TableUsuarios = () => {
     const handleDelete = useCallback(
         (selected) => {
             setActivateUsuario(selected);
-            startDeleteUsuario(selected);
+            Swal.fire({
+                icon: "warning",
+                title: "Estas seguro de eliminar?",
+                showDenyButton: true,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Si",
+                denyButtonText: "No",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    startDeleteUsuario(selected);
+                    Swal.fire("¡Eliminado!", "", "success");
+                }
+            });
         },
         [usuarios]
     );

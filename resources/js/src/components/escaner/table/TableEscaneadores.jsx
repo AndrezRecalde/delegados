@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
-import { BtnAdd, ActionsTable } from "../../../components";
+import { BtnAdd, ActionsTable, SectionImport } from "../../../components";
 import { useEscanerStore, useUiEscaner } from "../../../hooks";
+import { Group } from "@mantine/core";
 
 export const TableEscaneadores = ({ viewBtn = 1 }) => {
     const {
@@ -11,7 +12,7 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
         setActivateEscaner,
         setClearActivateEscaner,
     } = useEscanerStore();
-    const { modalActionEscaner } = useUiEscaner();
+    const { modalActionEscaner, modalActionImportEscaner } = useUiEscaner();
 
     const columns = useMemo(
         () => [
@@ -34,16 +35,19 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
                 accessorKey: "canton",
                 header: "Cantón",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "parroquia",
                 header: "Parroquia",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "recinto",
                 header: "Recinto",
                 wrap: true,
+                //filterVariant: "autocomplete",
             },
         ],
         [escaneadores]
@@ -71,9 +75,15 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
         modalActionEscaner(1);
     };
 
+    const handleImportEsc = (e) => {
+        e.preventDefault();
+        modalActionImportEscaner(1);
+    };
+
     const table = useMantineReactTable({
         columns,
         data: escaneadores,
+        enableFacetedValues: true,
         enableColumnOrdering: true,
         enableRowActions: true,
         positionActionsColumn: viewBtn === 1 ? "last" : null,
@@ -88,7 +98,10 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
             ) : null,
         renderTopToolbarCustomActions: () =>
             viewBtn === 1 ? (
-                <BtnAdd title="Agregar Escaner" handleAdd={handleOpen} />
+                <Group>
+                    <BtnAdd title="Agregar Escaner" handleAdd={handleOpen} />
+                    <SectionImport handleOpen={handleImportEsc} />
+                </Group>
             ) : null,
     });
 

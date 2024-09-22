@@ -1,11 +1,22 @@
-import { Card } from "@mantine/core";
-import { InfoHeader, ModalActivateUser, ModalUsuario, TableUsuarios, TitlePage } from "../../components";
+import {
+    InfoHeader,
+    ModalActivateUser,
+    ModalUsuario,
+    TableUsuarios,
+    TitlePage,
+} from "../../components";
 import { useUsuarioStore } from "../../hooks";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
 
 export const UsuarioPage = () => {
-    const { usuarios, startLoadUsuarios, startClearUsuarios } =
-        useUsuarioStore();
+    const {
+        usuarios,
+        startLoadUsuarios,
+        startClearUsuarios,
+        message,
+        errores,
+    } = useUsuarioStore();
 
     useEffect(() => {
         startLoadUsuarios();
@@ -15,22 +26,43 @@ export const UsuarioPage = () => {
         };
     }, []);
 
+    useEffect(() => {
+        if (message !== undefined) {
+            Swal.fire({
+                icon: message.status,
+                text: message.msg,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [message]);
+
+    useEffect(() => {
+        if (errores !== undefined) {
+            Swal.fire({
+                icon: "error",
+                title: "Opps...",
+                text: errores,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            return;
+        }
+    }, [errores]);
+
     return (
         <>
-            <TitlePage title="Usuarios" color="dark" fz={18} fw={700} />
-            <InfoHeader texto={`Existen ${usuarios.length} usuarios registrados al sistema.`} />
-            <Card withBorder radius="md" mt="lg" mb="lg" shadow="sm">
-                <Card.Section withBorder inheritPadding py="lg">
-                    <TitlePage
-                        title="Lista de usuarios"
-                        color="dimmed"
-                        fw={700}
-                    />
-                </Card.Section>
-                <Card.Section>
-                    <TableUsuarios />
-                </Card.Section>
-            </Card>
+            <TitlePage ta="left" order={3}>
+                Usuarios
+            </TitlePage>
+
+            <InfoHeader
+                texto={`Existen ${usuarios.length} usuarios registrados al sistema.`}
+            />
+
+            <TableUsuarios />
+
             <ModalUsuario />
             <ModalActivateUser />
         </>

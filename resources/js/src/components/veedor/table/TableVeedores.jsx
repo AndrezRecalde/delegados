@@ -1,7 +1,13 @@
 import { useCallback, useMemo } from "react";
 import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
-import { ActionsTable, ActivateVeedor, BtnAdd } from "../../../components";
+import {
+    ActionsTable,
+    ActivateVeedor,
+    BtnAdd,
+    SectionImport,
+} from "../../../components";
 import { useUiVeedor, useVeedorStore } from "../../../hooks";
+import { Group } from "@mantine/core";
 
 export const TableVeedores = ({ viewBtn = 1 }) => {
     const {
@@ -11,7 +17,11 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
         setActivateVeedor,
         setClearActivateVeedor,
     } = useVeedorStore();
-    const { modalActionVeedor, modalActionActivateVeed } = useUiVeedor();
+    const {
+        modalActionVeedor,
+        modalActionActivateVeed,
+        modalActionFileVeedor,
+    } = useUiVeedor();
 
     const columns = useMemo(
         () => [
@@ -42,7 +52,7 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
                 wrap: true,
             },
             {
-                accessorKey: "telefono",
+                accessorFn: (row) => row.telefono !== null ? row.telefono : "Sin Registrar",
                 header: "Teléfono",
                 wrap: true,
             },
@@ -50,11 +60,13 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
                 accessorKey: "canton",
                 header: "Cantón",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorKey: "recinto",
                 header: "Recinto",
                 wrap: true,
+                filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) =>
@@ -96,9 +108,15 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
         modalActionVeedor(1);
     };
 
+    const handleImportVeed = (e) => {
+        e.preventDefault();
+        modalActionFileVeedor(1);
+    };
+
     const table = useMantineReactTable({
         columns,
         data: veedores,
+        enableFacetedValues: true,
         enableColumnOrdering: true,
         enableRowActions: true,
         positionActionsColumn: viewBtn === 1 ? "last" : null,
@@ -113,7 +131,10 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
             ) : null,
         renderTopToolbarCustomActions: () =>
             viewBtn === 1 ? (
-                <BtnAdd title="Agregar Veedor" handleAdd={handleOpen} />
+                <Group>
+                    <BtnAdd title="Agregar Delegado" handleAdd={handleOpen} />
+                    <SectionImport handleOpen={handleImportVeed} />
+                </Group>
             ) : null,
     });
 

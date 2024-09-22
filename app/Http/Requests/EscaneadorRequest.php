@@ -27,7 +27,7 @@ class EscaneadorRequest extends FormRequest
         return [
             'nombres_completos' =>  'required',
             'dni'               =>  ['required', Rule::unique('escaneadores')->ignore($this->request->get('id'))],
-            'telefono'          =>  'required',
+            'telefono'          =>  '',
             'canton_id'         =>  'required',
             'parroquia_id'      =>  'required',
             'recinto_id'        =>  'required'
@@ -39,7 +39,6 @@ class EscaneadorRequest extends FormRequest
             'nombres_completos.required'  =>  'El/Los nombre(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
             'dni.unique'                  =>  'El número de cédula ya está registrado',
-            'telefono.required'           =>  'El teléfono es requerido',
             'canton_id.required'          =>  'El canton es requerido',
             'parroquia_id.required'          =>  'El canton es requerido',
             'recinto_id.required'          =>  'El canton es requerido',
