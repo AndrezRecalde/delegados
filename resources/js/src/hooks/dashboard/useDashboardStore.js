@@ -133,9 +133,7 @@ export const useDashboardStore = () => {
 
     const startLoadTotalJrvMoviles = async () => {
         try {
-            const { data } = await eleccionApi.get(
-                "/totales/jrv/moviles"
-            );
+            const { data } = await eleccionApi.get("/totales/jrv/moviles");
             const { totalJrvMoviles } = data;
             dispatch(onLoadTotalJrvMoviles(totalJrvMoviles));
         } catch (error) {
@@ -152,13 +150,11 @@ export const useDashboardStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
-    const startLoadTotalJrvReconteos = async() => {
+    const startLoadTotalJrvReconteos = async () => {
         try {
-            const { data } = await eleccionApi.get(
-                "/totales/jrv/reconteos"
-            );
+            const { data } = await eleccionApi.get("/totales/jrv/reconteos");
             const { totalJrvReconteos } = data;
             dispatch(onLoadTotalJrvReconteo(totalJrvReconteos));
         } catch (error) {
@@ -175,7 +171,7 @@ export const useDashboardStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
     const startLoadTotalUsuarios = async () => {
         try {
@@ -287,7 +283,9 @@ export const useDashboardStore = () => {
     const startAvanceParroquia = async ({ id }) => {
         dispatch(onLoadingTableParr());
         try {
-            const { data } = await eleccionApi.post("/avance/parroquia", { canton_id: id });
+            const { data } = await eleccionApi.post("/avance/parroquia", {
+                canton_id: id,
+            });
             const { avanceParroquias } = data;
             dispatch(onLoadAvanceParroquias(avanceParroquias));
         } catch (error) {
@@ -304,7 +302,7 @@ export const useDashboardStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
     const startAvanceRecintos = async ({ parroquia_id }) => {
         dispatch(onLoadingTableRec());
@@ -330,10 +328,57 @@ export const useDashboardStore = () => {
         }
     };
 
+    const startLoadVeedoresForCanton = async (cantones) => {
+        try {
+            const { data } = await eleccionApi.post(
+                "/totales/veedores/cantones",
+                { cantones }
+            );
+            const { totalVeedores } = data;
+            dispatch(onLoadTotalVeedores(totalVeedores));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
+    const startLoadJuntasForCanton = async (cantones) => {
+        try {
+            const { data } = await eleccionApi.post(
+                "/totales/juntas/cantones",
+                { cantones }
+            );
+            const { totalJuntas } = data;
+            dispatch(onLoadTotalJuntas(totalJuntas));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
     const setActivateCanton = (canton) => {
         dispatch(onSetActivateCanton(canton));
     };
-
 
     const setActivateParroquia = (parroquia) => {
         dispatch(onSetActivateParroquia(parroquia));
@@ -349,11 +394,11 @@ export const useDashboardStore = () => {
 
     const setClearAvanceParroquias = () => {
         dispatch(onLoadAvanceParroquias([]));
-    }
+    };
 
     const setClearAvanceRecintos = () => {
         dispatch(onLoadAvanceRecintos([]));
-    }
+    };
 
     const startClearTotales = () => {
         dispatch(onClearTotales());
@@ -397,6 +442,8 @@ export const useDashboardStore = () => {
         setClearActivateCanton,
         setClearActivateParroquia,
         setClearAvanceParroquias,
-        setClearAvanceRecintos
+        setClearAvanceRecintos,
+        startLoadVeedoresForCanton,
+        startLoadJuntasForCanton,
     };
 };

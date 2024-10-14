@@ -36,19 +36,41 @@ class DashboardController extends Controller
         return response()->json(['status' => 'success', 'totalVeedores' => $totalVeedores], 200);
     }
 
+    function getTotalVeedoresForCantones(Request $request): JsonResponse
+    {
+        $totalVeedores = Veedor::whereIn('canton_id', [$request->cantones])->count();
+        return response()->json(['status' => 'success', 'totalVeedores' => $totalVeedores], 200);
+    }
+
+    function getTotalJuntasForCantones(Request $request): JsonResponse
+    {
+        $totalJuntas = Recinto::from('recintos as r')
+            ->selectRaw('SUM(r.num_juntas) as totalJuntas')
+            ->join('parroquias as p', 'p.id', '=', 'r.parroquia_id')
+            ->join('cantones as c', 'c.id', '=', 'p.canton_id')
+            ->whereIn('c.id', $request->cantones) // Aplica el filtro antes de obtener los datos
+            ->pluck('totalJuntas') // Usamos pluck para obtener el valor como un array
+            ->first(); // Obtener el primer valor
+
+        return response()->json([
+            'status' => 'success',
+            'totalJuntas' => max(0, (int) $totalJuntas) // Asegura que sea un entero positivo
+        ], 200);
+    }
+
     function getTotalVeedoresConfirmed(): JsonResponse
     {
         $totalConfirmados = Veedor::where('confirmado', 1)->count();
         return response()->json(['status' => 'success', 'totalConfirmados' => $totalConfirmados], 200);
     }
 
-    function getTotalJrvMoviles() : JsonResponse
+    function getTotalJrvMoviles(): JsonResponse
     {
         $totalJrvMoviles = Jrvmovil::count();
         return response()->json(['status' => 'success', 'totalJrvMoviles' => $totalJrvMoviles], 200);
     }
 
-    function getTotalJrvReconteos() : JsonResponse
+    function getTotalJrvReconteos(): JsonResponse
     {
         $totalJrvReconteos = Reconteo::count();
         return response()->json(['status' => 'success', 'totalJrvReconteos' => $totalJrvReconteos], 200);
@@ -60,19 +82,23 @@ class DashboardController extends Controller
         return response()->json(['status' => 'success', 'totalUsuarios' => $totalUsuarios], 200);
     }
 
-    function getTotalEscaneadores() : JsonResponse
+    function getTotalEscaneadores(): JsonResponse
     {
         $totalEscaneadores = Escaneador::count();
         return response()->json(['status' => 'success', 'totalEscaneadores' => $totalEscaneadores], 200);
-
     }
 
     function getTotalJuntas(): JsonResponse
     {
         $totalJuntas = Recinto::from('recintos as r')
             ->selectRaw('SUM(r.num_juntas) as totalJuntas')
-            ->first();
-        return response()->json(['status' => 'success', 'totalJuntas' => $totalJuntas], 200);
+            ->pluck('totalJuntas') // Usamos pluck para obtener el valor como un array
+            ->first(); // Obtener el primer valor
+
+        return response()->json([
+            'status' => 'success',
+            'totalJuntas' => max(0, (int) $totalJuntas) // Asegura que sea un entero positivo
+        ], 200);
     }
 
     function getAvanceCantones(): JsonResponse
@@ -81,19 +107,19 @@ class DashboardController extends Controller
         return response()->json(['status' => 'success', 'avanceCantones' => $avanceCantones], 200);
     }
 
-    function getAvanceParroquial() : JsonResponse
+    function getAvanceParroquial(): JsonResponse
     {
         $avanceParroquias = DB::select('CALL getAvanceParroquia()');
         return response()->json(['status' => 'success', 'avanceParroquias' => $avanceParroquias], 200);
     }
 
-    function getAvanceParroquiaxCanton(Request $request) : JsonResponse
+    function getAvanceParroquiaxCanton(Request $request): JsonResponse
     {
         $avanceParroquias = DB::select('CALL getAvanceParroquiaxCanton(?)', [$request->canton_id]);
         return response()->json(['status' => 'success', 'avanceParroquias' => $avanceParroquias], 200);
     }
 
-    function getAvanceRecintos(Request $request) : JsonResponse
+    function getAvanceRecintos(Request $request): JsonResponse
     {
         $avanceRecintos = DB::select('CALL getAvanceRecinto(?)', [$request->parroquia_id]);
         return response()->json(['status' => 'success', 'avanceRecintos' => $avanceRecintos], 200);

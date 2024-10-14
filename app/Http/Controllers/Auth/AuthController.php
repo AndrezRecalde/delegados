@@ -23,6 +23,7 @@ class AuthController extends Controller
 
             $user = User::from('users as u')
                 ->selectRaw('u.id, u.nombres_completos, u.dni, r.name as role')
+                ->with(['cantones'])
                 ->join('model_has_roles as mhr', 'mhr.model_id', 'u.id')
                 ->join('roles as r', 'r.id', 'mhr.role_id')
                 ->where('u.dni', $request->dni)
@@ -49,6 +50,7 @@ class AuthController extends Controller
     {
         $user = User::from('users as u')
             ->selectRaw('u.id, u.nombres_completos, u.dni, r.name as role')
+            ->with(['cantones'])
             ->join('model_has_roles as mhr', 'mhr.model_id', 'u.id')
             ->join('roles as r', 'r.id', 'mhr.role_id')
             ->where('u.id', Auth::user()->id)
@@ -72,6 +74,7 @@ class AuthController extends Controller
     {
         $profile = User::from('users as u')
             ->selectRaw('u.id, u.nombres_completos, u.dni, r.name as role')
+            ->with(['cantones'])
             ->join('model_has_roles as mhr', 'mhr.model_id', 'u.id')
             ->join('roles as r', 'r.id', 'mhr.role_id')
             ->where('u.id', Auth::user()->id)

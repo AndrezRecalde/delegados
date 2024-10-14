@@ -1,4 +1,5 @@
 import { AuthenticationPage } from "./auth/AuthenticationPage";
+import { ProfilePage } from "./user/ProfilePage";
 
 import { CoordinadorPage } from "./coordinador/CoordinadorPage";
 import { SearchCoordPage } from "./coordinador/SearchCoordPage";
@@ -22,8 +23,13 @@ import { JrvreconteoPage } from "./jrv/reconteo/JrvreconteoPage";
 import { DashboardPage } from "./dashboard/DashboardPage";
 import { SummaryPage } from "./dashboard/SummaryPage";
 
+import { ErrorNotFound } from "./error/ErrorNotFound";
+import { ErrorAccessDenied } from "./error/ErrorAccessDenied";
+
+
 export {
   AuthenticationPage,
+  ProfilePage,
   CoordinadorPage,
   SearchCoordPage,
   EscanerPage,
@@ -38,5 +44,7 @@ export {
   JrvmovilPage,
   JrvreconteoPage,
   DashboardPage,
-  SummaryPage
+  SummaryPage,
+  ErrorNotFound,
+  ErrorAccessDenied
 };

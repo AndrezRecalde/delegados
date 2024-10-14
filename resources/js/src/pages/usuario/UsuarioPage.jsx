@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
     InfoHeader,
     ModalActivateUser,
@@ -6,7 +7,6 @@ import {
     TitlePage,
 } from "../../components";
 import { useUsuarioStore } from "../../hooks";
-import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export const UsuarioPage = () => {
@@ -22,7 +22,7 @@ export const UsuarioPage = () => {
         startLoadUsuarios();
 
         return () => {
-            startClearUsuarios();
+            //startClearUsuarios();
         };
     }, []);
 

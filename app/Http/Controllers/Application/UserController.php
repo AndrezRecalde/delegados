@@ -17,8 +17,11 @@ class UserController extends Controller
         $usuarios = User::from('users as u')
             ->selectRaw('u.id, u.nombres_completos, u.dni, u.activo')
             ->with([
-                'roles' => function($query){
-                    return $query->select('roles.id','roles.name');
+                'roles' => function ($query) {
+                    return $query->select('roles.id', 'roles.name');
+                },
+                'cantones' => function ($query) {
+                    return $query->select('cantones.id', 'cantones.nombre_canton');
                 }
             ])
             ->where('u.id', '<>', 1)
@@ -32,6 +35,11 @@ class UserController extends Controller
         try {
             $usuario = User::create($request->validated());
             $usuario->assignRole($request->roles);
+
+            if ($request->filled('cantones')) {
+                $usuario->cantones()->attach($request->cantones);
+            }
+
             return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
@@ -45,10 +53,17 @@ class UserController extends Controller
         try {
             if ($usuario) {
                 $usuario->update($request->validated());
+
                 if ($request->filled('roles')) {
                     $usuario->roles()->detach();
                     $usuario->assignRole($request->roles);
                 }
+
+                if ($request->filled('cantones')) {
+                    $usuario->cantones()->detach();
+                    $usuario->cantones()->sync($request->cantones);
+                }
+
                 return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
             } else {
                 return response()->json(['status' => 'error', 'msg' => 'No encontrado'], 404);

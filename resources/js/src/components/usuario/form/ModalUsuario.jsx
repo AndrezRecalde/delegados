@@ -1,18 +1,22 @@
+import { useEffect } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
 import { FormUsuario, TitlePage } from "../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { useUiUsuario, useUsuarioStore } from "../../../hooks";
+import { useRoleStore, useStateStore, useUiUsuario, useUsuarioStore } from "../../../hooks";
 
 export const ModalUsuario = () => {
     const theme = useMantineTheme();
     const { isOpenModalUser, modalActionUsuario } = useUiUsuario();
     const { setClearActivateUsuario } = useUsuarioStore();
+    const { startLoadRoles, startClearRoles } = useRoleStore();
+    const { startLoadCantones, starClearStates } = useStateStore();
 
     const form = useForm({
         initialValues: {
             nombres_completos: "",
             dni: "",
-            roles: "",
+            roles: [],
+            cantones: []
         },
         validate: {
             nombres_completos: isNotEmpty("Por favor ingresa los nombres"),
@@ -20,6 +24,18 @@ export const ModalUsuario = () => {
             roles: isNotEmpty("Por favor selecciona uno o varios roles"),
         },
     });
+
+    useEffect(() => {
+        if (isOpenModalUser) {
+            startLoadRoles();
+            startLoadCantones();
+        }
+
+        return () => {
+            //startClearRoles();
+            //starClearStates();
+        };
+    }, [isOpenModalUser]);
 
     const handleCloseModalUsuario = () => {
         form.reset();

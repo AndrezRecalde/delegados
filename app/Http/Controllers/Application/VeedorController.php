@@ -14,17 +14,23 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VeedorController extends Controller
 {
-    function getVeedores(): JsonResponse
+    function getVeedores(Request $request): JsonResponse
     {
+        $cantones = $request->input('cantones', []);
+
         $veedores = Veedor::from('veedores as veed')
             ->selectRaw('veed.id, veed.nombres_completos, veed.dni, veed.telefono,
                         veed.coordinador_id, coord.nombres_completos as coordinador,
                         veed.canton_id, c.nombre_canton as canton, veed.recinto_id,
                         r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado')
-            ->join('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
+            ->leftJoin('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
+            ->when(!empty($cantones), function ($query) use ($cantones) {
+                // Aplica el scope de whereIn para los cantones
+                return $query->whereInCantones($cantones);
+            })
             ->orderBy('veed.id', 'DESC')
             ->get();
 

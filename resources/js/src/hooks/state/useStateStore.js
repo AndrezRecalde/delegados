@@ -14,11 +14,11 @@ export const useStateStore = () => {
     );
     const dispatch = useDispatch();
 
-    const startLoadCantones = async () => {
+    const startLoadCantones = async (cantones = []) => {
         try {
-            const { data } = await eleccionApi.get("/cantones");
-            const { cantones } = data;
-            dispatch(onLoadCantones(cantones));
+            const { data } = await eleccionApi.post("/cantones", { cantones });
+            const { cantones: cantonesLoaded } = data;
+            dispatch(onLoadCantones(cantonesLoaded));
         } catch (error) {
             //console.log(error);
             Swal.fire({
@@ -66,9 +66,11 @@ export const useStateStore = () => {
         }
     };
 
-    const startLoadAllRecintos = async(canton_id) => {
+    const startLoadAllRecintos = async (canton_id) => {
         try {
-            const { data } = await eleccionApi.post("/todos/recintos", {canton_id});
+            const { data } = await eleccionApi.post("/todos/recintos", {
+                canton_id,
+            });
             const { recintos } = data;
             dispatch(onLoadRecintos(recintos));
         } catch (error) {
@@ -79,7 +81,7 @@ export const useStateStore = () => {
                 confirmButtonColor: "#c81d11",
             });
         }
-    }
+    };
 
     const starClearStates = () => {
         dispatch(onClearStates());
@@ -94,6 +96,6 @@ export const useStateStore = () => {
         startLoadParroquias,
         startLoadRecintos,
         startLoadAllRecintos,
-        starClearStates
+        starClearStates,
     };
 };

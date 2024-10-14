@@ -6,18 +6,12 @@ import {
     rem,
 } from "@mantine/core";
 import {
-    IconChartDonutFilled,
-    IconEyeDown,
-    IconEyePin,
-    IconEyeShare,
-    IconListCheck,
-    IconListDetails,
     IconLogout,
-    IconScan,
 } from "@tabler/icons-react";
 import { LinksGroup } from "./LinksGroup";
 import { useAuthStore } from "../../hooks";
 import { TitlePage } from "../../components";
+import { routes } from "./routes";
 
 const useStyles = createStyles((theme) => ({
     navbar: {
@@ -96,72 +90,14 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-const mockdata = [
-    {
-        label: "Dashboard",
-        icon: IconChartDonutFilled,
-        links: [
-            { label: "Dashboard", link: "/dashboard" },
-            { label: "Ver resúmen", link: "/dashboard/summary" },
-        ],
-    },
-    {
-        label: "Supervisores",
-        icon: IconListCheck,
-        initiallyOpened: true,
-        links: [
-            { label: "Ver supervisores", link: "/supervisores" },
-            { label: "Exportar supervisores", link: "/export/supervisores" },
-        ],
-    },
-    {
-        label: "Coordinadores",
-        icon: IconListDetails,
-        initiallyOpened: true,
-        links: [
-            { label: "Ver coordinadores", link: "/coordinadores" },
-            { label: "Exportar coordinadores", link: "/export/coordinadores" },
-        ],
-    },
-    {
-        label: "Delegados",
-        icon: IconEyeShare,
-        initiallyOpened: true,
-        links: [
-            { label: "Ver delegados", link: "/jrv/delegados" },
-            { label: "Exportar delegados", link: "/export/delegados" },
-        ],
-    },
-    {
-        label: "JRV Móviles",
-        icon: IconEyePin,
-        initiallyOpened: true,
-        links: [
-            { label: "Ver JRV Móviles", link: "/jrv/moviles" },
-        ],
-    },
-    {
-        label: "JRV Reconteo",
-        icon: IconEyeDown,
-        initiallyOpened: false,
-        links: [
-            { label: "Ver JRV Reconteo", link: "/jrv/reconteos" },
-        ],
-    },
-    {
-        label: "Escaneadores",
-        icon: IconScan,
-        initiallyOpened: false,
-        links: [
-            { label: "Ver Escaneadores", link: "/escaneadores" },
-            { label: "Exportar escaneadores", link: "/export/escaneadores" },
-        ],
-    },
-];
 
-export const NavbarSegmented = ({ opened }) => {
+
+export const NavbarSegmented = ({ opened, role }) => {
     const { startLogout } = useAuthStore();
     const { classes } = useStyles();
+
+    const mockdata = routes.filter(ruta => ruta.role === role)
+
     const links = mockdata.map((item) => (
         <LinksGroup {...item} key={item.label} />
     ));

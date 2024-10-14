@@ -21,12 +21,19 @@ export const SearchVeedPage = () => {
 
     const form = useForm({
         initialValues: {
-            canton_id: 0,
-            parroquia_id: 0,
-            recinto_id: 0,
-            coordinador_id: 0,
-            supervisor_id: 0,
+            canton_id: null,
+            parroquia_id: null,
+            recinto_id: null,
+            coordinador_id: null,
+            supervisor_id: null,
         },
+        transformValues: (values) => ({
+            canton_id: Number(values.canton_id) || [],
+            parroquia_id: Number(values.parroquia_id) || null,
+            recinto_id: Number(values.recinto_id) || null,
+            coordinador_id: Number(values.coordinador_id) || null,
+            supervisor_id: Number(values.supervisor_id) || null,
+        }),
     });
 
     useEffect(() => {

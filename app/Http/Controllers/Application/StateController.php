@@ -10,9 +10,17 @@ use Illuminate\Http\Request;
 
 class StateController extends Controller
 {
-    public function getCantones()
+    public function getCantones(Request $request)
     {
-        $cantones = Canton::where('activo', 1)->get(['id', 'nombre_canton']);
+        // Verifica si hay un array de IDs en el request
+        $cantones = $request->input('cantones', []);
+
+        // Si hay IDs, filtramos por esos IDs, sino obtenemos todos los cantones activos
+        $cantones = Canton::where('activo', 1)
+            ->when(!empty($cantones), function ($query) use ($cantones) {
+                $query->whereInCantones($cantones);
+            })
+            ->get(['id', 'nombre_canton']);
 
         return response()->json(['status' => 'success', 'cantones' => $cantones], 200);
     }
@@ -34,11 +42,11 @@ class StateController extends Controller
     public function getAllRecintos(Request $request)
     {
         $recintos = Recinto::from('recintos as r')
-                ->join('parroquias as parr', 'parr.id', 'r.parroquia_id')
-                ->join('cantones as c', 'c.id', 'parr.canton_id')
-                ->where('c.id', $request->canton_id)
-                ->selectRaw('r.id, r.nombre_recinto')
-                ->get();
+            ->join('parroquias as parr', 'parr.id', 'r.parroquia_id')
+            ->join('cantones as c', 'c.id', 'parr.canton_id')
+            ->where('c.id', $request->canton_id)
+            ->selectRaw('r.id, r.nombre_recinto')
+            ->get();
 
         return response()->json(['status' => 'success', 'recintos' => $recintos], 200);
     }

@@ -62,11 +62,11 @@ export function User() {
     };
 
     const changePassword = () => {
-        navigate("/change-password");
+        navigate("/space/change-password");
     };
 
     const navigateForUsers = () => {
-        navigate("/usuarios");
+        navigate("/gerencia/usuarios");
     };
 
     return (

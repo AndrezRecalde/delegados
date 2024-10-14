@@ -90,7 +90,7 @@ export const DashboardPage = () => {
                                 <Card.Section withBorder inheritPadding py="lg">
                                     <TitlePage ta="center" order={5}>
                                         Faltan{" "}
-                                        {totalJuntas.totalJuntas -
+                                        {totalJuntas -
                                             totalVeedores}{" "}
                                         delegados de ingresar
                                     </TitlePage>

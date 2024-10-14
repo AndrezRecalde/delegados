@@ -28,7 +28,7 @@ export const ModalImportJrvmovil = () => {
         <Modal
             opened={isOpenModalImportJrvmovil}
             onClose={handleCloseModalImport}
-            title={<TitlePage title="Importar JRV Móviles" fz={14} fw={700} />}
+            title={<TitlePage ta="left" order={3}>Importar JRV Móviles</TitlePage>}
             centered
             overlayProps={{
                 color:

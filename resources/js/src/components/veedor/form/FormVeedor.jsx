@@ -12,6 +12,7 @@ import { BtnSubmit } from "../../../components";
 
 export const FormVeedor = ({ form }) => {
     const { canton_id, recinto_id } = form.values;
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { coordinadores, startLoadCoordsForCanton } = useCoordinadorStore();
     const { startAddVeedor, activateVeedor } = useVeedorStore();
     const { modalActionVeedor } = useUiVeedor();
@@ -20,6 +21,11 @@ export const FormVeedor = ({ form }) => {
     const { juntas, startLoadJuntas } = useJuntaStore();
 
     useEffect(() => {
+        if (usuario.role !== "Administrador") {
+            const cantonesIds = usuario.cantones.map((canton) => canton.id);
+            startLoadCantones(cantonesIds);
+            return;
+        }
         startLoadCantones();
     }, []);
 

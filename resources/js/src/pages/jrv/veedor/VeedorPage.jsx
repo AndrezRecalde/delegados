@@ -11,6 +11,7 @@ import { useVeedorStore } from "../../../hooks";
 import Swal from "sweetalert2";
 
 export const VeedorPage = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const {
         veedores,
         startLoadVeedores,
@@ -20,6 +21,13 @@ export const VeedorPage = () => {
     } = useVeedorStore();
 
     useEffect(() => {
+        // Si el usuario no es "Administrador", cargamos los veedores por cantones
+        if (usuario.role !== "Administrador") {
+            const cantonesIds = usuario.cantones.map((canton) => canton.id); // Extraemos los IDs de cantones
+            startLoadVeedores(cantonesIds); // Pasamos los IDs de los cantones
+            return;
+        }
+        // Si el usuario es "Administrador", cargamos todos los veedores
         startLoadVeedores();
 
         return () => {

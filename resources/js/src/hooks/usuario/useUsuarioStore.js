@@ -14,7 +14,7 @@ import { useErrorException } from "../../hooks";
 import eleccionApi from "../../api/eleccionApi";
 
 export const useUsuarioStore = () => {
-    const { isLoading, usuarios, activeUsuario, errores } = useSelector(
+    const { isLoading, usuarios, activeUsuario, message, errores } = useSelector(
         (state) => state.usuario
     );
 
@@ -126,6 +126,7 @@ export const useUsuarioStore = () => {
         isLoading,
         usuarios,
         activeUsuario,
+        message,
         errores,
 
         startLoadUsuarios,

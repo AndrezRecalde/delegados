@@ -52,8 +52,8 @@ Route::group(
         Route::get('/avance/parroquias',  [DashboardController::class, 'getAvanceParroquial']);
         Route::post('/avance/parroquia',  [DashboardController::class, 'getAvanceParroquiaxCanton']);
         Route::post('/avance/recintos',  [DashboardController::class, 'getAvanceRecintos']);
-
-
+        Route::post('/totales/veedores/cantones', [DashboardController::class, 'getTotalVeedoresForCantones']);
+        Route::post('/totales/juntas/cantones', [DashboardController::class, 'getTotalJuntasForCantones']);
 
 
         /* Usuarios */
@@ -71,7 +71,7 @@ Route::group(
         Route::post('/juntas/recinto', [JuntaController::class, 'getJuntas']);
 
         /* States */
-        Route::get('cantones', [StateController::class, 'getCantones']);
+        Route::post('cantones', [StateController::class, 'getCantones']);
         Route::post('parroquias', [StateController::class, 'getParroquias']);
         Route::post('recintos', [StateController::class, 'getRecintos']);
         Route::post('/todos/recintos', [StateController::class, 'getAllRecintos']);
@@ -97,7 +97,7 @@ Route::group(
         Route::post('/coordinadores/export/excel', [CoordinadorController::class, 'exportExcelCoordinadores']);
 
         /* Veedores */
-        Route::get('/veedores/listar', [VeedorController::class, 'getVeedores']);
+        Route::post('/veedores/listar', [VeedorController::class, 'getVeedores']);
         Route::post('/veedor/create',  [VeedorController::class, 'store']);
         Route::put('/veedor/update/{id}',   [VeedorController::class, 'update']);
         Route::delete('/veedor/delete/{id}', [VeedorController::class, 'destroy']);
@@ -105,6 +105,7 @@ Route::group(
         Route::put('/veedor/update/confirmado/{id}', [VeedorController::class, 'updateConfirmado']);
         Route::post('/veedores/import', [VeedorController::class, 'massiveStore']);
         Route::post('/veedores/export/excel', [VeedorController::class, 'exportExcelVeedores']);
+
 
 
         /* Escaneadores */

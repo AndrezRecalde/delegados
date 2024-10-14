@@ -15,6 +15,7 @@ import { BtnSubmit } from "../../../../components";
 import { useUiVeedor, useVeedorStore } from "../../../../hooks";
 
 export const FormActivarVeed = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActivateVeed } = useUiVeedor();
     const { activateVeedor, startUpdateConfirmVeed } = useVeedorStore();
 
@@ -38,7 +39,8 @@ export const FormActivarVeed = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        startUpdateConfirmVeed(form.values);
+        const cantonesIds = usuario.cantones.map((canton) => canton.id);
+        startUpdateConfirmVeed(cantonesIds, form.values);
         form.reset();
         modalActionActivateVeed(0);
     };

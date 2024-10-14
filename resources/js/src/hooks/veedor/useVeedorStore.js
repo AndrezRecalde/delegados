@@ -22,10 +22,12 @@ export const useVeedorStore = () => {
 
     const dispatch = useDispatch();
 
-    const startLoadVeedores = async () => {
+    const startLoadVeedores = async (cantones = []) => {
         dispatch(onLoading(true));
         try {
-            const { data } = await eleccionApi.get("/veedores/listar");
+            const { data } = await eleccionApi.post("/veedores/listar", {
+                cantones
+            });
             const { veedores } = data;
             dispatch(onVeedores(veedores));
         } catch (error) {
@@ -77,7 +79,7 @@ export const useVeedorStore = () => {
         }
     };
 
-    const startUpdateConfirmVeed = async (veedor) => {
+    const startUpdateConfirmVeed = async (cantones, veedor) => {
         try {
             const { data } = await eleccionApi.put(
                 `/veedor/update/confirmado/${veedor.id}`,
@@ -88,6 +90,7 @@ export const useVeedorStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
             //dispatch(onDeleteVeedor(veedor));
+            startLoadVeedores(cantones);
             setClearActivateVeedor();
         } catch (error) {
             console.log(error);
@@ -96,15 +99,17 @@ export const useVeedorStore = () => {
     };
 
     const startSearchVeedor = async ({
-        canton_id,
-        recinto_id,
-        supervisor_id,
-        coordinador_id,
+        canton_id = [],
+        parroquia_id = null,
+        recinto_id = null,
+        supervisor_id = null,
+        coordinador_id = null,
     }) => {
         try {
             dispatch(onLoading(true));
             const { data } = await eleccionApi.post("/veedores/search", {
                 canton_id,
+                parroquia_id,
                 recinto_id,
                 supervisor_id,
                 coordinador_id,
