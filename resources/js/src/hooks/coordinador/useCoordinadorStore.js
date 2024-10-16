@@ -29,7 +29,7 @@ export const useCoordinadorStore = () => {
             const { coordinadores } = data;
             dispatch(onCoordinadores(coordinadores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -43,7 +43,7 @@ export const useCoordinadorStore = () => {
             const { coordinadores } = data;
             dispatch(onCoordinadores(coordinadores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -72,7 +72,7 @@ export const useCoordinadorStore = () => {
             }, 40);
             startLoadCoordinadores();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -89,7 +89,7 @@ export const useCoordinadorStore = () => {
             }, 40);
             setClearActivateCoordinador();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -111,7 +111,7 @@ export const useCoordinadorStore = () => {
             const { coordinadores } = data;
             dispatch(onCoordinadores(coordinadores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -131,7 +131,7 @@ export const useCoordinadorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -151,7 +151,7 @@ export const useCoordinadorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -173,7 +173,7 @@ export const useCoordinadorStore = () => {
             }, 40);
             startLoadCoordinadores();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -194,7 +194,7 @@ export const useCoordinadorStore = () => {
             window.open(url, "_blank");
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

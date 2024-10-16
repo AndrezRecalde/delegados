@@ -33,7 +33,7 @@ export const useReconteoStore = () => {
             const { jrvreconteos } = data;
             dispatch(onReconteos(jrvreconteos));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -62,7 +62,7 @@ export const useReconteoStore = () => {
             }, 40);
             startLoadJrvReconteos();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -78,7 +78,7 @@ export const useReconteoStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -98,7 +98,7 @@ export const useReconteoStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -122,7 +122,7 @@ export const useReconteoStore = () => {
             }, 40);
             startLoadJrvReconteos();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -139,7 +139,7 @@ export const useReconteoStore = () => {
             );
             window.open(url, "_blank");
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

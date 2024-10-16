@@ -13,6 +13,7 @@ export const routes = [
     {
         label: "Dashboard",
         icon: IconChartDonutFilled,
+        initiallyOpened: true,
         links: [
             { label: "Dashboard", link: "/gerencia/dashboard" },
             { label: "Ver resúmen", link: "/gerencia/dashboard/summary" },
@@ -72,7 +73,7 @@ export const routes = [
     {
         label: "Escaneadores",
         icon: IconScan,
-        initiallyOpened: false,
+        initiallyOpened: true,
         links: [
             { label: "Ver Escaneadores", link: "/gerencia/escaneadores" },
             {
@@ -82,7 +83,15 @@ export const routes = [
         ],
         role: ROLES.ADMIN,
     },
-
+    {
+        label: "Perfil (C)",
+        icon: IconEyeShare,
+        initiallyOpened: true,
+        links: [
+            { label: "Ver Perfil", link: "/space/profile" },
+        ],
+        role: ROLES.COORDINADOR,
+    },
 
     {
         label: "Delegados (C)",
@@ -93,6 +102,16 @@ export const routes = [
             { label: "Exportar delegados", link: "/coordinador/export/delegados" },
         ],
         role: ROLES.COORDINADOR,
+    },
+
+    {
+        label: "Perfil (S)",
+        icon: IconEyeShare,
+        initiallyOpened: true,
+        links: [
+            { label: "Ver Perfil", link: "/space/profile" },
+        ],
+        role: ROLES.SUPERVISOR,
     },
 
     {

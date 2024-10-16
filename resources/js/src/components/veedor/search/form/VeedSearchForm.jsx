@@ -51,7 +51,7 @@ export const VeedSearchForm = ({ form }) => {
 
     // Cargar parroquias cuando cambia el cantón
     useEffect(() => {
-        console.log(canton_id);
+        //console.log(canton_id);
         startLoadParroquias(canton_id);
         form.setFieldValue("parroquia_id", 0);
     }, [canton_id]);
@@ -69,12 +69,12 @@ export const VeedSearchForm = ({ form }) => {
             if (!canton_id && !parroquia_id && !recinto_id) {
                 const cantonesIds = usuario.cantones.map((canton) => canton.id);
                 startSearchVeedor({ canton_id: cantonesIds });
-                console.log("aqui llega 1 ");
+                //console.log("aqui llega 1 ");
                 return;
             }
         }
-        console.log("aqui llega 2");
-        console.log(form.getTransformedValues());
+        //console.log("aqui llega 2");
+        //console.log(form.getTransformedValues());
         startSearchVeedor(form.getTransformedValues());
     };
 

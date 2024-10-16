@@ -31,7 +31,7 @@ export const useVeedorStore = () => {
             const { veedores } = data;
             dispatch(onVeedores(veedores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -58,7 +58,7 @@ export const useVeedorStore = () => {
             }, 40);
             startLoadVeedores();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -74,7 +74,7 @@ export const useVeedorStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -93,7 +93,7 @@ export const useVeedorStore = () => {
             startLoadVeedores(cantones);
             setClearActivateVeedor();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -118,7 +118,7 @@ export const useVeedorStore = () => {
             const { veedores } = data;
             dispatch(onVeedores(veedores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -138,7 +138,7 @@ export const useVeedorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -158,7 +158,7 @@ export const useVeedorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -182,7 +182,7 @@ export const useVeedorStore = () => {
             }, 40);
             startLoadVeedores();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -203,7 +203,7 @@ export const useVeedorStore = () => {
             window.open(url, "_blank");
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

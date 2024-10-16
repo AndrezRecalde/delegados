@@ -93,7 +93,7 @@ export const ProfilePage = () => {
                 </Card.Section>
                 <Card.Section withBorder inheritPadding py="lg">
                     <TitlePage ta="center" order={5}>
-                        Faltan {totalJuntas - totalVeedores} delegados de
+                        Faltan {Math.max(totalJuntas - totalVeedores, 0)} delegados de
                         ingresar
                     </TitlePage>
                 </Card.Section>

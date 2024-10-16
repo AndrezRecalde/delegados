@@ -35,7 +35,7 @@ export const useEscanerStore = () => {
             const { escaneadores } = data;
             dispatch(onEscaneadores(escaneadores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -64,7 +64,7 @@ export const useEscanerStore = () => {
             }, 40);
             startLoadEscaneres();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -81,7 +81,7 @@ export const useEscanerStore = () => {
             dispatch(onDeleteEscaneador());
             setClearActivateEscaner();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -95,7 +95,7 @@ export const useEscanerStore = () => {
             const { escaneadores } = data;
             dispatch(onEscaneadores(escaneadores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -115,7 +115,7 @@ export const useEscanerStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -135,7 +135,7 @@ export const useEscanerStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -159,7 +159,7 @@ export const useEscanerStore = () => {
             }, 40);
             startLoadEscaneres();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -180,7 +180,7 @@ export const useEscanerStore = () => {
             window.open(url, "_blank");
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

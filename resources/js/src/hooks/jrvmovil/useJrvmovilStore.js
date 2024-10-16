@@ -31,7 +31,7 @@ export const useJrvmovilStore = () => {
             const { jrvmoviles } = data;
             dispatch(onJrvmoviles(jrvmoviles));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -60,7 +60,7 @@ export const useJrvmovilStore = () => {
             }, 40);
             startLoadJrvmoviles();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -76,7 +76,7 @@ export const useJrvmovilStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -96,7 +96,7 @@ export const useJrvmovilStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -120,7 +120,7 @@ export const useJrvmovilStore = () => {
             }, 40);
             startLoadJrvmoviles();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -137,7 +137,7 @@ export const useJrvmovilStore = () => {
             );
             window.open(url, "_blank");
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

@@ -29,7 +29,7 @@ export const useUsuarioStore = () => {
             const { usuarios } = data;
             dispatch(onUsuarios(usuarios));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -56,7 +56,7 @@ export const useUsuarioStore = () => {
             }, 40);
             startLoadUsuarios();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -73,7 +73,7 @@ export const useUsuarioStore = () => {
             }, 40);
             startLoadUsuarios();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -93,7 +93,7 @@ export const useUsuarioStore = () => {
             }, 40);
             dispatch(onDeleteUsuario());
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -109,7 +109,7 @@ export const useUsuarioStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

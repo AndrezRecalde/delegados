@@ -37,7 +37,7 @@ export const useSupervisorStore = () => {
             const { supervisores } = data;
             dispatch(onSupervisores(supervisores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -80,7 +80,7 @@ export const useSupervisorStore = () => {
             }, 40);
             startLoadSupervisores({});
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -97,7 +97,7 @@ export const useSupervisorStore = () => {
             }, 40);
             setClearActivateSupervisor();
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -113,7 +113,7 @@ export const useSupervisorStore = () => {
             const { supervisores } = data;
             dispatch(onSupervisores(supervisores));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -134,7 +134,7 @@ export const useSupervisorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -154,7 +154,7 @@ export const useSupervisorStore = () => {
             window.URL.revokeObjectURL(url);
             dispatch(onExport(false));
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };
@@ -178,7 +178,7 @@ export const useSupervisorStore = () => {
             }, 40);
             startLoadSupervisores({});
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             ExceptionMessageError(error);
         }
     };

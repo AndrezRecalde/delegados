@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Coordinador extends Model
 {
@@ -21,6 +22,10 @@ class Coordinador extends Model
         'canton_id',
         'parroquia_id'
     ];
+
+    function veedores() : HasMany {
+        return $this->hasMany(Veedor::class);
+    }
 
     function recintos(): BelongsToMany
     {
@@ -60,6 +65,7 @@ class Coordinador extends Model
         parent::boot();
         static::deleting(function ($coordinador) {
             $coordinador->recintos()->detach();
+            $coordinador->veedores()->detach();
         });
     }
 }
