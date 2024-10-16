@@ -39,6 +39,7 @@ export const useSupervisorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -115,6 +116,7 @@ export const useSupervisorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -136,6 +138,7 @@ export const useSupervisorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
@@ -156,6 +159,7 @@ export const useSupervisorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 

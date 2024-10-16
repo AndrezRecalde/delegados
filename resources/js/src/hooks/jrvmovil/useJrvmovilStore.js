@@ -16,9 +16,8 @@ import eleccionApi from "../../api/eleccionApi";
 import { useErrorException } from "../../hooks";
 
 export const useJrvmovilStore = () => {
-    const { isLoading, isExport, jrvmoviles, activateJrvmovil, errores } = useSelector(
-        (state) => state.jrvmovil
-    );
+    const { isLoading, isExport, jrvmoviles, activateJrvmovil, errores } =
+        useSelector((state) => state.jrvmovil);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -33,6 +32,7 @@ export const useJrvmovilStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -98,6 +98,7 @@ export const useJrvmovilStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
@@ -126,6 +127,7 @@ export const useJrvmovilStore = () => {
     };
 
     const exportExcelJrvmoviles = async () => {
+        dispatch(onExport(true));
         try {
             const response = await eleccionApi.get("/jrvmoviles/export/excel", {
                 responseType: "blob",
@@ -139,6 +141,7 @@ export const useJrvmovilStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 

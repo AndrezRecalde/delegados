@@ -26,13 +26,14 @@ export const useVeedorStore = () => {
         dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.post("/veedores/listar", {
-                cantones
+                cantones,
             });
             const { veedores } = data;
             dispatch(onVeedores(veedores));
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -120,6 +121,7 @@ export const useVeedorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -140,6 +142,7 @@ export const useVeedorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
@@ -160,6 +163,7 @@ export const useVeedorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
@@ -205,6 +209,7 @@ export const useVeedorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 

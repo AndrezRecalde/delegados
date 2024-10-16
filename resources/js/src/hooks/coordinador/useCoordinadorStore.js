@@ -15,8 +15,14 @@ import { useErrorException } from "../../hooks";
 import eleccionApi from "../../api/eleccionApi";
 
 export const useCoordinadorStore = () => {
-    const { isLoading, isExport, coordinadores, activateCoordinador, message, errores } =
-        useSelector((state) => state.coordinador);
+    const {
+        isLoading,
+        isExport,
+        coordinadores,
+        activateCoordinador,
+        message,
+        errores,
+    } = useSelector((state) => state.coordinador);
 
     const { ExceptionMessageError } = useErrorException(onLoadErrores);
 
@@ -31,6 +37,7 @@ export const useCoordinadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -45,6 +52,7 @@ export const useCoordinadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -113,6 +121,7 @@ export const useCoordinadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onLoading(false));
         }
     };
 
@@ -133,6 +142,7 @@ export const useCoordinadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
@@ -153,6 +163,7 @@ export const useCoordinadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
@@ -196,6 +207,7 @@ export const useCoordinadorStore = () => {
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
+            dispatch(onExport(false));
         }
     };
 
