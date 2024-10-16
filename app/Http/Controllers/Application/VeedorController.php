@@ -124,9 +124,9 @@ class VeedorController extends Controller
             ->get();
 
         if (sizeof($veedores) >= 1) {
-            return response()->json(['status' => 'success', 'veedores' => $veedores]);
+            return response()->json(['status' => 'success', 'veedores' => $veedores], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => 'No existen veedores en esa zona']);
+            return response()->json(['status' => 'error', 'msg' => 'No existen veedores en esa zona'], 404);
         }
     }
 

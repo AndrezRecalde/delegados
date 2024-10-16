@@ -121,9 +121,9 @@ class CoordinadorController extends Controller
             ->get();
 
         if (sizeof($coordinadores) >= 1) {
-            return response()->json(['status' => 'success', 'coordinadores' => $coordinadores], 201);
+            return response()->json(['status' => 'success', 'coordinadores' => $coordinadores], 200);
         } else {
-            return response()->json(['status' => 'error', 'msg' => "No existen supervisores en esa zona"], 201);
+            return response()->json(['status' => 'error', 'msg' => "No existen supervisores en esa zona"], 404);
         }
     }
 

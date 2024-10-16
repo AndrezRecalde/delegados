@@ -28,7 +28,7 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                 filterVariant: "autocomplete",
             },
             {
-                accessorFn: (row) => row.telefono || "No registra...",
+                accessorFn: (row) => row?.telefono || "No registra...",
                 header: "Teléfono",
                 wrap: true,
             },
