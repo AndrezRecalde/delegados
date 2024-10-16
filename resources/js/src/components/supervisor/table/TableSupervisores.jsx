@@ -27,7 +27,7 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
                 wrap: true,
             },
             {
-                accessorKey: "telefono",
+                accessorFn: (row) => row.telefono || "No registra...",
                 header: "Teléfono",
                 wrap: true,
             },

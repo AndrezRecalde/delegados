@@ -25,7 +25,7 @@ export const ModalCoordinador = () => {
                 "Por favor ingresa los apellidos y nombres"
             ),
             dni: isNotEmpty("Por favor ingresa el número de cedula"),
-            telefono: isNotEmpty("Por favor ingresa el número de telefono"),
+            //telefono: isNotEmpty("Por favor ingresa el número de telefono"),
             supervisor_id: isNotEmpty("Por favor selecciona un supervisor"),
             canton_id: isNotEmpty("Por favor ingrese un cantón"),
             parroquia_id: isNotEmpty("Por favor ingrese una parroquia"),

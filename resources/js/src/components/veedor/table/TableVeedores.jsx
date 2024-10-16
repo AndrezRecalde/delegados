@@ -7,7 +7,7 @@ import {
     SectionImport,
 } from "../../../components";
 import { useUiVeedor, useVeedorStore } from "../../../hooks";
-import { Group } from "@mantine/core";
+import { Group, Table } from "@mantine/core";
 
 export const TableVeedores = ({ viewBtn = 1 }) => {
     const {
@@ -52,7 +52,7 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
                 wrap: true,
             },
             {
-                accessorFn: (row) => row.telefono !== null ? row.telefono : "Sin Registrar",
+                accessorFn: (row) => row.telefono || "No registra...",
                 header: "Teléfono",
                 wrap: true,
             },
@@ -116,11 +116,28 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
     const table = useMantineReactTable({
         columns,
         data: veedores,
-        enableFacetedValues: true,
+        //enableFacetedValues: true,
         enableColumnOrdering: true,
         enableRowActions: true,
         positionActionsColumn: viewBtn === 1 ? "last" : null,
         state: { showProgressBars: isLoading },
+        renderDetailPanel: ({ row }) => (
+            <Table horizontalSpacing="lg" withBorder withColumnBorders>
+                <thead>
+                    <tr>
+                        <th>Usuario que ingresó</th>
+                        <th>Usuario que actualizó</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{row.original.usuario_created || "No registra..."}</td>
+                        <td>{row.original.usuario_updated || "No registra..."}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </Table>
+        ),
         renderRowActionMenuItems: ({ row }) =>
             viewBtn === 1 ? (
                 <ActionsTable

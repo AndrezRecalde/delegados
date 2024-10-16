@@ -19,7 +19,9 @@ class Veedor extends Model
         'canton_id',
         'recinto_id',
         'junta_id',
-        'confirmado'
+        'confirmado',
+        'created_by',
+        'updated_by'
     ];
 
     function scopeCanton($query, $canton_id)

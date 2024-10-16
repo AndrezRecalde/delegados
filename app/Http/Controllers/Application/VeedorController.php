@@ -10,6 +10,7 @@ use App\Imports\VeedoresImport;
 use App\Models\Veedor;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class VeedorController extends Controller
@@ -22,11 +23,14 @@ class VeedorController extends Controller
             ->selectRaw('veed.id, veed.nombres_completos, veed.dni, veed.telefono,
                         veed.coordinador_id, coord.nombres_completos as coordinador,
                         veed.canton_id, c.nombre_canton as canton, veed.recinto_id,
-                        r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado')
+                        r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado,
+                        u.nombres_completos as usuario_created, us.nombres_completos as usuario_updated')
             ->leftJoin('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
+            ->leftJoin('users as u', 'u.id', 'veed.created_by')
+            ->leftJoin('users as us', 'us.id', 'veed.updated_by')
             ->when(!empty($cantones), function ($query) use ($cantones) {
                 // Aplica el scope de whereIn para los cantones
                 return $query->whereInCantones($cantones);
@@ -40,7 +44,9 @@ class VeedorController extends Controller
     function store(VeedorRequest $request): JsonResponse
     {
         try {
-            Veedor::create($request->validated());
+            $data = $request->validated();
+            $data['created_by'] = Auth::id();
+            Veedor::create($data);
             return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
@@ -51,8 +57,18 @@ class VeedorController extends Controller
     {
         $veedor = Veedor::find($id);
         if ($veedor) {
-            $veedor->update($request->validated());
-            return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+            try {
+                // Agregar el id del usuario autenticado al array validado antes de actualizar el registro
+                $data = $request->validated();
+                $data['updated_by'] = Auth::id();
+
+                // Actualizar el registro con los datos y el id del actualizador
+                $veedor->update($data);
+
+                return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
+            } catch (\Throwable $th) {
+                return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
+            }
         } else {
             return response()->json(['status' => 'error', 'msg' => 'No encontrado'], 404);
         }
@@ -89,6 +105,8 @@ class VeedorController extends Controller
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
+            ->leftJoin('users as u', 'u.id', 'veed.created_by')
+            ->leftJoin('users as us', 'us.id', 'veed.updated_by')
             ->canton($request->canton_id)
             ->parroquia($request->parroquia_id)
             ->recinto($request->recinto_id)
@@ -100,7 +118,8 @@ class VeedorController extends Controller
                         coord.nombres_completos as coordinador,
                         c.nombre_canton as canton,
                         r.nombre_recinto as recinto,
-                        veed.confirmado, veed.junta_id, j.junta_nombre as junta')
+                        veed.confirmado, veed.junta_id, j.junta_nombre as junta,
+                        u.nombres_completos as usuario_created, us.nombres_completos as usuario_updated')
             ->orderBy('veed.id', 'DESC')
             ->get();
 
