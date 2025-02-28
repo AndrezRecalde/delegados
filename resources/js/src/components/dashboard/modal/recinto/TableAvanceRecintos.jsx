@@ -64,7 +64,7 @@ export const TableAvanceRecintos = () => {
                 </td>
                 <td>{row.total_veed !== null ? row.total_veed : 0}</td>
                 <td>{row.total_juntas}</td>
-                <td>{row.total_veed !== null ? row.total_veed.toFixed(0) * 20 : 0}</td>
+                <td>{row.total_veed !== null ? row.total_veed.toFixed(0) * 30 : 0}</td>
                 <td>
                     <Group position="apart">
                         <Text fz="xs" c="teal.7" weight={700}>
@@ -123,7 +123,7 @@ export const TableAvanceRecintos = () => {
                     <tbody>
                         <tr>
                           <td><Text fz="xs" c="teal.7" weight={700}>TOTAL (20 USD)</Text></td>
-                          <td>{totales * 20} USD</td>
+                          <td>{totales * 30} USD</td>
                         </tr>
                     </tbody>
                 </Table>

@@ -58,13 +58,13 @@ export const StatPayrollCoords = () => {
                     Monetización general de coordinadores
                 </Text>
                 <Text c="dimmed" ta="center" fz="lg">
-                    {`${totalCoordinadores * 20} USD`}
+                    {`${totalCoordinadores * 30} USD`}
                 </Text>
 
                 <Group position="center" mt="md">
                     {/* <Text fz="sm">20 / 36 km</Text> */}
                     <Badge size="md" color="indigo.7">
-                        Al valor actual de 20 USD
+                        Al valor actual de 30 USD
                     </Badge>
                 </Group>
             </Paper>

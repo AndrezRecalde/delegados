@@ -78,14 +78,14 @@ export const TableAvanceParroquial = () => {
             {
                 accessorFn: (row) =>
                     row.total_veed !== null
-                        ? row.total_veed.toFixed(0) * 20
+                        ? row.total_veed.toFixed(0) * 30
                         : 0,
                 header: "Monetización (20 USD)",
                 wrap: true,
                 Footer: () => (
                     <Stack>
                         Total:
-                        <Box color="orange">{totalVeedSum * 20} USD</Box>
+                        <Box color="orange">{totalVeedSum * 30} USD</Box>
                     </Stack>
                 ),
             },

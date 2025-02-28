@@ -58,12 +58,12 @@ export function StatPayrollDelegados() {
                         Monetización general de delegados
                     </Text>
                     <Text c="dimmed" ta="center" fz="lg">
-                        {`${totalConfirmados * 20} USD`}
+                        {`${totalConfirmados * 30} USD`}
                     </Text>
 
                     <Group position="center" mt="md">
                         {/* <Text fz="sm">20 / 36 km</Text> */}
-                        <Badge size="md" color="indigo.7">Al valor actual de 20 USD</Badge>
+                        <Badge size="md" color="indigo.7">Al valor actual de 30 USD</Badge>
                     </Group>
                 </Paper>
             </Box>

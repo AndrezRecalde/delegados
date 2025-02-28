@@ -55,7 +55,7 @@ export const TableAvanceCantones = () => {
             {
                 accessorFn: (row) =>
                     row.total_veed !== null
-                        ? row.total_veed.toFixed(0) * 20
+                        ? row.total_veed.toFixed(0) * 30
                         : 0,
                 header: "Monetización (20 USD)",
                 wrap: true,
