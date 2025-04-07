@@ -10,13 +10,13 @@ export const ModalJrvreconteo = () => {
 
     const form = useForm({
         initialValues: {
-            nombres_completos: "",
+            nombres: "",
+            apellidos: "",
             dni: "",
         },
         validate: {
-            nombres_completos: isNotEmpty(
-                "Por favor ingrese apellidos y nombres"
-            ),
+            nombres: isNotEmpty("Por favor ingrese nombres"),
+            apellidos: isNotEmpty("Por favor ingrese apellidos"),
             dni: isNotEmpty("Por favor ingrese número de cédula"),
         },
     });

@@ -16,11 +16,15 @@ class CoordinadorController extends Controller
     function getCoordinadores(): JsonResponse
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-            ->selectRaw('coord.id, coord.nombres_completos, coord.dni,
-                                coord.email, coord.telefono,
-                                coord.supervisor_id, s.nombres_completos as supervisor,
-                                coord.canton_id, c.nombre_canton as canton,
-                                coord.parroquia_id, p.nombre_parroquia as parroquia')
+            ->selectRaw('coord.id,
+                                    coord.nombres as nombres_coordinador,
+                                    coord.apellidos as apellidos_coordinador,
+                                    coord.dni, coord.email, coord.telefono,
+                                    coord.supervisor_id,
+                                    s.nombres as nombres_supervisor,
+                                    s.apellidos as apellidos_supervisor,
+                                    coord.canton_id, c.nombre_canton as canton,
+                                    coord.parroquia_id, p.nombre_parroquia as parroquia')
             ->with([
                 'recintos'  =>  function ($query) {
                     return $query->select('recintos.id', 'recintos.nombre_recinto');
@@ -37,11 +41,15 @@ class CoordinadorController extends Controller
     function getCoordinadoresForCanton(Request $request): JsonResponse
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-            ->selectRaw('coord.id, coord.nombres_completos, coord.dni,
-                                coord.email, coord.telefono,
-                                coord.supervisor_id, s.nombres_completos as supervisor,
-                                coord.canton_id, c.nombre_canton as canton,
-                                coord.parroquia_id, p.nombre_parroquia as parroquia')
+            ->selectRaw('coord.id,
+                                    coord.nombres as nombres_coordinador,
+                                    coord.apellidos as apellidos_coordinador,
+                                    coord.dni, coord.email, coord.telefono,
+                                    coord.supervisor_id,
+                                    s.nombres as nombres_supervisor,
+                                    s.apellidos as apellidos_supervisor,
+                                    coord.canton_id, c.nombre_canton as canton,
+                                    coord.parroquia_id, p.nombre_parroquia as parroquia')
             ->with([
                 'recintos'  =>  function ($query) {
                     return $query->select('recintos.id', 'recintos.nombre_recinto');
@@ -98,11 +106,14 @@ class CoordinadorController extends Controller
     function searchCoordinadores(Request $request): JsonResponse
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-            ->selectRaw('coord.id, coord.nombres_completos, coord.dni,
-                         coord.telefono, coord.email,
-                         super.nombres_completos as supervisor,
-                         c.nombre_canton as canton,
-                         parr.nombre_parroquia as parroquia')
+            ->selectRaw('coord.id,
+                                    coord.nombres as nombres_coordinador,
+                                    coord.apellidos as apellidos_coordinador,
+                                    coord.dni, coord.telefono, coord.email,
+                                    super.nombres as nombres_supervisor,
+                                    super.apellidos as apellidos_supervisor,
+                                    c.nombre_canton as canton,
+                                    parr.nombre_parroquia as parroquia')
             ->with([
                 'recintos' => function ($query) {
                     return $query->select('recintos.id', 'recintos.nombre_recinto');
@@ -137,7 +148,7 @@ class CoordinadorController extends Controller
             Excel::import(new CoordinadoresImport, $request->file('coordinadores_import'));
             return response()->json(['status' => 'success', 'msg' => 'Archivo subido con éxito'], 201);
 
-        } catch (\Maatwebsite\Excel\Validators $e){
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e){
             $failures = $e->failures();
             foreach ($failures as $failure) {
                 $failure->row();

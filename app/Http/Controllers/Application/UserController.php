@@ -15,7 +15,7 @@ class UserController extends Controller
     function getUsuarios(): JsonResponse
     {
         $usuarios = User::from('users as u')
-            ->selectRaw('u.id, u.nombres_completos, u.dni, u.activo')
+            ->selectRaw('u.id, CONCAT(u.nombres, " ", u.apellidos) as nombres_completos, u.dni, u.activo')
             ->with([
                 'roles' => function ($query) {
                     return $query->select('roles.id', 'roles.name');

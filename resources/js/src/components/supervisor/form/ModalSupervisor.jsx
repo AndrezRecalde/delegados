@@ -10,7 +10,8 @@ export const ModalSupervisor = () => {
 
     const form = useForm({
         initialValues: {
-            nombres_completos: "",
+            nombres: "",
+            apellidos: "",
             dni: "",
             email: "",
             telefono: "",
@@ -18,9 +19,8 @@ export const ModalSupervisor = () => {
             parroquia_id: "",
         },
         validate: {
-            nombres_completos: isNotEmpty(
-                "Por favor ingresa los apellidos y nombres"
-            ),
+            nombres: isNotEmpty("Por favor ingresa los nombres"),
+            apellidos: isNotEmpty("Por favor ingresa los apellidos"),
             dni: isNotEmpty("Por favor ingresa el # de cédula"),
             //telefono: isNotEmpty("Por favor ingresa el número de teléfono"),
             canton_id: isNotEmpty("Por favor ingresa el cantón"),

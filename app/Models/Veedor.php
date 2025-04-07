@@ -12,7 +12,8 @@ class Veedor extends Model
     protected $table = 'veedores';
 
     protected $fillable = [
-        'nombres_completos',
+        'nombres',
+        'apellidos',
         'dni',
         'telefono',
         'coordinador_id',

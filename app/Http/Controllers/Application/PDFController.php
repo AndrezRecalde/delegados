@@ -39,10 +39,14 @@ class PDFController extends Controller
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
             ->supervisor($request->supervisor_id)
-            ->selectRaw('veed.id, veed.nombres_completos,
+            ->selectRaw('veed.id,
+                    veed.nombres as nombres_veedor,
+                    veed.apellidos as apellidos_veedor,
                     veed.dni, veed.telefono,
-                    super.nombres_completos as supervisor,
-                    coord.nombres_completos as coordinador,
+                    super.nombres as nombres_supervisor,
+                    super.apellidos as apellidos_supervisor,
+                    coord.nombres as nombres_coordinador,
+                    coord.apellidos as apellidos_coordinador,
                     c.nombre_canton as canton,
                     r.nombre_recinto as recinto,
                     p.nombre_parroquia as parroquia,
@@ -70,10 +74,14 @@ class PDFController extends Controller
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
             ->supervisor($request->supervisor_id)
-            ->selectRaw('veed.id, veed.nombres_completos,
+            ->selectRaw('veed.id,
+                    veed.nombres as nombres_veedor,
+                    veed.apellidos as apellidos_veedor,
                     veed.dni, veed.telefono,
-                    super.nombres_completos as supervisor,
-                    coord.nombres_completos as coordinador,
+                    super.nombres as nombres_supervisor,
+                    super.apellidos as apellidos_supervisor,
+                    coord.nombres as nombres_coordinador,
+                    coord.apellidos as apellidos_coordinador,
                     c.nombre_canton as canton,
                     r.nombre_recinto as recinto')
             ->get();
@@ -85,17 +93,21 @@ class PDFController extends Controller
 
         $pdf = PDF::loadView('pdf.veedores.table', $data);
 
-        return $pdf->setPaper('a4', 'landscape')->download('veedores.pdf');
+        return $pdf->setPaper('a4', 'portrait')->download('veedores.pdf');
     }
 
     function getCardsCoordinadoresPDF(Request $request)
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-            ->selectRaw('coord.id, coord.nombres_completos, coord.dni,
-                     coord.telefono, coord.email,
-                     super.nombres_completos as supervisor,
-                     c.nombre_canton as canton,
-                     parr.nombre_parroquia as parroquia')
+            ->selectRaw('coord.id,
+                        coord.nombres as nombres_coordinador,
+                        coord.apellidos as apellidos_coordinador,
+                        coord.dni,
+                        coord.telefono, coord.email,
+                        super.nombres as nombres_supervisor,
+                        super.apellidos as apellidos_supervisor,
+                        c.nombre_canton as canton,
+                        parr.nombre_parroquia as parroquia')
             ->with([
                 'recintos' => function ($query) {
                     return $query->select('recintos.id', 'recintos.nombre_recinto');
@@ -125,9 +137,13 @@ class PDFController extends Controller
     function getTableCoordinadoresPDF(Request $request)
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-            ->selectRaw('coord.id, coord.nombres_completos, coord.dni,
+            ->selectRaw('coord.id,
+                     coord.nombres as nombres_coordinador,
+                     coord.apellidos as apellidos_coordinador,
+                     coord.dni,
                      coord.telefono, coord.email,
-                     super.nombres_completos as supervisor,
+                     super.nombres as nombres_supervisor,
+                     super.apellidos as apellidos_supervisor,
                      c.nombre_canton as canton,
                      parr.nombre_parroquia as parroquia')
             ->with([
@@ -159,7 +175,11 @@ class PDFController extends Controller
     function getCardsSupervisoresPDF(Request $request)
     {
         $supervisores = Supervisor::from('supervisores as super')
-            ->selectRaw('super.id, super.nombres_completos, super.dni,super.telefono, super.email, c.nombre_canton as canton')
+            ->selectRaw('super.id,
+                            super.nombres as nombres_supervisor,
+                            super.apellidos as apellidos_supervisor,
+                            super.dni,super.telefono,
+                            super.email, c.nombre_canton as canton')
             ->with([
                 'parroquias' => function ($query) {
                     $query->select('parroquias.id', 'parroquias.nombre_parroquia');
@@ -185,7 +205,11 @@ class PDFController extends Controller
     function getTableSupervisoresPDF(Request $request)
     {
         $supervisores = Supervisor::from('supervisores as super')
-            ->selectRaw('super.id, super.nombres_completos, super.dni,super.telefono, super.email, c.nombre_canton as canton')
+            ->selectRaw('super.id,
+                                    super.nombres as nombres_supervisor,
+                                    super.apellidos as apellidos_supervisor,
+                                    super.dni,super.telefono,
+                                    super.email, c.nombre_canton as canton')
             ->with([
                 'parroquias' => function ($query) {
                     $query->select('parroquias.id', 'parroquias.nombre_parroquia');

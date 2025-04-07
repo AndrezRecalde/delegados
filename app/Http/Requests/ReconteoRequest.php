@@ -25,7 +25,8 @@ class ReconteoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombres_completos' =>  'required',
+            'nombres'   =>  'required',
+            'apellidos' =>  'required',
             'dni'               =>  ['required', Rule::unique('reconteos')->ignore($this->request->get('id'))],
         ];
     }

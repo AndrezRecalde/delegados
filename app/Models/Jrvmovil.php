@@ -12,7 +12,8 @@ class Jrvmovil extends Model
     protected $table = 'jrvmoviles';
 
     protected $fillable = [
-        'nombres_completos',
+        'nombres',
+        'apellidos',
         'dni'
     ];
 }

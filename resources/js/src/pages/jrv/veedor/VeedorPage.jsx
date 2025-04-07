@@ -9,6 +9,7 @@ import {
 } from "../../../components";
 import { useVeedorStore } from "../../../hooks";
 import Swal from "sweetalert2";
+import { Divider } from "@mantine/core";
 
 export const VeedorPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
@@ -65,6 +66,7 @@ export const VeedorPage = () => {
             <TitlePage ta="left" order={3}>
                 Delegados de la Junta
             </TitlePage>
+            <Divider my="md" />
             <InfoHeader
                 texto={`Existen ${veedores.length} delegados registrados a nivel de la provincia de Esmeraldas.`}
             />

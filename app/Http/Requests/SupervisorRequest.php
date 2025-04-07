@@ -25,7 +25,8 @@ class SupervisorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombres_completos' => 'required',
+            'nombres'   => 'required',
+            'apellidos' => 'required',
             'dni'               =>  ['required', Rule::unique('supervisores')->ignore($this->request->get('id'))],
             'email'             =>  '',
             'telefono'          =>  '',
@@ -36,7 +37,8 @@ class SupervisorRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombres_completos.required'  => 'El/Los nombre(s) es obligatorio',
+            'nombres.required'  => 'El/Los nombre(s) es obligatorio',
+            'apellidos.required' => 'El/Los apellido(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
             'canton_id.required'          =>  'Seleccione un cantón',
             'parroquia_id.required'       =>  'Seleccione una o varias parroquias'

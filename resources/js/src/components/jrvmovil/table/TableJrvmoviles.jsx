@@ -18,12 +18,10 @@ export const TableJrvmoviles = () => {
             {
                 accessorKey: "dni",
                 header: "Cédula",
-                wrap: true,
             },
             {
-                accessorKey: "nombres_completos",
+                accessorFn: (row) => row.nombres + row.apellidos,
                 header: "JRV Móvil",
-                wrap: true,
             },
         ],
         [jrvmoviles]
@@ -69,6 +67,21 @@ export const TableJrvmoviles = () => {
         renderTopToolbarCustomActions: () => (
             <BtnAdd title="Agregar JRV Móvil" handleAdd={handleOpen} />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

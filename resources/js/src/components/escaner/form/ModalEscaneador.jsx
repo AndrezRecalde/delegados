@@ -10,7 +10,8 @@ export const ModalEscaneador = () => {
 
     const form = useForm({
         initialValues: {
-            nombres_completos: "",
+            nombres: "",
+            apellidos: "",
             dni: "",
             telefono: "",
             canton_id: "",

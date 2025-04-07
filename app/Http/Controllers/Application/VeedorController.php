@@ -20,11 +20,17 @@ class VeedorController extends Controller
         $cantones = $request->input('cantones', []);
 
         $veedores = Veedor::from('veedores as veed')
-            ->selectRaw('veed.id, veed.nombres_completos, veed.dni, veed.telefono,
-                        veed.coordinador_id, coord.nombres_completos as coordinador,
-                        veed.canton_id, c.nombre_canton as canton, veed.recinto_id,
-                        r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado,
-                        u.nombres_completos as usuario_created, us.nombres_completos as usuario_updated')
+            ->selectRaw('veed.id,
+                                    veed.nombres as nombres_veedor,
+                                    veed.apellidos as apellidos_veedor,
+                                    veed.dni, veed.telefono,
+                                    veed.coordinador_id,
+                                    coord.nombres as nombres_coordinador,
+                                    coord.apellidos as apellidos_coordinador,
+                                    veed.canton_id, c.nombre_canton as canton, veed.recinto_id,
+                                    r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado,
+                                    CONCAT(u.nombres, " ", u.apellidos) as usuario_created,
+                                    CONCAT(us.nombres, " ", us.apellidos) as usuario_updated')
             ->leftJoin('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
@@ -112,14 +118,19 @@ class VeedorController extends Controller
             ->recinto($request->recinto_id)
             ->coordinador($request->coordinador_id)
             ->supervisor($request->supervisor_id)
-            ->selectRaw('veed.id, veed.nombres_completos,
+            ->selectRaw('veed.id,
+                        veed.nombres as nombres_veedor,
+                        veed.apellidos as apellidos_veedor,
                         veed.dni, veed.telefono,
-                        super.nombres_completos as supervisor,
-                        coord.nombres_completos as coordinador,
+                        super.nombres as nombres_supervisor,
+                        super.apellidos as apellidos_supervisor,
+                        coord.nombres as nombres_coordinador,
+                        coord.apellidos as apellidos_coordinador,
                         c.nombre_canton as canton,
                         r.nombre_recinto as recinto,
                         veed.confirmado, veed.junta_id, j.junta_nombre as junta,
-                        u.nombres_completos as usuario_created, us.nombres_completos as usuario_updated')
+                        CONCAT(u.nombres, " ", u.apellidos) as usuario_created,
+                        CONCAT(us.nombres, " ", us.apellidos) as usuario_updated')
             ->orderBy('veed.id', 'DESC')
             ->get();
 
@@ -139,7 +150,7 @@ class VeedorController extends Controller
 
             Excel::import(new VeedoresImport, $request->file('veedores_import'));
             return response()->json(['status' => 'success', 'msg' => 'Archivo subido con éxito'], 201);
-        } catch (\Maatwebsite\Excel\Validators $e) {
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             foreach ($failures as $failure) {
                 $failure->row();

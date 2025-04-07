@@ -57,7 +57,7 @@ export const TableAvanceCantones = () => {
                     row.total_veed !== null
                         ? row.total_veed.toFixed(0) * 30
                         : 0,
-                header: "Monetización (20 USD)",
+                header: "Monetización (30 USD)",
                 wrap: true,
             },
             {
@@ -133,6 +133,21 @@ export const TableAvanceCantones = () => {
         enableColumnOrdering: true,
         enablePagination: true,
         state: { showProgressBars: isLoading },
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

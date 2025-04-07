@@ -16,12 +16,12 @@ class EscaneadorController extends Controller
     function getEscaneadores(): JsonResponse
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
-            ->selectRaw('esc.id, esc.nombres_completos, esc.dni,
+            ->selectRaw('esc.id, CONCAT(esc.nombres, " ", esc.apellidos) as nombres_completos, esc.dni,
                                  esc.telefono, esc.canton_id,
                                  c.nombre_canton as canton,
                                  esc.parroquia_id, p.nombre_parroquia as parroquia,
                                  esc.recinto_id, r.nombre_recinto as recinto')
-            ->join('cantones as c', 'c.id', 'esc.canton_id')
+            ->leftJoin('cantones as c', 'c.id', 'esc.canton_id')
             ->leftJoin('parroquias as p', 'p.id', 'esc.parroquia_id')
             ->leftJoin('recintos as r', 'r.id', 'esc.recinto_id')
             ->get();
@@ -63,7 +63,7 @@ class EscaneadorController extends Controller
     function searchEscaneadores(Request $request): JsonResponse
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
-            ->selectRaw('esc.id, esc.nombres_completos, esc.dni, esc.telefono,
+            ->selectRaw('esc.id, CONCAT(esc.nombres, " ", esc.apellidos) as nombres_completos, esc.dni, esc.telefono,
                          esc.canton_id, c.nombre_canton as canton,
                          p.nombre_parroquia as parroquia,
                          r.nombre_recinto as recinto')
@@ -106,8 +106,8 @@ class EscaneadorController extends Controller
     {
         return Excel::download(new EscaneadorExport(
             $request->canton_id,
-            $request->parroquia_id,
-            $request->recinto,
+            //$request->parroquia_id,
+           // $request->recinto,
         ), 'escaneadores.xlsx');
     }
 }

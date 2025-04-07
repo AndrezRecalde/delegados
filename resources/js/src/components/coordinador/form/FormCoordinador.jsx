@@ -35,6 +35,11 @@ export const FormCoordinador = ({ form }) => {
         if (activateCoordinador !== null) {
             form.setValues({
                 ...activateCoordinador,
+                nombres: activateCoordinador.nombres_coordinador,
+                apellidos: activateCoordinador.apellidos_coordinador,
+                supervisor_id: activateCoordinador.supervisor_id.toString(),
+                canton_id: activateCoordinador.canton_id.toString(),
+                parroquia_id: activateCoordinador.parroquia_id.toString(),
                 recinto_id: activateCoordinador.recintos.map(
                     (recinto) => recinto.id
                 ),
@@ -47,10 +52,9 @@ export const FormCoordinador = ({ form }) => {
         startLoadParroquias(canton_id);
         form.setFieldValue(
             "parroquia_id",
-            activateCoordinador?.parroquia_id ??
-                activateCoordinador?.parroquias?.map(
-                    (parroquias) => parroquias.id
-                )
+            activateCoordinador?.parroquia_id
+                ? activateCoordinador.parroquia_id.toString()
+                : null
         );
     }, [canton_id]);
 
@@ -59,7 +63,7 @@ export const FormCoordinador = ({ form }) => {
         form.setFieldValue(
             "recinto_id",
             activateCoordinador?.recinto_id ??
-                activateCoordinador?.recintos?.map((recinto) => recinto.id)
+                activateCoordinador?.recintos?.map((recinto) => recinto.id.toString())
         );
     }, [parroquia_id]);
 
@@ -89,7 +93,7 @@ export const FormCoordinador = ({ form }) => {
                         {...form.getInputProps("canton_id")}
                         data={cantones.map((canton) => {
                             return {
-                                value: canton.id,
+                                value: canton.id.toString(),
                                 label: canton.nombre_canton,
                             };
                         })}
@@ -105,8 +109,11 @@ export const FormCoordinador = ({ form }) => {
                         {...form.getInputProps("supervisor_id")}
                         data={supervisores.map((supervisor) => {
                             return {
-                                value: supervisor.id,
-                                label: supervisor.nombres_completos,
+                                value: supervisor.id.toString(),
+                                label:
+                                    supervisor.nombres_supervisor +
+                                    " " +
+                                    supervisor.apellidos_supervisor,
                             };
                         })}
                     />
@@ -119,12 +126,20 @@ export const FormCoordinador = ({ form }) => {
                         {...form.getInputProps("dni")}
                     />
                 </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                <Grid.Col sm={12} md={6} lg={6} xl={6}>
                     <TextInput
-                        placeholder="Apellidos y nombres del coordinador"
-                        label="Apellidos y Nombres"
+                        placeholder="Apellidos del Coordinador"
+                        label="Apellidos"
                         withAsterisk
-                        {...form.getInputProps("nombres_completos")}
+                        {...form.getInputProps("apellidos")}
+                    />
+                </Grid.Col>
+                <Grid.Col sm={12} md={6} lg={6} xl={6}>
+                    <TextInput
+                        placeholder="Nombres del coordinador"
+                        label="Nombres"
+                        withAsterisk
+                        {...form.getInputProps("nombres")}
                     />
                 </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={6} xl={6}>
@@ -151,7 +166,7 @@ export const FormCoordinador = ({ form }) => {
                         {...form.getInputProps("parroquia_id")}
                         data={parroquias.map((parroquia) => {
                             return {
-                                value: parroquia.id,
+                                value: parroquia.id.toString(),
                                 label: parroquia.nombre_parroquia,
                             };
                         })}
@@ -168,7 +183,7 @@ export const FormCoordinador = ({ form }) => {
                         {...form.getInputProps("recinto_id")}
                         data={recintos.map((recinto) => {
                             return {
-                                value: recinto.id,
+                                value: recinto.id.toString(),
                                 label: recinto.nombre_recinto,
                             };
                         })}

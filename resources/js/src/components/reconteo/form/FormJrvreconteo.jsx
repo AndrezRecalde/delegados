@@ -40,10 +40,16 @@ export const FormJrvreconteo = ({ form }) => {
                     {...form.getInputProps("dni")}
                 />
                 <TextInput
-                    placeholder="Apellidos y nombres del veedor"
-                    label="Apellidos y Nombres"
+                    placeholder="Apellidos del Veedor"
+                    label="Apellidos"
                     withAsterisk
-                    {...form.getInputProps("nombres_completos")}
+                    {...form.getInputProps("apellidos")}
+                />
+                <TextInput
+                    placeholder="Nombres del Veedor"
+                    label="Nombres"
+                    withAsterisk
+                    {...form.getInputProps("nombres")}
                 />
                 <BtnSubmit IconSection={IconChecks}>Guardar</BtnSubmit>
             </Stack>

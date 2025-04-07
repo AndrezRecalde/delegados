@@ -15,7 +15,7 @@ class ReconteoController extends Controller
 {
     function getJrvReconteos(): JsonResponse
     {
-        $jrvreconteos = Reconteo::get(['id', 'nombres_completos', 'dni']);
+        $jrvreconteos = Reconteo::get(['id', 'nombres', 'apellidos', 'dni']);
 
         return response()->json(['status' => 'success', 'jrvreconteos' => $jrvreconteos], 200);
     }

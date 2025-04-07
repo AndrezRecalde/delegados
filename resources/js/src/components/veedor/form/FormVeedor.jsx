@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, Select, Stack, TextInput } from "@mantine/core";
+import { Box, Select, SimpleGrid, Stack, TextInput } from "@mantine/core";
 import { IconChecks } from "@tabler/icons-react";
 import {
     useCoordinadorStore,
@@ -37,6 +37,12 @@ export const FormVeedor = ({ form }) => {
         if (activateVeedor !== null) {
             form.setValues({
                 ...activateVeedor,
+                nombres: activateVeedor.nombres_veedor,
+                apellidos: activateVeedor.apellidos_veedor,
+                coordinador_id: activateVeedor.coordinador_id.toString(),
+                canton_id: activateVeedor.canton_id.toString(),
+                recinto_id: activateVeedor.recinto_id.toString(),
+                junta_id: activateVeedor.junta_id.toString(),
             });
             return;
         }
@@ -46,7 +52,7 @@ export const FormVeedor = ({ form }) => {
         startLoadAllRecintos(canton_id);
         form.setFieldValue(
             "recinto_id",
-            activateVeedor?.recinto_id ? activateVeedor?.recinto_id : 0
+            activateVeedor?.recinto_id.toString() ? activateVeedor?.recinto_id.toString() : null
         );
     }, [canton_id]);
 
@@ -54,12 +60,12 @@ export const FormVeedor = ({ form }) => {
         startLoadJuntas(recinto_id);
         form.setFieldValue(
             "junta_id",
-            activateVeedor?.junta_id ? activateVeedor?.junta_id : 0
+            activateVeedor?.junta_id ? activateVeedor?.junta_id.toString() : null
         );
     }, [recinto_id]);
 
     const handleSubmit = () => {
-        startAddVeedor(form.values);
+        startAddVeedor(form.getTransformedValues());
         form.reset();
         modalActionVeedor(0);
     };
@@ -83,7 +89,7 @@ export const FormVeedor = ({ form }) => {
                     {...form.getInputProps("canton_id")}
                     data={cantones?.map((canton) => {
                         return {
-                            value: canton.id,
+                            value: canton.id.toString(),
                             label: canton.nombre_canton,
                         };
                     })}
@@ -97,8 +103,8 @@ export const FormVeedor = ({ form }) => {
                     {...form.getInputProps("coordinador_id")}
                     data={coordinadores?.map((coord) => {
                         return {
-                            value: coord.id,
-                            label: coord.nombres_completos,
+                            value: coord.id.toString(),
+                            label: coord.nombres_coordinador + " " + coord.apellidos_coordinador,
                         };
                     })}
                 />
@@ -108,12 +114,20 @@ export const FormVeedor = ({ form }) => {
                     label="Cédula"
                     {...form.getInputProps("dni")}
                 />
-                <TextInput
-                    withAsterisk
-                    placeholder="Apellidos y nombres del veedor"
-                    label="Apellidos y Nombres"
-                    {...form.getInputProps("nombres_completos")}
-                />
+                <SimpleGrid cols={2}>
+                    <TextInput
+                        withAsterisk
+                        placeholder="Ingresar Apellidos"
+                        label="Apellidos"
+                        {...form.getInputProps("apellidos")}
+                    />
+                    <TextInput
+                        withAsterisk
+                        placeholder="Ingresar Nombres"
+                        label="Nombres"
+                        {...form.getInputProps("nombres")}
+                    />
+                </SimpleGrid>
 
                 <TextInput
                     placeholder="Número de teléfono"
@@ -130,7 +144,7 @@ export const FormVeedor = ({ form }) => {
                     {...form.getInputProps("recinto_id")}
                     data={recintos?.map((recinto) => {
                         return {
-                            value: recinto.id,
+                            value: recinto.id.toString(),
                             label: recinto.nombre_recinto,
                         };
                     })}
@@ -144,7 +158,7 @@ export const FormVeedor = ({ form }) => {
                     {...form.getInputProps("junta_id")}
                     data={juntas?.map((junta) => {
                         return {
-                            value: junta.id,
+                            value: junta.id.toString(),
                             label: junta.junta_nombre,
                         };
                     })}

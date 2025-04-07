@@ -14,7 +14,8 @@ class Supervisor extends Model
     protected $table = 'supervisores';
 
     protected $fillable = [
-        'nombres_completos',
+        'nombres',
+        'apellidos',
         'dni',
         'email',
         'telefono',

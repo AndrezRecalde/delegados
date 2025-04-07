@@ -15,7 +15,7 @@ class JrmovilController extends Controller
 {
     function getJrvmoviles(): JsonResponse
     {
-        $jrvmoviles = Jrvmovil::get(['id', 'nombres_completos', 'dni']);
+        $jrvmoviles = Jrvmovil::get(['id', 'nombres', 'apellidos', 'dni']);
 
         return response()->json(['status' => 'success', 'jrvmoviles' => $jrvmoviles], 200);
     }

@@ -64,7 +64,7 @@
                                         <small class="form-text text-muted text-center mt-1"
                                             style="font-size: 7px">NOMBRE DE LA ORGANIZACION POLITICA O ALIANZA</small>
                                         <p class="form-control" style="width: 80%; font-size: 7px;">
-                                            {{ Str::upper($item->nombres_completos) }}</p>
+                                            {{ Str::upper($item->nombres_coordinador . " " . $item->apellidos_coordinador) }}</p>
                                         <small class="form-text text-muted text-center mt-1"
                                             style="font-size: 7px">NOMBRES APELLIDOS</small>
                                         <input type="text" class="form-control" style="width: 80%; font-size: 7px;"

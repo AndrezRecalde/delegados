@@ -19,22 +19,20 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
             {
                 accessorKey: "dni",
                 header: "Cédula",
-                wrap: true,
+                size: 80,
             },
             {
-                accessorKey: "nombres_completos",
+                accessorFn: (row) => row.nombres_supervisor + " " + row.apellidos_supervisor,
                 header: "Supervisor",
-                wrap: true,
             },
             {
                 accessorFn: (row) => row.telefono || "No registra...",
                 header: "Teléfono",
-                wrap: true,
+                size: 80,
             },
             {
                 accessorKey: "canton",
                 header: "Cantón",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
@@ -43,7 +41,6 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
                         (parroquias) => parroquias.nombre_parroquia + ", "
                     ),
                 header: "Parroquia",
-                wrap: true,
                 //filterVariant: "autocomplete",
             },
         ],
@@ -100,6 +97,21 @@ export const TableSupervisores = ({ viewBtn = 1 }) => {
                     <SectionImport handleOpen={handleImportSuperv} />
                 </Group>
             ) : null,
+        mantineTableProps: {
+            withColumnBorders: true,
+            withBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

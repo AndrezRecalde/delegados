@@ -10,7 +10,8 @@ class Reconteo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nombres_completos',
+        'nombres',
+        'apellidos',
         'dni'
     ];
 }

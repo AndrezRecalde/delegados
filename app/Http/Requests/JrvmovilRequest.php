@@ -25,7 +25,8 @@ class JrvmovilRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombres_completos' =>  'required',
+            'nombres'   =>  'required',
+            'apellidos' =>  'required',
             'dni'               =>  ['required', Rule::unique('jrvmoviles')->ignore($this->request->get('id'))],
         ];
     }

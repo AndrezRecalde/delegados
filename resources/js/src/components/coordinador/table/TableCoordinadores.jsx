@@ -5,7 +5,8 @@ import { ActionsTable, BtnAdd, SectionImport } from "../../../components";
 import { Group } from "@mantine/core";
 
 export const TableCoordinadores = ({ viewBtn = 1 }) => {
-    const { modalActionCoordinador, modalActionImportCoord } = useUiCoordinador();
+    const { modalActionCoordinador, modalActionImportCoord } =
+        useUiCoordinador();
     const {
         coordinadores,
         isLoading,
@@ -19,30 +20,27 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
             {
                 accessorKey: "dni",
                 header: "Cédula",
-                wrap: true,
+                size: 80,
             },
             {
-                accessorKey: "nombres_completos",
+                accessorFn: (row) => row.nombres_coordinador + " " + row.apellidos_coordinador,
                 header: "Coordinador",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) => row?.telefono || "No registra...",
                 header: "Teléfono",
-                wrap: true,
+                size: 80,
             },
             {
                 accessorKey: "canton",
                 header: "Cantón",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
                 accessorKey: "parroquia",
                 header: "Parroquia",
                 filterVariant: "autocomplete",
-                wrap: true,
             },
             {
                 accessorFn: (row) =>
@@ -50,12 +48,10 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                         (recinto) => recinto.nombre_recinto + ", "
                     ),
                 header: "Recinto(s)",
-                wrap: true,
             },
             {
-                accessorKey: "supervisor",
+                accessorFn: (row) => row.nombres_supervisor + row.apellidos_supervisor,
                 header: "Supervisor",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
         ],
@@ -108,10 +104,28 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
         renderTopToolbarCustomActions: () =>
             viewBtn === 1 ? (
                 <Group>
-                    <BtnAdd title="Agregar Coordinador" handleAdd={handleOpen} />
+                    <BtnAdd
+                        title="Agregar Coordinador"
+                        handleAdd={handleOpen}
+                    />
                     <SectionImport handleOpen={handleImportCoord} />
                 </Group>
             ) : null,
+        mantineTableProps: {
+            withColumnBorders: true,
+            withBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

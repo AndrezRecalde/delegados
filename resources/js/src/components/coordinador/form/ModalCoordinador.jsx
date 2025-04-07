@@ -11,7 +11,8 @@ export const ModalCoordinador = () => {
 
     const form = useForm({
         initialValues: {
-            nombres_completos: "",
+            nombres: "",
+            apellidos: "",
             dni: "",
             email: "",
             telefono: "",
@@ -21,9 +22,8 @@ export const ModalCoordinador = () => {
             recinto_id: "",
         },
         validate: {
-            nombres_completos: isNotEmpty(
-                "Por favor ingresa los apellidos y nombres"
-            ),
+            nombres: isNotEmpty("Por favor ingresa los nombres"),
+            apellidos: isNotEmpty("Por favor ingresa los apellidos"),
             dni: isNotEmpty("Por favor ingresa el número de cedula"),
             //telefono: isNotEmpty("Por favor ingresa el número de telefono"),
             supervisor_id: isNotEmpty("Por favor selecciona un supervisor"),
@@ -45,7 +45,11 @@ export const ModalCoordinador = () => {
         <Modal
             opened={isOpenModalCoordinador}
             onClose={handleCloseModalCoord}
-            title={<TitlePage ta="left" order={3}>Coordinador</TitlePage>}
+            title={
+                <TitlePage ta="left" order={3}>
+                    Coordinador
+                </TitlePage>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

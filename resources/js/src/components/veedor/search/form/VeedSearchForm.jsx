@@ -53,13 +53,13 @@ export const VeedSearchForm = ({ form }) => {
     useEffect(() => {
         //console.log(canton_id);
         startLoadParroquias(canton_id);
-        form.setFieldValue("parroquia_id", 0);
+        form.setFieldValue("parroquia_id", null);
     }, [canton_id]);
 
     // Cargar recintos cuando cambia la parroquia
     useEffect(() => {
         startLoadRecintos(parroquia_id);
-        form.setFieldValue("recinto_id", 0);
+        form.setFieldValue("recinto_id", null);
     }, [parroquia_id]);
 
     // Manejar el submit del formulario
@@ -91,7 +91,7 @@ export const VeedSearchForm = ({ form }) => {
     const parroquiasOptions = useMemo(
         () =>
             parroquias.map((parroquia) => ({
-                value: parroquia.id,
+                value: parroquia.id.toString(),
                 label: parroquia.nombre_parroquia,
             })),
         [parroquias]
@@ -100,7 +100,7 @@ export const VeedSearchForm = ({ form }) => {
     const recintosOptions = useMemo(
         () =>
             recintos.map((recinto) => ({
-                value: recinto.id,
+                value: recinto.id.toString(),
                 label: recinto.nombre_recinto,
             })),
         [recintos]
@@ -109,8 +109,8 @@ export const VeedSearchForm = ({ form }) => {
     const supervisoresOptions = useMemo(
         () =>
             supervisores.map((supervisor) => ({
-                value: supervisor.id,
-                label: supervisor.nombres_completos,
+                value: supervisor.id.toString(),
+                label: supervisor.nombres_supervisor + " " + supervisor.apellidos_supervisor,
             })),
         [supervisores]
     );
@@ -118,8 +118,8 @@ export const VeedSearchForm = ({ form }) => {
     const coordinadoresOptions = useMemo(
         () =>
             coordinadores.map((coordinador) => ({
-                value: coordinador.id,
-                label: coordinador.nombres_completos,
+                value: coordinador.id.toString(),
+                label: coordinador.nombres_coordinador + " " + coordinador.apellidos_coordinador,
             })),
         [coordinadores]
     );

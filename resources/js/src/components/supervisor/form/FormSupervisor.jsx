@@ -34,6 +34,11 @@ export const FormSupervisor = ({ form }) => {
         if (activateSupervisor !== null) {
             form.setValues({
                 ...activateSupervisor,
+                nombres: activateSupervisor.nombres_supervisor,
+                apellidos: activateSupervisor.apellidos_supervisor,
+                canton_id: activateSupervisor.canton_id
+                    ? activateSupervisor.canton_id.toString()
+                    : null,
                 parroquia_id: activateSupervisor.parroquias.map(
                     (parroquia) => parroquia.id
                 ),
@@ -67,12 +72,20 @@ export const FormSupervisor = ({ form }) => {
                         {...form.getInputProps("dni")}
                     />
                 </Grid.Col>
-                <Grid.Col sm={12} md={12} lg={12} xl={12}>
+                <Grid.Col sm={12} md={6} lg={6} xl={6}>
                     <TextInput
-                        placeholder="Apellidos y nombres del supervisor"
-                        label="Apellidos y Nombres"
+                        placeholder="Apellidos del Supervisor"
+                        label="Apellidos"
                         withAsterisk
-                        {...form.getInputProps("nombres_completos")}
+                        {...form.getInputProps("apellidos")}
+                    />
+                </Grid.Col>
+                <Grid.Col sm={12} md={6} lg={6} xl={6}>
+                    <TextInput
+                        placeholder="Nombres del Supervisor"
+                        label="Nombres"
+                        withAsterisk
+                        {...form.getInputProps("nombres")}
                     />
                 </Grid.Col>
                 <Grid.Col sm={12} md={12} lg={6} xl={6}>
@@ -100,7 +113,7 @@ export const FormSupervisor = ({ form }) => {
                         {...form.getInputProps("canton_id")}
                         data={cantones.map((canton) => {
                             return {
-                                value: canton.id,
+                                value: canton.id.toString(),
                                 label: canton.nombre_canton,
                             };
                         })}
@@ -117,7 +130,7 @@ export const FormSupervisor = ({ form }) => {
                         {...form.getInputProps("parroquia_id")}
                         data={parroquias.map((parroquia) => {
                             return {
-                                value: parroquia.id,
+                                value: parroquia.id.toString(),
                                 label: parroquia.nombre_parroquia,
                             };
                         })}

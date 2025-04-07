@@ -51,7 +51,8 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
     {
         return [
             'Cédula (10 Dígitos)',
-            'Nombres Completos',
+            'Nombres',
+            'Apellidos',
             'Teléfono',
             'Canton',
             'Parroquia',
@@ -63,7 +64,10 @@ class CoordinadorExport implements FromCollection, WithHeadings, WithColumnWidth
     public function collection()
     {
         $coordinadores = Coordinador::from('coordinadores as coord')
-        ->selectRaw('coord.dni, coord.nombres_completos, coord.telefono,
+        ->selectRaw('coord.dni,
+                    coord.nombres as nombres_coordinador,
+                    coord.apellidos as apellidos_coordinador,
+                    coord.telefono,
                     c.nombre_canton as canton,
                     parr.nombre_parroquia as parroquia,
                     rec.nombre_recinto as recinto,

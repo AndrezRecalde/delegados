@@ -22,7 +22,7 @@ class AuthController extends Controller
             }
 
             $user = User::from('users as u')
-                ->selectRaw('u.id, u.nombres_completos, u.dni, r.name as role')
+                ->selectRaw('u.id, CONCAT(u.nombres, " ", u.apellidos) as nombres_completos, u.dni, r.name as role')
                 ->with(['cantones'])
                 ->join('model_has_roles as mhr', 'mhr.model_id', 'u.id')
                 ->join('roles as r', 'r.id', 'mhr.role_id')
@@ -49,7 +49,7 @@ class AuthController extends Controller
     function refresh(): JsonResponse
     {
         $user = User::from('users as u')
-            ->selectRaw('u.id, u.nombres_completos, u.dni, r.name as role')
+            ->selectRaw('u.id, CONCAT(u.nombres, " ", u.apellidos) as nombres_completos, u.dni, r.name as role')
             ->with(['cantones'])
             ->join('model_has_roles as mhr', 'mhr.model_id', 'u.id')
             ->join('roles as r', 'r.id', 'mhr.role_id')
@@ -73,7 +73,7 @@ class AuthController extends Controller
     function profile(): JsonResponse
     {
         $profile = User::from('users as u')
-            ->selectRaw('u.id, u.nombres_completos, u.dni, r.name as role')
+            ->selectRaw('u.id, CONCAT(u.nombres, " ", u.apellidos) as nombres_completos, u.dni, r.name as role')
             ->with(['cantones'])
             ->join('model_has_roles as mhr', 'mhr.model_id', 'u.id')
             ->join('roles as r', 'r.id', 'mhr.role_id')

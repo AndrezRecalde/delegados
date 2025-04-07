@@ -25,7 +25,8 @@ class VeedorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombres_completos' =>  'required',
+            'nombres'   =>  'required',
+            'apellidos' =>  'required',
             'dni'               =>  ['required', Rule::unique('veedores')->ignore($this->request->get('id'))],
             'telefono'          =>  '',
             'coordinador_id'    =>  'required',
@@ -38,7 +39,8 @@ class VeedorRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nombres_completos.required'  =>  'El/Los nombre(s) es obligatorio',
+            'nombres.required'            =>  'El/Los nombre(s) es obligatorio',
+            'apellidos.required'          =>  'El/Los apellido(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
             'dni.unique'                  =>  'El número de cédula ya está registrado',
             'coordinador_id.required'     =>  'El supervisor es requerido',

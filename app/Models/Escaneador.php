@@ -12,7 +12,8 @@ class Escaneador extends Model
     protected $table = 'escaneadores';
 
     protected $fillable = [
-        'nombres_completos',
+        'nombres',
+        'apellidos',
         'dni',
         'telefono',
         'canton_id',

@@ -64,7 +64,7 @@ export const CoordSearchForm = ({ form }) => {
                         {...form.getInputProps("canton_id")}
                         data={cantones.map((canton) => {
                             return {
-                                value: canton.id,
+                                value: canton.id.toString(),
                                 label: canton.nombre_canton,
                             };
                         })}
@@ -80,7 +80,7 @@ export const CoordSearchForm = ({ form }) => {
                         {...form.getInputProps("parroquia_id")}
                         data={parroquias.map((parroquia) => {
                             return {
-                                value: parroquia.id,
+                                value: parroquia.id.toString(),
                                 label: parroquia.nombre_parroquia,
                             };
                         })}
@@ -96,7 +96,7 @@ export const CoordSearchForm = ({ form }) => {
                         {...form.getInputProps("recinto_id")}
                         data={recintos.map((recinto) => {
                             return {
-                                value: recinto.id,
+                                value: recinto.id.toString(),
                                 label: recinto.nombre_recinto,
                             };
                         })}
@@ -112,8 +112,8 @@ export const CoordSearchForm = ({ form }) => {
                         {...form.getInputProps("supervisor_id")}
                         data={supervisores.map((supervisor) => {
                             return {
-                                value: supervisor.id,
-                                label: supervisor.nombres_completos,
+                                value: supervisor.id.toString(),
+                                label: supervisor.nombres_supervisor + " " + supervisor.apellidos_supervisor,
                             };
                         })}
                     />

@@ -29,10 +29,8 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
                 accessorKey: "confirmado",
                 header: viewBtn === 1 ? "¿Confirmado?" : null,
                 enableColumnOrdering: false,
-                enableEditing: false,
-                enableSorting: false,
                 /* enableColumnFilter: false, */
-                size: 40,
+                size: 80,
                 Cell: ({ cell }) =>
                     viewBtn === 1 ? (
                         <ActivateVeedor
@@ -44,35 +42,38 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
             {
                 accessorKey: "dni",
                 header: "Cédula",
-                wrap: true,
+                size: 80,
             },
             {
-                accessorKey: "nombres_completos",
+                accessorFn: (row) =>
+                    row.nombres_veedor + " " + row.apellidos_veedor,
                 header: "Delegado",
-                wrap: true,
             },
             {
                 accessorFn: (row) => row.telefono || "No registra...",
                 header: "Teléfono",
-                wrap: true,
+                size: 80,
             },
             {
                 accessorKey: "canton",
                 header: "Cantón",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
                 accessorKey: "recinto",
                 header: "Recinto",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
                 accessorFn: (row) =>
                     row.junta !== null ? row.junta : "Sin registrar",
                 header: "Junta",
-                wrap: true,
+                size: 80,
+            },
+            {
+                accessorFn: (row) =>
+                    row.nombres_coordinador + " " + row.apellidos_coordinador,
+                header: "Coordinador",
             },
         ],
         [veedores]
@@ -117,7 +118,8 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
         columns,
         data: veedores,
         //enableFacetedValues: true,
-        enableColumnOrdering: true,
+        enableSorting: false,
+        enableColumnOrdering: false,
         enableRowActions: true,
         positionActionsColumn: viewBtn === 1 ? "last" : null,
         state: { showProgressBars: isLoading },
@@ -131,8 +133,12 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{row.original.usuario_created || "No registra..."}</td>
-                        <td>{row.original.usuario_updated || "No registra..."}</td>
+                        <td>
+                            {row.original.usuario_created || "No registra..."}
+                        </td>
+                        <td>
+                            {row.original.usuario_updated || "No registra..."}
+                        </td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -153,6 +159,21 @@ export const TableVeedores = ({ viewBtn = 1 }) => {
                     <SectionImport handleOpen={handleImportVeed} />
                 </Group>
             ) : null,
+        mantineTableProps: {
+            withColumnBorders: true,
+            withBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

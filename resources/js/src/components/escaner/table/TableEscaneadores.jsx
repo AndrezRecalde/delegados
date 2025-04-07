@@ -19,34 +19,30 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
             {
                 accessorKey: "dni",
                 header: "Cédula",
-                wrap: true,
+                size: 80,
             },
             {
                 accessorKey: "nombres_completos",
                 header: "Delegado",
-                wrap: true,
             },
             {
                 accessorKey: "telefono",
                 header: "Teléfono",
-                wrap: true,
+                size: 80,
             },
             {
                 accessorKey: "canton",
                 header: "Cantón",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
                 accessorKey: "parroquia",
                 header: "Parroquia",
-                wrap: true,
                 filterVariant: "autocomplete",
             },
             {
                 accessorKey: "recinto",
                 header: "Recinto",
-                wrap: true,
                 //filterVariant: "autocomplete",
             },
         ],
@@ -103,6 +99,21 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
                     <SectionImport handleOpen={handleImportEsc} />
                 </Group>
             ) : null,
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

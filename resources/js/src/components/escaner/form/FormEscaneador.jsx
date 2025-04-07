@@ -69,10 +69,16 @@ export const FormEscaneador = ({ form }) => {
                     {...form.getInputProps("dni")}
                 />
                 <TextInput
-                    placeholder="Apellidos y nombres del veedor"
-                    label="Apellidos y Nombres"
+                    placeholder="Apellidos del Veedor"
+                    label="Apellidos"
                     withAsterisk
-                    {...form.getInputProps("nombres_completos")}
+                    {...form.getInputProps("apellidos")}
+                />
+                <TextInput
+                    placeholder="Nombres del Veedor"
+                    label="Nombres"
+                    withAsterisk
+                    {...form.getInputProps("nombres")}
                 />
                 <TextInput
                     placeholder="Número de teléfono"
@@ -88,7 +94,7 @@ export const FormEscaneador = ({ form }) => {
                     {...form.getInputProps("canton_id")}
                     data={cantones?.map((canton) => {
                         return {
-                            value: canton.id,
+                            value: canton.id.toString(),
                             label: canton.nombre_canton,
                         };
                     })}

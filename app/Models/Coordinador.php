@@ -14,7 +14,8 @@ class Coordinador extends Model
     protected $table = 'coordinadores';
 
     protected $fillable = [
-        'nombres_completos',
+        'nombres',
+        'apellidos',
         'dni',
         'email',
         'telefono',

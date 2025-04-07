@@ -163,6 +163,21 @@ export const TableAvanceParroquial = () => {
         enableColumnOrdering: true,
         enablePagination: true,
         state: { showProgressBars: isLoadingTableParr },
+        mantineTableProps: {
+            withColumnBorders: true,
+            withTableBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

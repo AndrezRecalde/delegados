@@ -11,22 +11,31 @@ export const ModalVeedor = () => {
 
     const form = useForm({
         initialValues: {
-            nombres_completos: "",
+            nombres: "",
+            apellidos: "",
             dni: "",
             telefono: "",
-            coordinador_id: "",
-            canton_id: "",
-            recinto_id: "",
-            junta_id: ""
+            coordinador_id: null,
+            canton_id: null,
+            recinto_id: null,
+            junta_id: null
         },
         validate: {
-            nombres_completos: isNotEmpty("Por favor ingrese apellidos y nombres"),
+            nombres: isNotEmpty("Por favor ingrese nombres"),
+            apellidos: isNotEmpty("Por favor ingrese apellidos"),
             dni: isNotEmpty("Por favor ingrese número de cédula"),
             //telefono: isNotEmpty("Por favor ingrese número telefónico"),
             coordinador_id: isNotEmpty("Por favor seleccione el coordinador"),
             canton_id: isNotEmpty("Por favor ingrese el cantón de residencia"),
             recinto_id: isNotEmpty("Por favor ingrese el recinto electoral donde vota")
-        }
+        },
+        transformValues: (values) => ({
+            ...values,
+            coordinador_id: Number(values.coordinador_id) || null,
+            canton_id: Number(values.canton_id) || null,
+            recinto_id: Number(values.recinto_id) || null,
+            junta_id: Number(values.junta_id) || null
+        }),
     });
 
     const handleCloseModalVeedor = () => {

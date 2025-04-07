@@ -15,7 +15,10 @@ class SupervisorController extends Controller
     function getSupervisores(Request $request): JsonResponse
     {
         $supervisores = Supervisor::from('supervisores as s')
-            ->selectRaw('s.id, s.nombres_completos, s.dni, s.email, s.telefono,
+            ->selectRaw('s.id,
+                                    s.nombres as nombres_supervisor,
+                                    s.apellidos as apellidos_supervisor,
+                                    s.dni, s.email, s.telefono,
                          s.canton_id, c.nombre_canton as canton')
             ->with([
                 'parroquias' => function ($query) {
@@ -32,7 +35,10 @@ class SupervisorController extends Controller
     function getSupervisoresForCanton(Request $request): JsonResponse
     {
         $supervisores = Supervisor::from('supervisores as s')
-            ->selectRaw('s.id, s.nombres_completos, s.dni, s.email, s.telefono,
+            ->selectRaw('s.id,
+                                    s.nombres as nombres_supervisor,
+                                    s.apellidos as apellidos_supervisor,
+                                    s.dni, s.email, s.telefono,
                          s.canton_id, c.nombre_canton as canton')
             ->with([
                 'parroquias' => function ($query) {
@@ -88,10 +94,12 @@ class SupervisorController extends Controller
     function searchSupervisores(Request $request): JsonResponse
     {
         $supervisores = Supervisor::from('supervisores as super')
-            ->selectRaw('super.id, super.nombres_completos,
-                         super.dni,super.telefono,
-                        super.email,
-                        super.canton_id, c.nombre_canton as canton')
+            ->selectRaw('super.id,
+                                    super.nombres as nombres_supervisor,
+                                    super.apellidos as apellidos_supervisor,
+                                    super.dni,super.telefono,
+                                    super.email,
+                                    super.canton_id, c.nombre_canton as canton')
             ->with([
                 'parroquias' => function ($query) {
                     $query->select('parroquias.id', 'parroquias.nombre_parroquia');
@@ -121,7 +129,7 @@ class SupervisorController extends Controller
             Excel::import(new SupervisoresImport, $request->file('supervisores_import'));
             return response()->json(['status' => 'success', 'msg' => 'Archivo subido con éxito'], 201);
 
-        } catch (\Maatwebsite\Excel\Validators $e){
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e){
             $failures = $e->failures();
             foreach ($failures as $failure) {
                 $failure->row();

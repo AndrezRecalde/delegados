@@ -25,7 +25,8 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombres_completos' => 'required',
+            'nombres'   => 'required',
+            'apellidos' => 'required',
             'dni'               =>  ['required', Rule::unique('users')->ignore($this->request->get('id'))],
             'roles'             =>  'required',
             'cantones'          =>  ''

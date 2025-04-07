@@ -18,12 +18,10 @@ export const TableJrvreconteo = () => {
             {
                 accessorKey: "dni",
                 header: "Cédula",
-                wrap: true,
             },
             {
-                accessorKey: "nombres_completos",
+                accessorFn: (row) => row.nombres + row.apellidos,
                 header: "JRV Móvil",
-                wrap: true,
             },
         ],
         [reconteos]
@@ -69,6 +67,21 @@ export const TableJrvreconteo = () => {
         renderTopToolbarCustomActions: () => (
             <BtnAdd title="Agregar JRV Reconteo" handleAdd={handleOpen} />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;
