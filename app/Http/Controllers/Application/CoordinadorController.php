@@ -138,6 +138,16 @@ class CoordinadorController extends Controller
         }
     }
 
+    function getCoordinadorForDNI(Request $request) : JsonResponse
+    {
+        $coordinador = Coordinador::where('dni', $request->dni)->first();
+        if ($coordinador) {
+            return response()->json(['status' => 'success', 'coordinador' => $coordinador], 200);
+        } else {
+            return response()->json(['status' => 'error', 'msg' => "No existe un coordinador con ese DNI"], 404);
+        }
+    }
+
     function massiveStore(Request $request)
     {
         try {

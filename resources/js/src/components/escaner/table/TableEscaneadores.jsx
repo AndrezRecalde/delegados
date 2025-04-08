@@ -101,7 +101,7 @@ export const TableEscaneadores = ({ viewBtn = 1 }) => {
             ) : null,
         mantineTableProps: {
             withColumnBorders: true,
-            withTableBorder: true,
+            withBorder: true,
             sx: {
                 "thead > tr": {
                     backgroundColor: "inherit",

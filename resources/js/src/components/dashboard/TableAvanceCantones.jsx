@@ -135,7 +135,7 @@ export const TableAvanceCantones = () => {
         state: { showProgressBars: isLoading },
         mantineTableProps: {
             withColumnBorders: true,
-            withTableBorder: true,
+            withBorder: true,
             sx: {
                 "thead > tr": {
                     backgroundColor: "inherit",

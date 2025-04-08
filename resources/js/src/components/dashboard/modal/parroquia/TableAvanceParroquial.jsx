@@ -165,7 +165,7 @@ export const TableAvanceParroquial = () => {
         state: { showProgressBars: isLoadingTableParr },
         mantineTableProps: {
             withColumnBorders: true,
-            withTableBorder: true,
+            withBorder: true,
             sx: {
                 "thead > tr": {
                     backgroundColor: "inherit",

@@ -26,12 +26,21 @@ export const ProfilePage = () => {
     } = useDashboardStore();
 
     useEffect(() => {
-        if (usuario.role !== ROLES.ADMIN) {
+        if (usuario.role === ROLES.SUPERVISOR) {
             const cantonesIds = usuario.cantones.map((canton) => canton.id);
-            startLoadVeedoresForCanton({ cantones: cantonesIds });
-            startLoadJuntasForCanton({ cantones: cantonesIds });
+            console.log(cantonesIds);
+            startLoadVeedoresForCanton(cantonesIds);
+            startLoadJuntasForCanton(cantonesIds);
             return;
         }
+
+        /* if (usuario.role === ROLES.COORDINADOR) {
+            const parroquiasIds = usuario.parroquias.map((parroquia) => parroquia.id);
+            console.log(parroquiasIds);
+            //startLoadVeedoresForCanton(cantonesIds);
+            //startLoadJuntasForCanton(cantonesIds);
+            return;
+        } */
         startLoadTotalVeedores();
         startLoadTotalJuntas();
 

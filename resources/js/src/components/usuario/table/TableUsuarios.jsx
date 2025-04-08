@@ -55,11 +55,8 @@ export const TableUsuarios = () => {
                             mb={5}
                             radius="sm"
                             color="indigo.7"
-                            variant={
-                                theme.colorScheme === "dark"
-                                    ? "light"
-                                    : "outline"
-                            }
+                            variant="light"
+
                         >
                             {role.name}
                         </Badge>
@@ -129,6 +126,21 @@ export const TableUsuarios = () => {
         renderTopToolbarCustomActions: () => (
             <BtnAdd title="Agregar Usuario" handleAdd={handleOpen} />
         ),
+        mantineTableProps: {
+            withColumnBorders: true,
+            withBorder: true,
+            sx: {
+                "thead > tr": {
+                    backgroundColor: "inherit",
+                },
+                "thead > tr > th": {
+                    backgroundColor: "inherit",
+                },
+                "tbody > tr > td": {
+                    backgroundColor: "inherit",
+                },
+            },
+        },
     });
 
     return <MantineReactTable table={table} />;

@@ -1,6 +1,6 @@
 import { Modal, useMantineTheme } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { FormJrvmovil, TitlePage } from "../../../components";
+import { FormJrvmovil, TextSection } from "../../../components";
 import { useJrvmovilStore, useUiJrvmovil } from "../../../hooks";
 
 export const ModalJrvmovil = () => {
@@ -33,9 +33,9 @@ export const ModalJrvmovil = () => {
             opened={isOpenModalJrvmovil}
             onClose={handleCloseModalJrvmovil}
             title={
-                <TitlePage ta="left" order={3}>
-                    JRV Móvil
-                </TitlePage>
+                <TextSection tt="" fz={18} fw={700}>
+                    JRV Movil
+                </TextSection>
             }
             overlayProps={{
                 color:

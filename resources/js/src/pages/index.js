@@ -19,6 +19,7 @@ import { VeedorPage } from "./jrv/veedor/VeedorPage";
 import { SearchVeedPage } from "./jrv/veedor/SearchVeedPage";
 import { JrvmovilPage } from "./jrv/movil/JrvmovilPage";
 import { JrvreconteoPage } from "./jrv/reconteo/JrvreconteoPage";
+import { DelegadoViewPage } from "./jrv/veedor/public/DelegadoViewPage";
 
 import { DashboardPage } from "./dashboard/DashboardPage";
 import { SummaryPage } from "./dashboard/SummaryPage";
@@ -43,6 +44,7 @@ export {
   SearchVeedPage,
   JrvmovilPage,
   JrvreconteoPage,
+  DelegadoViewPage,
   DashboardPage,
   SummaryPage,
   ErrorNotFound,

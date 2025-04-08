@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Box, MultiSelect, Select, Stack, TextInput } from "@mantine/core";
+import { Box, MultiSelect, SimpleGrid, Stack, TextInput } from "@mantine/core";
 import { IconChecks } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../components";
 import {
@@ -32,7 +32,7 @@ export const FormUsuario = ({ form }) => {
     // Vaciar cantones si rolesSelected contiene el rol con id = 1
     useEffect(() => {
         if (rolesSelected.includes(1) && form.values.cantones.length > 0) {
-            form.setFieldValue('cantones', []); // Solo vacía si no está ya vacío
+            form.setFieldValue("cantones", []); // Solo vacía si no está ya vacío
         }
     }, [rolesSelected, form]);
 
@@ -42,7 +42,6 @@ export const FormUsuario = ({ form }) => {
         //console.log(roleName)
         return roleName?.id === 2 || roleName?.id === 3;
     });
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -61,12 +60,27 @@ export const FormUsuario = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Stack>
-                <TextInput
-                    placeholder="Apellidos y nombres completos"
-                    label="Apellidos y Nombres"
-                    withAsterisk
-                    {...form.getInputProps("nombres_completos")}
-                />
+                <SimpleGrid
+                    breakpoints={[
+                        { minWidth: "xs", cols: 1 },
+                        { minWidth: "sm", cols: 2 },
+                        { minWidth: "md", cols: 2 },
+                        { minWidth: "lg", cols: 2 },
+                    ]}
+                >
+                    <TextInput
+                        label="Apellidos"
+                        placeholder="Ingrese Apellidos"
+                        withAsterisk
+                        {...form.getInputProps("apellidos")}
+                    />
+                    <TextInput
+                        label="Nombres"
+                        placeholder="Ingrese Nombres"
+                        withAsterisk
+                        {...form.getInputProps("nombres")}
+                    />
+                </SimpleGrid>
                 <TextInput
                     placeholder="Número de cédula"
                     label="Cédula"

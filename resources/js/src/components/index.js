@@ -1,4 +1,5 @@
 import { TitlePage } from "./elements/TitlePage";
+import { TextSection } from "./elements/TextSection";
 import { InfoHeader } from "./elements/InfoHeader";
 import { ActionsTable } from "./elements/table/ActionsTable";
 import { BtnAdd } from "./elements/BtnAdd";
@@ -72,6 +73,7 @@ import { FormActivateUser } from "./usuario/activar/form/FormActivateUser";
 
 export {
     TitlePage,
+    TextSection,
     InfoHeader,
     ActionsTable,
     BtnAdd,

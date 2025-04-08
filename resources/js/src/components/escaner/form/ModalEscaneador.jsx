@@ -1,5 +1,5 @@
 import { Modal, useMantineTheme } from "@mantine/core";
-import { FormEscaneador, TitlePage } from "../../../components";
+import { FormEscaneador, TextSection } from "../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useEscanerStore, useUiEscaner } from "../../../hooks";
 
@@ -42,9 +42,9 @@ export const ModalEscaneador = () => {
             opened={isOpenModalEscaneador}
             onClose={handleCloseModalEscaner}
             title={
-                <TitlePage ta="left" order={3}>
+                <TextSection tt="" fz={18} fw={700}>
                     Escaneador
-                </TitlePage>
+                </TextSection>
             }
             overlayProps={{
                 color:

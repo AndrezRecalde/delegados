@@ -1,5 +1,5 @@
 import { Modal, useMantineTheme } from "@mantine/core";
-import { FormSupervisor, TitlePage } from "../../../components";
+import { FormSupervisor, TextSection } from "../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useSupervisorStore, useUiSupervisor } from "../../../hooks";
 
@@ -41,9 +41,9 @@ export const ModalSupervisor = () => {
             opened={isOpenModalSupervisor}
             onClose={handleCloseModalSuper}
             title={
-                <TitlePage ta="left" order={3}>
+                <TextSection tt="" fz={18} fw={700}>
                     Supervisor
-                </TitlePage>
+                </TextSection>
             }
             overlayProps={{
                 color:

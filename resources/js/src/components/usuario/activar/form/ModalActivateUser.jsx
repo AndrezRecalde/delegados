@@ -1,5 +1,5 @@
 import { Modal, useMantineTheme } from "@mantine/core";
-import { FormActivateUser, TitlePage } from "../../../../components";
+import { FormActivateUser, TextSection } from "../../../../components";
 import { useUiUsuario, useUsuarioStore } from "../../../../hooks";
 
 export const ModalActivateUser = () => {
@@ -9,15 +9,19 @@ export const ModalActivateUser = () => {
     const { setClearActivateUsuario } = useUsuarioStore();
 
     const handleCloseModal = () => {
-        modalActivateUsuario(0)
+        modalActivateUsuario(0);
         setClearActivateUsuario();
-    }
+    };
 
     return (
         <Modal
             opened={isOpenModalActivateUser}
             onClose={handleCloseModal}
-            title={<TitlePage ta="center" order={3}>Activar Usuario</TitlePage>}
+            title={
+                <TextSection tt="" fz={18} fw={700}>
+                    Activar Usuario
+                </TextSection>
+            }
             centered
             overlayProps={{
                 color:

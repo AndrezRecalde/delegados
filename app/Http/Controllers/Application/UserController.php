@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserPassword;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateActivo;
+use App\Models\Coordinador;
+use App\Models\Supervisor;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ class UserController extends Controller
     function getUsuarios(): JsonResponse
     {
         $usuarios = User::from('users as u')
-            ->selectRaw('u.id, CONCAT(u.nombres, " ", u.apellidos) as nombres_completos, u.dni, u.activo')
+            ->selectRaw('u.id, CONCAT(u.apellidos, " ", u.nombres) as nombres_completos, u.dni, u.activo')
             ->with([
                 'roles' => function ($query) {
                     return $query->select('roles.id', 'roles.name');
@@ -39,6 +41,25 @@ class UserController extends Controller
             if ($request->filled('cantones')) {
                 $usuario->cantones()->attach($request->cantones);
             }
+
+            // Revisamos los roles
+            /* if (in_array(2, $request->roles)) {
+                Supervisor::create([
+                    'apellidos' => $usuario->apellidos,
+                    'nombres' => $usuario->nombres,
+                    'dni' => $usuario->dni,
+                    //'user_id' => $usuario->id, // Relacionamos el Supervisor con el User
+                ]);
+            }
+
+            if (in_array(3, $request->roles)) {
+                Coordinador::create([
+                    'nombres' => $usuario->nombres,
+                    'apellidos' => $usuario->apellidos,
+                    'dni' => $usuario->dni,
+                    //'user_id' => $usuario->id, // Relacionamos el Coordinador con el User
+                ]);
+            } */
 
             return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
         } catch (\Throwable $th) {

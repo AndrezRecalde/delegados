@@ -1,8 +1,7 @@
 import { isNotEmpty, useForm } from "@mantine/form";
 import { Modal, useMantineTheme } from "@mantine/core";
 import { useUiVeedor, useVeedorStore } from "../../../hooks";
-import { TitlePage, FormVeedor } from "../../../components";
-
+import { FormVeedor, TextSection } from "../../../components";
 
 export const ModalVeedor = () => {
     const theme = useMantineTheme();
@@ -18,7 +17,7 @@ export const ModalVeedor = () => {
             coordinador_id: null,
             canton_id: null,
             recinto_id: null,
-            junta_id: null
+            junta_id: null,
         },
         validate: {
             nombres: isNotEmpty("Por favor ingrese nombres"),
@@ -27,14 +26,16 @@ export const ModalVeedor = () => {
             //telefono: isNotEmpty("Por favor ingrese número telefónico"),
             coordinador_id: isNotEmpty("Por favor seleccione el coordinador"),
             canton_id: isNotEmpty("Por favor ingrese el cantón de residencia"),
-            recinto_id: isNotEmpty("Por favor ingrese el recinto electoral donde vota")
+            recinto_id: isNotEmpty(
+                "Por favor ingrese el recinto electoral donde vota"
+            ),
         },
         transformValues: (values) => ({
             ...values,
             coordinador_id: Number(values.coordinador_id) || null,
             canton_id: Number(values.canton_id) || null,
             recinto_id: Number(values.recinto_id) || null,
-            junta_id: Number(values.junta_id) || null
+            junta_id: Number(values.junta_id) || null,
         }),
     });
 
@@ -42,13 +43,17 @@ export const ModalVeedor = () => {
         form.reset();
         setClearActivateVeedor();
         modalActionVeedor(0);
-    }
+    };
 
     return (
         <Modal
             opened={isOpenModalVeedor}
             onClose={handleCloseModalVeedor}
-            title={<TitlePage ta="left" order={3}>Delegado</TitlePage>}
+            title={
+                <TextSection tt="" fz={18} fw={700}>
+                    Delegado
+                </TextSection>
+            }
             overlayProps={{
                 color:
                     theme.colorScheme === "dark"

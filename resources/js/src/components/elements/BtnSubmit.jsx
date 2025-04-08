@@ -11,7 +11,7 @@ export const BtnSubmit = ({
 }) => {
     return (
         <Button
-            color="indigo.5"
+            color="indigo.7"
             type="submit"
             fullWidth={fullwidth}
             mt="md"

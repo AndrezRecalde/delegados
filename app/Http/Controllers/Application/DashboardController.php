@@ -38,7 +38,7 @@ class DashboardController extends Controller
 
     function getTotalVeedoresForCantones(Request $request): JsonResponse
     {
-        $totalVeedores = Veedor::whereIn('canton_id', [$request->cantones])->count();
+        $totalVeedores = Veedor::whereIn('canton_id', $request->cantones)->count();
         return response()->json(['status' => 'success', 'totalVeedores' => $totalVeedores], 200);
     }
 

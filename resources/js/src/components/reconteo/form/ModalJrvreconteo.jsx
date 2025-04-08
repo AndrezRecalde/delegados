@@ -1,6 +1,6 @@
 import { Modal, useMantineTheme } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
-import { FormJrvreconteo, TitlePage } from "../../../components";
+import { FormJrvreconteo, TextSection } from "../../../components";
 import { useReconteoStore, useUiReconteo } from "../../../hooks";
 
 export const ModalJrvreconteo = () => {
@@ -33,9 +33,9 @@ export const ModalJrvreconteo = () => {
             opened={isOpenModalReconteo}
             onClose={handleCloseModalJrvreconteo}
             title={
-                <TitlePage ta="left" order={3}>
+                <TextSection tt="" fz={18} fw={700}>
                     JRV Reconteo
-                </TitlePage>
+                </TextSection>
             }
             overlayProps={{
                 color:

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
-import { FormUsuario, TitlePage } from "../../../components";
+import { FormUsuario, TextSection, TitlePage } from "../../../components";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useRoleStore, useStateStore, useUiUsuario, useUsuarioStore } from "../../../hooks";
 
@@ -13,13 +13,15 @@ export const ModalUsuario = () => {
 
     const form = useForm({
         initialValues: {
-            nombres_completos: "",
+            nombres: "",
+            apellidos: "",
             dni: "",
             roles: [],
             cantones: []
         },
         validate: {
-            nombres_completos: isNotEmpty("Por favor ingresa los nombres"),
+            nombres: isNotEmpty("Por favor ingresa los nombres"),
+            apellidos: isNotEmpty("Por favor ingresa los apellidos"),
             dni: isNotEmpty("Por favor ingresa el número de cedula"),
             roles: isNotEmpty("Por favor selecciona uno o varios roles"),
         },
@@ -49,9 +51,9 @@ export const ModalUsuario = () => {
             opened={isOpenModalUser}
             onClose={handleCloseModalUsuario}
             title={
-                <TitlePage ta="left" order={3}>
+                <TextSection tt="" fz={18} fw={700}>
                     Usuario
-                </TitlePage>
+                </TextSection>
             }
             overlayProps={{
                 color:
