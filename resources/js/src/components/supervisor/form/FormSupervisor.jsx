@@ -25,7 +25,7 @@ export const FormSupervisor = ({ form }) => {
             "parroquia_id",
             activateSupervisor?.parroquia_id ??
                 activateSupervisor?.parroquias.map(
-                    (parroquias) => parroquias.id
+                    (parroquias) => parroquias.id.toString()
                 )
         );
     }, [canton_id]);
@@ -40,7 +40,7 @@ export const FormSupervisor = ({ form }) => {
                     ? activateSupervisor.canton_id.toString()
                     : null,
                 parroquia_id: activateSupervisor.parroquias.map(
-                    (parroquia) => parroquia.id
+                    (parroquia) => parroquia.id.toString()
                 ),
             });
             return;
@@ -99,7 +99,6 @@ export const FormSupervisor = ({ form }) => {
                     <TextInput
                         placeholder="Número de teléfono"
                         label="Teléfono"
-                        withAsterisk
                         {...form.getInputProps("telefono")}
                     />
                 </Grid.Col>

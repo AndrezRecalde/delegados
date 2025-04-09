@@ -22,11 +22,17 @@ export const useVeedorStore = () => {
 
     const dispatch = useDispatch();
 
-    const startLoadVeedores = async (cantones = []) => {
+    const startLoadVeedores = async ({
+        cantones = [],
+        parroquias = [],
+        recintos = [],
+    }) => {
         dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.post("/veedores/listar", {
                 cantones,
+                parroquias,
+                recintos,
             });
             const { veedores } = data;
             dispatch(onVeedores(veedores));
@@ -37,7 +43,12 @@ export const useVeedorStore = () => {
         }
     };
 
-    const startAddVeedor = async (veedor) => {
+    const startAddVeedor = async (
+        veedor,
+        cantones = [],
+        parroquias = [],
+        recintos = []
+    ) => {
         try {
             if (veedor.id) {
                 const { data } = await eleccionApi.put(
@@ -48,7 +59,7 @@ export const useVeedorStore = () => {
                 setTimeout(() => {
                     dispatch(onLoadMessage(undefined));
                 }, 40);
-                startLoadVeedores();
+                startLoadVeedores({ cantones, parroquias, recintos });
                 return;
             }
 
@@ -57,7 +68,7 @@ export const useVeedorStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadVeedores();
+            startLoadVeedores({cantones, parroquias, recintos});
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);
@@ -80,7 +91,7 @@ export const useVeedorStore = () => {
         }
     };
 
-    const startUpdateConfirmVeed = async (cantones, veedor) => {
+    const startUpdateConfirmVeed = async (cantones = [], veedor) => {
         try {
             const { data } = await eleccionApi.put(
                 `/veedor/update/confirmado/${veedor.id}`,
@@ -91,7 +102,7 @@ export const useVeedorStore = () => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
             //dispatch(onDeleteVeedor(veedor));
-            startLoadVeedores(cantones);
+            startLoadVeedores({ cantones });
             setClearActivateVeedor();
         } catch (error) {
             //console.log(error);
@@ -100,7 +111,7 @@ export const useVeedorStore = () => {
     };
 
     const startSearchVeedor = async ({
-        canton_id = [],
+        canton_id = null,
         parroquia_id = null,
         recinto_id = null,
         supervisor_id = null,
@@ -184,7 +195,7 @@ export const useVeedorStore = () => {
             setTimeout(() => {
                 dispatch(onLoadMessage(undefined));
             }, 40);
-            startLoadVeedores();
+            startLoadVeedores({});
         } catch (error) {
             //console.log(error);
             ExceptionMessageError(error);

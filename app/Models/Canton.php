@@ -17,4 +17,12 @@ class Canton extends Model
             return $query->whereIn('id', $cantones);
         }
     }
+
+    function scopeByCantonId($query, $canton_id)
+    {
+        if ($canton_id) {
+            return $query->where('id', $canton_id);
+        }
+
+    }
 }

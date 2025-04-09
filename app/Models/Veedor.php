@@ -25,11 +25,15 @@ class Veedor extends Model
         'updated_by'
     ];
 
+    public function recinto()
+    {
+        return $this->belongsTo(Recinto::class, 'recinto_id');
+    }
+
     function scopeCanton($query, $canton_id)
     {
         if ($canton_id) {
-            $canton_id = is_array($canton_id) ? $canton_id : [$canton_id];
-            return $query->whereIn('veed.canton_id', $canton_id);
+            return $query->where('veed.canton_id', $canton_id);
         }
     }
 
@@ -64,7 +68,23 @@ class Veedor extends Model
     public function scopeWhereInCantones($query, array $cantones)
     {
         if (sizeof($cantones) > 0) {
-            return $query->whereIn('veed.canton_id', $cantones);
+            return $query->whereIn('veedores.canton_id', $cantones);
+        }
+    }
+
+    public function scopeWhereInRecintos($query, array $recintos)
+    {
+        if (sizeof($recintos) > 0) {
+            return $query->whereIn('veedores.recinto_id', $recintos);
+        }
+    }
+
+    public function scopeWhereInParroquias($query, array $parroquias)
+    {
+        if (sizeof($parroquias) > 0) {
+            return $query->whereHas('recinto', function ($q) use ($parroquias) {
+                $q->whereIn('parroquia_id', $parroquias);
+            });
         }
     }
 }

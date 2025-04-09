@@ -39,7 +39,7 @@ export const TableUsuarios = () => {
                 wrap: true,
             },
             {
-                accessorKey: "nombres_completos",
+                accessorFn: (row) =>  `${row.nombres} ${row.apellidos}`,
                 header: "Nombres",
                 wrap: true,
             },

@@ -187,6 +187,21 @@ export const useSupervisorStore = () => {
         }
     };
 
+    const startLoadSupervisorForDNI = async (dni) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await eleccionApi.post("/supervisor/dni", {
+                dni,
+            });
+            const { supervisor } = data;
+            dispatch(onSetActivateSupervisor(supervisor));
+        } catch (error) {
+            //console.log(error);
+            ExceptionMessageError(error);
+            dispatch(onLoading(false));
+        }
+    }
+
     const startClearSupervisores = () => {
         dispatch(onClearSupervisores());
     };
@@ -215,6 +230,7 @@ export const useSupervisorStore = () => {
         startDeleteSupervisor,
         startSearchSupervisores,
         startExportTablePDF,
+        startLoadSupervisorForDNI,
         startClearSupervisores,
         startExportCrendenciales,
         startImportSuperv,

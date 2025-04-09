@@ -25,11 +25,11 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nombres'   => 'required',
-            'apellidos' => 'required',
+            'nombres'           => 'required',
+            'apellidos'         => 'required',
             'dni'               =>  ['required', Rule::unique('users')->ignore($this->request->get('id'))],
             'roles'             =>  'required',
-            'cantones'          =>  ''
+            'canton_id'         =>  ''
         ];
     }
     public function messages(): array

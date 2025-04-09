@@ -41,7 +41,7 @@ export const useCoordinadorStore = () => {
         }
     };
 
-    const startLoadCoordsForCanton = async (canton_id) => {
+    const startLoadCoordsForCanton = async ({ canton_id = null }) => {
         dispatch(onLoading(true));
         try {
             const { data } = await eleccionApi.post("/coordinadores/canton", {
@@ -189,6 +189,21 @@ export const useCoordinadorStore = () => {
         }
     };
 
+    const startLoadCoordinadorForDNI = async (dni) => {
+        try {
+            dispatch(onLoading(true));
+            const { data } = await eleccionApi.post("/coordinador/dni", {
+                dni,
+            });
+            const { coordinador } = data;
+            dispatch(onSetActivateCoordinador(coordinador));
+        } catch (error) {
+            //console.log(error);
+            ExceptionMessageError(error);
+            dispatch(onLoading(false));
+        }
+    };
+
     const exportExcelCoordinadores = async (values = {}) => {
         try {
             dispatch(onExport(true));
@@ -241,6 +256,7 @@ export const useCoordinadorStore = () => {
         startExportTablePDF,
         startExportCredenciales,
         startImportCoord,
+        startLoadCoordinadorForDNI,
         exportExcelCoordinadores,
         startClearCoordinadores,
     };

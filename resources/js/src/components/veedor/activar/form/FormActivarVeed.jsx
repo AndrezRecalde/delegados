@@ -12,12 +12,20 @@ import {
 } from "@mantine/core";
 import { IconChecks, IconDiscountCheckFilled } from "@tabler/icons-react";
 import { BtnSubmit } from "../../../../components";
-import { useUiVeedor, useVeedorStore } from "../../../../hooks";
+import {
+    useCoordinadorStore,
+    useSupervisorStore,
+    useUiVeedor,
+    useVeedorStore,
+} from "../../../../hooks";
+import { ROLES } from "../../../../helpers/getDictionary";
 
 export const FormActivarVeed = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
     const { modalActionActivateVeed } = useUiVeedor();
     const { activateVeedor, startUpdateConfirmVeed } = useVeedorStore();
+    const { activateSupervisor } = useSupervisorStore();
+    const { activateCoordinador } = useCoordinadorStore();
 
     const form = useForm({
         initialValues: {
@@ -39,10 +47,45 @@ export const FormActivarVeed = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const cantonesIds = usuario.cantones.map((canton) => canton.id);
-        startUpdateConfirmVeed(cantonesIds, form.values);
-        form.reset();
-        modalActionActivateVeed(0);
+
+        if (
+            usuario.role === ROLES.SUPERVISOR &&
+            activateSupervisor &&
+            activateSupervisor.parroquias?.length > 0
+        ) {
+            startUpdateConfirmVeed(
+                [activateSupervisor?.canton_id],
+                form.values
+            );
+
+            form.reset();
+            modalActionActivateVeed(0);
+
+            return;
+        }
+
+        if (
+            usuario.role === ROLES.COORDINADOR &&
+            activateCoordinador &&
+            activateCoordinador.recintos?.length > 0
+        ) {
+            startUpdateConfirmVeed(
+                [activateCoordinador?.canton_id],
+                form.values
+            );
+            form.reset();
+            modalActionActivateVeed(0);
+
+            return;
+        }
+
+        if (usuario.role === ROLES.ADMIN) {
+            startUpdateConfirmVeed([], form.values);
+            form.reset();
+            modalActionActivateVeed(0);
+
+            return;
+        }
     };
 
     return (

@@ -1,5 +1,5 @@
 import { Modal, useMantineTheme } from "@mantine/core";
-import { FormActivarVeed, TitlePage } from "../../../../components";
+import { FormActivarVeed, TextSection } from "../../../../components";
 import { useUiVeedor, useVeedorStore } from "../../../../hooks";
 
 export const ModalActivateVeed = () => {
@@ -12,13 +12,17 @@ export const ModalActivateVeed = () => {
         //e.preventDefault();
         setClearActivateVeedor();
         modalActionActivateVeed(0);
-    }
+    };
 
     return (
         <Modal
             opened={isOpenActiveVeedor}
             onClose={handleCloseModal}
-            title={<TitlePage ta="left" order={3}>Confirmar Delegado</TitlePage>}
+            title={
+                <TextSection tt="" fz={18} fw={700}>
+                    Confirmar Delegado
+                </TextSection>
+            }
             centered
             overlayProps={{
                 color:

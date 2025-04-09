@@ -48,7 +48,7 @@
     <div class="title">{{ $title }}</div>
 
     <table class="table">
-        <caption>Supervisor: {{ $coordinadores[0]->nombres_supervisor . " " . $coordinadores[0]->apellidos_supervisor }}</caption>
+        <caption>Supervisor: {{ $coordinadores[0]->nombres_supervisor . " " . $coordinadores[0]->apellidos_supervisor || "Sin Supervisor" }}</caption>
         <thead>
             <tr>
                 <th>Cédula</th>

@@ -11,16 +11,31 @@ import {
 import { ROLES } from "../../../../helpers/getDictionary";
 
 export const VeedSearchForm = ({ form }) => {
-    const { canton_id, parroquia_id, recinto_id } = form.values;
+    const {
+        canton_id,
+        parroquia_id,
+        recinto_id,
+        supervisor_id,
+        coordinador_id,
+    } = form.values;
     const usuario = useMemo(
         () => JSON.parse(localStorage.getItem("service_user")),
         []
     );
     const { startSearchVeedor } = useVeedorStore();
-    const { supervisores, startLoadSupervisores, startClearSupervisores } =
-        useSupervisorStore();
-    const { coordinadores, startLoadCoordinadores, startClearCoordinadores } =
-        useCoordinadorStore();
+    const {
+        supervisores,
+        activateSupervisor,
+        startLoadSupervisores,
+        startClearSupervisores,
+    } = useSupervisorStore();
+    const {
+        coordinadores,
+        activateCoordinador,
+        startLoadCoordinadores,
+        startLoadCoordsForCanton,
+        startClearCoordinadores,
+    } = useCoordinadorStore();
     const {
         cantones,
         parroquias,
@@ -32,11 +47,9 @@ export const VeedSearchForm = ({ form }) => {
     } = useStateStore();
 
     // Cargar datos iniciales
+
     useEffect(() => {
-        if (usuario.role !== ROLES.ADMIN) {
-            const cantonesIds = usuario.cantones.map((canton) => canton.id);
-            startLoadCantones(cantonesIds);
-        } else {
+        if (usuario.role === ROLES.ADMIN) {
             startLoadCantones();
             startLoadSupervisores({});
             startLoadCoordinadores();
@@ -47,7 +60,35 @@ export const VeedSearchForm = ({ form }) => {
             startClearCoordinadores();
             startClearSupervisores();
         };
-    }, [usuario.role]);
+    }, []);
+
+    useEffect(() => {
+        if (
+            usuario.role === ROLES.SUPERVISOR &&
+            activateSupervisor &&
+            activateSupervisor.canton_id
+        ) {
+            startLoadCantones(activateSupervisor.canton_id);
+            startLoadCoordsForCanton({
+                canton_id: activateSupervisor.canton_id,
+            });
+            return;
+        }
+    }, [activateSupervisor]);
+
+    useEffect(() => {
+        if (
+            usuario.role === ROLES.COORDINADOR &&
+            activateCoordinador &&
+            activateCoordinador.canton_id
+        ) {
+            startLoadCantones(activateCoordinador.canton_id);
+            startLoadCoordsForCanton({
+                canton_id: activateCoordinador.canton_id,
+            });
+            return;
+        }
+    }, [activateCoordinador]);
 
     // Cargar parroquias cuando cambia el cantón
     useEffect(() => {
@@ -65,10 +106,40 @@ export const VeedSearchForm = ({ form }) => {
     // Manejar el submit del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (usuario.role !== "Administrador") {
-            if (!canton_id && !parroquia_id && !recinto_id) {
-                const cantonesIds = usuario.cantones.map((canton) => canton.id);
-                startSearchVeedor({ canton_id: cantonesIds });
+        console.log(form.getTransformedValues());
+        if (usuario.role === ROLES.COORDINADOR) {
+            if (
+                !canton_id &&
+                !parroquia_id &&
+                !recinto_id &&
+                !supervisor_id &&
+                !coordinador_id
+            ) {
+                startSearchVeedor({ canton_id: activateCoordinador.canton_id });
+                //console.log("aqui llega 1 ");
+                return;
+            }
+            if (
+                !canton_id &&
+                !parroquia_id &&
+                !recinto_id &&
+                !supervisor_id &&
+                coordinador_id
+            ) {
+                startSearchVeedor({ coordinador_id: coordinador_id });
+                //console.log("aqui llega 1 ");
+                return;
+            }
+        }
+        if (usuario.role === ROLES.SUPERVISOR) {
+            if (
+                !canton_id &&
+                !parroquia_id &&
+                !recinto_id &&
+                !supervisor_id &&
+                !coordinador_id
+            ) {
+                startSearchVeedor({ canton_id: activateSupervisor.canton_id });
                 //console.log("aqui llega 1 ");
                 return;
             }
@@ -110,7 +181,10 @@ export const VeedSearchForm = ({ form }) => {
         () =>
             supervisores.map((supervisor) => ({
                 value: supervisor.id.toString(),
-                label: supervisor.nombres_supervisor + " " + supervisor.apellidos_supervisor,
+                label:
+                    supervisor.nombres_supervisor +
+                    " " +
+                    supervisor.apellidos_supervisor,
             })),
         [supervisores]
     );
@@ -119,7 +193,10 @@ export const VeedSearchForm = ({ form }) => {
         () =>
             coordinadores.map((coordinador) => ({
                 value: coordinador.id.toString(),
-                label: coordinador.nombres_coordinador + " " + coordinador.apellidos_coordinador,
+                label:
+                    coordinador.nombres_coordinador +
+                    " " +
+                    coordinador.apellidos_coordinador,
             })),
         [coordinadores]
     );
@@ -134,39 +211,43 @@ export const VeedSearchForm = ({ form }) => {
             onSubmit={form.onSubmit((_, e) => handleSubmit(e))}
         >
             <Grid>
-                <Grid.Col sm={12} md={4}>
-                    <Select
-                        label="Selecciona el Cantón"
-                        placeholder="Cantón"
-                        searchable
-                        clearable
-                        nothingFound="No options"
-                        {...form.getInputProps("canton_id")}
-                        data={cantonesOptions}
-                    />
-                </Grid.Col>
-                <Grid.Col sm={12} md={4}>
-                    <Select
-                        label="Selecciona la Parroquia"
-                        placeholder="Parroquia"
-                        searchable
-                        clearable
-                        nothingFound="No options"
-                        {...form.getInputProps("parroquia_id")}
-                        data={parroquiasOptions}
-                    />
-                </Grid.Col>
-                <Grid.Col sm={12} md={4}>
-                    <Select
-                        label="Selecciona el Recinto"
-                        placeholder="Recinto"
-                        searchable
-                        clearable
-                        nothingFound="No options"
-                        {...form.getInputProps("recinto_id")}
-                        data={recintosOptions}
-                    />
-                </Grid.Col>
+                {usuario.role === ROLES.ADMIN && (
+                    <>
+                        <Grid.Col sm={12} md={4}>
+                            <Select
+                                label="Selecciona el Cantón"
+                                placeholder="Cantón"
+                                searchable
+                                clearable
+                                nothingFound="No options"
+                                {...form.getInputProps("canton_id")}
+                                data={cantonesOptions}
+                            />
+                        </Grid.Col>
+                        <Grid.Col sm={12} md={4}>
+                            <Select
+                                label="Selecciona la Parroquia"
+                                placeholder="Parroquia"
+                                searchable
+                                clearable
+                                nothingFound="No options"
+                                {...form.getInputProps("parroquia_id")}
+                                data={parroquiasOptions}
+                            />
+                        </Grid.Col>
+                        <Grid.Col sm={12} md={4}>
+                            <Select
+                                label="Selecciona el Recinto"
+                                placeholder="Recinto"
+                                searchable
+                                clearable
+                                nothingFound="No options"
+                                {...form.getInputProps("recinto_id")}
+                                data={recintosOptions}
+                            />
+                        </Grid.Col>
+                    </>
+                )}
                 {usuario.role === ROLES.ADMIN && (
                     <>
                         <Grid.Col sm={12} md={6}>
@@ -192,6 +273,32 @@ export const VeedSearchForm = ({ form }) => {
                             />
                         </Grid.Col>
                     </>
+                )}
+                {usuario.role === ROLES.SUPERVISOR && (
+                    <Grid.Col sm={12} md={12}>
+                        <Select
+                            label="Selecciona el Coordinador"
+                            placeholder="Coordinador"
+                            searchable
+                            clearable
+                            nothingFound="No options"
+                            {...form.getInputProps("coordinador_id")}
+                            data={coordinadoresOptions}
+                        />
+                    </Grid.Col>
+                )}
+                {usuario.role === ROLES.COORDINADOR && (
+                    <Grid.Col sm={12} md={12}>
+                        <Select
+                            label="Selecciona el Coordinador"
+                            placeholder="Coordinador"
+                            searchable
+                            clearable
+                            nothingFound="No options"
+                            {...form.getInputProps("coordinador_id")}
+                            data={coordinadoresOptions}
+                        />
+                    </Grid.Col>
                 )}
             </Grid>
             <BtnSubmit IconSection={IconDatabase}>Filtrar Delegados</BtnSubmit>

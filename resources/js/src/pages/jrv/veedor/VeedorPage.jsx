@@ -7,12 +7,21 @@ import {
     TableVeedores,
     TitlePage,
 } from "../../../components";
-import { useVeedorStore } from "../../../hooks";
+import {
+    useCoordinadorStore,
+    useSupervisorStore,
+    useVeedorStore,
+} from "../../../hooks";
 import Swal from "sweetalert2";
 import { Divider } from "@mantine/core";
+import { ROLES } from "../../../helpers/getDictionary";
 
 export const VeedorPage = () => {
     const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { activateCoordinador, startLoadCoordinadorForDNI } =
+        useCoordinadorStore();
+    const { activateSupervisor, startLoadSupervisorForDNI } =
+        useSupervisorStore();
     const {
         veedores,
         startLoadVeedores,
@@ -22,19 +31,57 @@ export const VeedorPage = () => {
     } = useVeedorStore();
 
     useEffect(() => {
-        // Si el usuario no es "Administrador", cargamos los veedores por cantones
-        if (usuario.role !== "Administrador") {
-            const cantonesIds = usuario.cantones.map((canton) => canton.id); // Extraemos los IDs de cantones
-            startLoadVeedores(cantonesIds); // Pasamos los IDs de los cantones
-            return;
-        }
-        // Si el usuario es "Administrador", cargamos todos los veedores
-        startLoadVeedores();
-
         return () => {
+            // Limpiar el estado de veedores al salir del componente
             startClearVeedores();
         };
     }, []);
+
+    useEffect(() => {
+        if (usuario.role === ROLES.SUPERVISOR) {
+            startLoadSupervisorForDNI(usuario.dni);
+            return;
+        }
+        if (usuario.role === ROLES.COORDINADOR) {
+            startLoadCoordinadorForDNI(usuario.dni);
+            return;
+        }
+    }, []);
+
+    useEffect(() => {
+        if (usuario.role === ROLES.ADMIN) {
+            // Si el usuario es "Administrador", cargamos todos los veedores
+            startLoadVeedores({});
+            return;
+        }
+    }, []);
+
+    useEffect(() => {
+        if (
+            usuario.role === ROLES.SUPERVISOR &&
+            activateSupervisor &&
+            activateSupervisor.parroquias?.length > 0
+        ) {
+            const parroquiasId = activateSupervisor?.parroquias.map(
+                (parroquia) => parroquia.id
+            );
+            startLoadVeedores({ parroquias: parroquiasId });
+        }
+    }, [activateSupervisor]);
+
+    useEffect(() => {
+        if (
+            usuario.role === ROLES.COORDINADOR &&
+            activateCoordinador &&
+            activateCoordinador.recintos?.length > 0
+        ) {
+            const recintosId = activateCoordinador?.recintos?.map(
+                (recinto) => recinto.id
+            );
+            startLoadVeedores({ recintos: recintosId }); // Pasamos los IDs de los recintos
+            return;
+        }
+    }, [activateCoordinador]);
 
     useEffect(() => {
         if (message !== undefined) {

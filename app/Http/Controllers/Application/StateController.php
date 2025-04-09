@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class StateController extends Controller
 {
-    public function getCantones(Request $request)
+    /* public function getCantones(Request $request)
     {
         // Verifica si hay un array de IDs en el request
         $cantones = $request->input('cantones', []);
@@ -20,6 +20,18 @@ class StateController extends Controller
             ->when(!empty($cantones), function ($query) use ($cantones) {
                 $query->whereInCantones($cantones);
             })
+            ->get(['id', 'nombre_canton']);
+
+        return response()->json(['status' => 'success', 'cantones' => $cantones], 200);
+    } */
+
+    public function getCantones(Request $request)
+    {
+        // Verifica si hay un array de IDs en el request
+
+        // Si hay IDs, filtramos por esos IDs, sino obtenemos todos los cantones activos
+        $cantones = Canton::where('activo', 1)
+            ->byCantonId($request->cantones)
             ->get(['id', 'nombre_canton']);
 
         return response()->json(['status' => 'success', 'cantones' => $cantones], 200);

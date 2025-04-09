@@ -6,10 +6,15 @@ import {
     Badge,
     Container,
     Divider,
+    SimpleGrid,
 } from "@mantine/core";
 import { ProgressGeneralChart, TitlePage } from "../../components";
-import { useDashboardStore } from "../../hooks";
-import { useEffect } from "react";
+import {
+    useCoordinadorStore,
+    useDashboardStore,
+    useSupervisorStore,
+} from "../../hooks";
+import { useEffect, useState } from "react";
 import { ROLES } from "../../helpers/getDictionary";
 
 export const ProfilePage = () => {
@@ -18,36 +23,60 @@ export const ProfilePage = () => {
         isLoading,
         totalJuntas,
         totalVeedores,
-        startLoadVeedoresForCanton,
-        startClearTotales,
-        startLoadJuntasForCanton,
+        startLoadVeedoresForParroquia,
+        startLoadVeedoresForRecinto,
+        startLoadJuntasForParroquia,
+        startLoadJuntasForRecinto,
         startLoadTotalJuntas,
-        startLoadTotalVeedores
+        startLoadTotalVeedores,
+        startClearTotales,
     } = useDashboardStore();
+    const { activateSupervisor, startLoadSupervisorForDNI } =
+        useSupervisorStore();
+    const { activateCoordinador, startLoadCoordinadorForDNI } =
+        useCoordinadorStore();
+    const [userRoleActive, setUserRoleActive] = useState({});
 
     useEffect(() => {
         if (usuario.role === ROLES.SUPERVISOR) {
-            const cantonesIds = usuario.cantones.map((canton) => canton.id);
-            console.log(cantonesIds);
-            startLoadVeedoresForCanton(cantonesIds);
-            startLoadJuntasForCanton(cantonesIds);
+            startLoadSupervisorForDNI(usuario.dni);
+        }
+
+        if (usuario.role === ROLES.COORDINADOR) {
+            startLoadCoordinadorForDNI(usuario.dni);
+        }
+    }, []);
+
+    useEffect(() => {
+        // Esperar que los datos estén cargados antes de seguir
+        if (usuario.role === ROLES.SUPERVISOR && activateSupervisor?.parroquias?.length > 0) {
+            setUserRoleActive(activateSupervisor);
+            const parroquiasId = activateSupervisor.parroquias.map(
+                (parroquia) => parroquia.id
+            );
+            startLoadVeedoresForParroquia(parroquiasId);
+            startLoadJuntasForParroquia(parroquiasId);
             return;
         }
 
-        /* if (usuario.role === ROLES.COORDINADOR) {
-            const parroquiasIds = usuario.parroquias.map((parroquia) => parroquia.id);
-            console.log(parroquiasIds);
-            //startLoadVeedoresForCanton(cantonesIds);
-            //startLoadJuntasForCanton(cantonesIds);
+        if (usuario.role === ROLES.COORDINADOR && activateCoordinador?.recintos?.length > 0) {
+            setUserRoleActive(activateCoordinador);
+            const recintosId = activateCoordinador.recintos.map(
+                (recinto) => recinto.id
+            );
+            startLoadVeedoresForRecinto(recintosId);
+            startLoadJuntasForRecinto(recintosId);
             return;
-        } */
+        }
+
+        // Si no es supervisor ni coordinador, carga totales normales
         startLoadTotalVeedores();
         startLoadTotalJuntas();
 
         return () => {
             startClearTotales();
         };
-    }, []);
+    }, [usuario.role, activateSupervisor, activateCoordinador]);
 
     return (
         <Container size="lg" mt={20}>
@@ -59,7 +88,7 @@ export const ProfilePage = () => {
                 <Group position="apart" mb="md">
                     <Group>
                         <Avatar color="indigo.5" radius="xl" size="lg">
-                            {usuario.nombres_completos[0]}
+                            CR
                         </Avatar>
                         <div>
                             <Text size="lg" weight={500}>
@@ -77,18 +106,82 @@ export const ProfilePage = () => {
                 </Text>
 
                 {usuario.role !== ROLES.ADMIN ? (
-                    <>
-                        <Text size="sm" color="dimmed">
-                            Cantones:
-                        </Text>
-                        <Group spacing="xs">
-                            {usuario.cantones.map((canton, index) => (
-                                <Badge key={canton.id} variant="outline">
-                                    {canton.nombre_canton}
-                                </Badge>
-                            ))}
-                        </Group>
-                    </>
+                    <SimpleGrid cols={2} spacing="lg">
+                        <Card shadow="sm" mt={5} withBorder>
+                            <Text fz={12} weight={500}>
+                                Cantón:{" "}
+                            </Text>
+                            <Card.Section withBorder inheritPadding py="xs">
+                                {userRoleActive?.canton ? (
+                                    <Badge radius="xs">
+                                        {userRoleActive?.canton}
+                                    </Badge>
+                                ) : (
+                                    "Sin datos..."
+                                )}
+                            </Card.Section>
+                        </Card>
+                        {usuario.role === ROLES.SUPERVISOR ? (
+                            <Card shadow="sm" mt={5} withBorder>
+                                <Text fz={12} weight={500}>
+                                    Parroquias:{" "}
+                                </Text>
+                                <Card.Section withBorder inheritPadding py="xs">
+                                    {userRoleActive?.parroquias?.length > 0
+                                        ? userRoleActive?.parroquias?.map(
+                                              (parroquia) => (
+                                                  <Badge
+                                                      key={parroquia.id}
+                                                      radius="xs"
+                                                  >
+                                                      {
+                                                          parroquia.nombre_parroquia
+                                                      }
+                                                  </Badge>
+                                              )
+                                          )
+                                        : "Sin datos..."}
+                                </Card.Section>
+                            </Card>
+                        ) : null}
+                        {usuario.role === ROLES.COORDINADOR ? (
+                            <Card shadow="sm" mt={5} withBorder>
+                                <Text fz={12} weight={500}>
+                                    Parroquia:{" "}
+                                </Text>
+                                <Card.Section withBorder inheritPadding py="xs">
+                                    {userRoleActive?.parroquia ? (
+                                        <Badge radius="xs">
+                                            {userRoleActive?.parroquia}
+                                        </Badge>
+                                    ) : (
+                                        "Sin datos..."
+                                    )}
+                                </Card.Section>
+                            </Card>
+                        ) : null}
+                        {usuario.role === ROLES.COORDINADOR ? (
+                            <Card shadow="sm" mt={5} withBorder>
+                                <Text fz={12} weight={500}>
+                                    Recintos:{" "}
+                                </Text>
+                                <Card.Section withBorder inheritPadding py="xs">
+                                    {userRoleActive?.recintos?.length > 0
+                                        ? userRoleActive?.recintos?.map(
+                                              (recinto) => (
+                                                  <Badge
+                                                      key={recinto.id}
+                                                      radius="xs"
+                                                  >
+                                                      {recinto.nombre_recinto}
+                                                  </Badge>
+                                              )
+                                          )
+                                        : "Sin datos..."}
+                                </Card.Section>
+                            </Card>
+                        ) : null}
+                    </SimpleGrid>
                 ) : null}
             </Card>
             <Card shadow="sm" mt={20} padding="lg" radius="md" withBorder>
@@ -102,8 +195,8 @@ export const ProfilePage = () => {
                 </Card.Section>
                 <Card.Section withBorder inheritPadding py="lg">
                     <TitlePage ta="center" order={5}>
-                        Faltan {Math.max(totalJuntas - totalVeedores, 0)} delegados de
-                        ingresar
+                        Faltan {Math.max(totalJuntas - totalVeedores, 0)}{" "}
+                        delegados de ingresar
                     </TitlePage>
                 </Card.Section>
             </Card>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SupervisorRequest;
 use App\Imports\SupervisoresImport;
 use App\Models\Supervisor;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -57,6 +58,14 @@ class SupervisorController extends Controller
         try {
             $supervisor = Supervisor::create($request->validated());
             $supervisor->parroquias()->attach($request->parroquia_id);
+
+            $usuario = User::create([
+                'apellidos' => $request->apellidos,
+                'nombres' => $request->nombres,
+                'dni' => $request->dni,
+            ]);
+            $usuario->assignRole([2]);
+
             return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
@@ -117,6 +126,29 @@ class SupervisorController extends Controller
         } else {
             return response()->json(['status' => 'error', 'msg' => "No existen supervisores en esa zona"], 404);
         }
+    }
+
+    function getSupervisorForDNI(Request $request): JsonResponse
+    {
+        $supervisor = Supervisor::from('supervisores as super')
+        ->selectRaw('super.id,
+                                super.nombres as nombres_supervisor,
+                                super.apellidos as apellidos_supervisor,
+                                super.dni,super.telefono,
+                                super.email,
+                                super.canton_id, c.nombre_canton as canton')
+        ->with([
+            'parroquias' => function ($query) {
+                $query->select('parroquias.id', 'parroquias.nombre_parroquia');
+            }
+        ])
+        ->join('cantones as c', 'c.id', 'super.canton_id')
+        ->join('parroquia_super as ps', 'ps.supervisor_id', 'super.id')
+        ->where('super.dni', $request->dni)
+        ->first();
+
+        return response()->json(['status' => 'success', 'supervisor' => $supervisor], 200);
+
     }
 
     function massiveStore(Request $request)

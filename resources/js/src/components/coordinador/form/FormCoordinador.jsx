@@ -37,11 +37,11 @@ export const FormCoordinador = ({ form }) => {
                 ...activateCoordinador,
                 nombres: activateCoordinador.nombres_coordinador,
                 apellidos: activateCoordinador.apellidos_coordinador,
-                supervisor_id: activateCoordinador.supervisor_id.toString(),
+                supervisor_id: activateCoordinador?.supervisor_id?.toString() || null,
                 canton_id: activateCoordinador.canton_id.toString(),
                 parroquia_id: activateCoordinador.parroquia_id.toString(),
                 recinto_id: activateCoordinador.recintos.map(
-                    (recinto) => recinto.id
+                    (recinto) => recinto.id.toString()
                 ),
             });
             return;

@@ -5,14 +5,23 @@ import {
     TableVeedores,
     VeedSearchForm,
 } from "../../../components";
-import { useVeedorStore } from "../../../hooks";
+import {
+    useCoordinadorStore,
+    useSupervisorStore,
+    useVeedorStore,
+} from "../../../hooks";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
+import { ROLES } from "../../../helpers/getDictionary";
 
 export const SearchVeedPage = () => {
+    const usuario = JSON.parse(localStorage.getItem("service_user"));
+    const { startLoadSupervisorForDNI } = useSupervisorStore();
+    const { startLoadCoordinadorForDNI } = useCoordinadorStore();
     const {
         startExportTablePDF,
         startExportCredenciales,
+        startClearVeedores,
         exportExcelVeedores,
         isExport,
         message,
@@ -28,13 +37,28 @@ export const SearchVeedPage = () => {
             supervisor_id: null,
         },
         transformValues: (values) => ({
-            canton_id: Number(values.canton_id) || [],
+            canton_id: Number(values.canton_id) || null,
             parroquia_id: Number(values.parroquia_id) || null,
             recinto_id: Number(values.recinto_id) || null,
             coordinador_id: Number(values.coordinador_id) || null,
             supervisor_id: Number(values.supervisor_id) || null,
         }),
     });
+
+    useEffect(() => {
+        if (usuario.role === ROLES.SUPERVISOR) {
+            startLoadSupervisorForDNI(usuario.dni);
+            return;
+        }
+        if (usuario.role === ROLES.COORDINADOR) {
+            startLoadCoordinadorForDNI(usuario.dni);
+            return;
+        }
+
+        return () => {
+            startClearVeedores();
+        };
+    }, []);
 
     useEffect(() => {
         if (isExport === true) {

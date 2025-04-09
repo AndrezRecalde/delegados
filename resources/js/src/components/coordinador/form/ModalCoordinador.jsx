@@ -1,7 +1,7 @@
 import { Modal, useMantineTheme } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
 import { useCoordinadorStore, useUiCoordinador } from "../../../hooks";
-import { TitlePage, FormCoordinador } from "../../../components";
+import { FormCoordinador, TextSection } from "../../../components";
 
 export const ModalCoordinador = () => {
     const theme = useMantineTheme();
@@ -46,9 +46,9 @@ export const ModalCoordinador = () => {
             opened={isOpenModalCoordinador}
             onClose={handleCloseModalCoord}
             title={
-                <TitlePage ta="left" order={3}>
+                <TextSection tt="" fz={18} fw={700}>
                     Coordinador
-                </TitlePage>
+                </TextSection>
             }
             overlayProps={{
                 color:

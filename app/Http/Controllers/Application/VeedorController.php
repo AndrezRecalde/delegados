@@ -18,33 +18,43 @@ class VeedorController extends Controller
     function getVeedores(Request $request): JsonResponse
     {
         $cantones = $request->input('cantones', []);
+        $parroquias = $request->input('parroquias', []);
+        $recintos = $request->input('recintos', []);
 
-        $veedores = Veedor::from('veedores as veed')
-            ->selectRaw('veed.id,
-                                    veed.nombres as nombres_veedor,
-                                    veed.apellidos as apellidos_veedor,
-                                    veed.dni, veed.telefono,
-                                    veed.coordinador_id,
-                                    coord.nombres as nombres_coordinador,
-                                    coord.apellidos as apellidos_coordinador,
-                                    veed.canton_id, c.nombre_canton as canton, veed.recinto_id,
-                                    r.nombre_recinto as recinto, veed.junta_id, j.junta_nombre as junta, veed.confirmado,
-                                    CONCAT(u.nombres, " ", u.apellidos) as usuario_created,
-                                    CONCAT(us.nombres, " ", us.apellidos) as usuario_updated')
-            ->leftJoin('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
-            ->join('cantones as c', 'c.id', 'veed.canton_id')
-            ->join('recintos as r', 'r.id', 'veed.recinto_id')
-            ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
-            ->leftJoin('users as u', 'u.id', 'veed.created_by')
-            ->leftJoin('users as us', 'us.id', 'veed.updated_by')
+        $veedores = Veedor::query()
+            ->selectRaw('veedores.id,
+            veedores.nombres as nombres_veedor,
+            veedores.apellidos as apellidos_veedor,
+            veedores.dni, veedores.telefono,
+            veedores.coordinador_id,
+            coord.nombres as nombres_coordinador,
+            coord.apellidos as apellidos_coordinador,
+            veedores.canton_id, c.nombre_canton as canton, veedores.recinto_id,
+            r.nombre_recinto as recinto, veedores.junta_id, j.junta_nombre as junta, veedores.confirmado,
+            CONCAT(u.nombres, " ", u.apellidos) as usuario_created,
+            CONCAT(us.nombres, " ", us.apellidos) as usuario_updated')
+            ->leftJoin('coordinadores as coord', 'coord.id', '=', 'veedores.coordinador_id')
+            ->join('cantones as c', 'c.id', '=', 'veedores.canton_id')
+            ->join('recintos as r', 'r.id', '=', 'veedores.recinto_id')
+            ->leftJoin('juntas as j', 'j.id', '=', 'veedores.junta_id')
+            ->leftJoin('users as u', 'u.id', '=', 'veedores.created_by')
+            ->leftJoin('users as us', 'us.id', '=', 'veedores.updated_by')
             ->when(!empty($cantones), function ($query) use ($cantones) {
-                // Aplica el scope de whereIn para los cantones
                 return $query->whereInCantones($cantones);
             })
-            ->orderBy('veed.id', 'DESC')
+            ->when(!empty($recintos), function ($query) use ($recintos) {
+                return $query->whereInRecintos($recintos);
+            })
+            ->when(!empty($parroquias), function ($query) use ($parroquias) {
+                return $query->whereInParroquias($parroquias);
+            })
+            ->orderBy('veedores.id', 'DESC')
             ->get();
 
-        return response()->json(['status' => 'success', 'veedores' => $veedores], 200);
+        return response()->json([
+            'status' => 'success',
+            'veedores' => $veedores
+        ]);
     }
 
     function store(VeedorRequest $request): JsonResponse
@@ -106,8 +116,8 @@ class VeedorController extends Controller
     function searchVeedores(Request $request): JsonResponse
     {
         $veedores = Veedor::from('veedores as veed')
-            ->join('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
-            ->join('supervisores as super', 'super.id', 'coord.supervisor_id')
+            ->leftJoin('coordinadores as coord', 'coord.id', 'veed.coordinador_id')
+            ->leftJoin('supervisores as super', 'super.id', 'coord.supervisor_id')
             ->join('cantones as c', 'c.id', 'veed.canton_id')
             ->join('recintos as r', 'r.id', 'veed.recinto_id')
             ->leftJoin('juntas as j', 'j.id', 'veed.junta_id')
@@ -122,8 +132,10 @@ class VeedorController extends Controller
                         veed.nombres as nombres_veedor,
                         veed.apellidos as apellidos_veedor,
                         veed.dni, veed.telefono,
+                        super.id as supervisor_id,
                         super.nombres as nombres_supervisor,
                         super.apellidos as apellidos_supervisor,
+                        coord.id as coordinador_id,
                         coord.nombres as nombres_coordinador,
                         coord.apellidos as apellidos_coordinador,
                         c.nombre_canton as canton,

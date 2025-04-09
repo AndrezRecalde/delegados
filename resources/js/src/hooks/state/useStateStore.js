@@ -14,7 +14,7 @@ export const useStateStore = () => {
     );
     const dispatch = useDispatch();
 
-    const startLoadCantones = async (cantones = []) => {
+    const startLoadCantones = async (cantones = null) => {
         try {
             const { data } = await eleccionApi.post("/cantones", { cantones });
             const { cantones: cantonesLoaded } = data;

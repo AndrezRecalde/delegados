@@ -17,7 +17,6 @@ export const ModalUsuario = () => {
             apellidos: "",
             dni: "",
             roles: [],
-            cantones: []
         },
         validate: {
             nombres: isNotEmpty("Por favor ingresa los nombres"),

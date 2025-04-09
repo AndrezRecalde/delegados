@@ -235,7 +235,7 @@ class PDFController extends Controller
     function getTableEscaneadoresPDF(Request $request)
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
-            ->selectRaw('esc.id, esc.nombres_completos, esc.dni, esc.telefono, esc.canton_id, c.nombre_canton as canton')
+            ->selectRaw('esc.id, esc.apellidos, esc.nombres, esc.dni, esc.telefono, esc.canton_id, c.nombre_canton as canton')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
             ->canton($request->canton_id)
             ->get();
@@ -253,7 +253,7 @@ class PDFController extends Controller
     function getCardsEscaneadoresPDF(Request $request)
     {
         $escaneadores = Escaneador::from('escaneadores as esc')
-            ->selectRaw('esc.id, esc.nombres_completos, esc.dni,
+            ->selectRaw('esc.id, esc.apellidos, esc.nombres, esc.dni,
              c.nombre_canton as canton, p.nombre_parroquia as parroquia,
              r.nombre_recinto as recinto')
             ->join('cantones as c', 'c.id', 'esc.canton_id')
@@ -274,7 +274,7 @@ class PDFController extends Controller
 
     function getCardsJrvmovilesPDF()
     {
-        $jrvmoviles = Jrvmovil::get(['id', 'dni', 'nombres_completos']);;
+        $jrvmoviles = Jrvmovil::get(['id', 'dni', 'apellidos', 'nombres']);;
 
         $data = [
             'title'     =>  'Reporte de JRV Moviles',
@@ -288,7 +288,7 @@ class PDFController extends Controller
 
     function getCardsJrvReconteosPDF()
     {
-        $reconteos = Reconteo::get(['id', 'dni', 'nombres_completos']);
+        $reconteos = Reconteo::get(['id', 'dni', 'apellidos', 'nombres']);;
 
         $data = [
             'title'     =>  'Reporte de JRV Moviles',

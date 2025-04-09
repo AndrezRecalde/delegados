@@ -52,8 +52,15 @@ Route::group(
         Route::get('/avance/parroquias',  [DashboardController::class, 'getAvanceParroquial']);
         Route::post('/avance/parroquia',  [DashboardController::class, 'getAvanceParroquiaxCanton']);
         Route::post('/avance/recintos',  [DashboardController::class, 'getAvanceRecintos']);
+
         Route::post('/totales/veedores/cantones', [DashboardController::class, 'getTotalVeedoresForCantones']);
+        Route::post('/totales/veedores/parroquias', [DashboardController::class, 'getTotalVeedoresForParroquias']);
+        Route::post('/totales/veedores/recintos', [DashboardController::class, 'getTotalVeedoresForRecintos']);
+
         Route::post('/totales/juntas/cantones', [DashboardController::class, 'getTotalJuntasForCantones']);
+        Route::post('/totales/juntas/parroquias', [DashboardController::class, 'getTotalJuntasForParroquias']);
+        Route::post('/totales/juntas/recintos', [DashboardController::class, 'getTotalJuntasForRecintos']);
+
 
 
         /* Usuarios */
@@ -85,6 +92,8 @@ Route::group(
         Route::post('/supervisores/search',  [SupervisorController::class, 'searchSupervisores']);  /* TODO FINISH */
         Route::post('/supervisores/import', [SupervisorController::class, 'massiveStore']); /* TODO FINISH */
         Route::post('/supervisores/canton', [SupervisorController::class, 'getSupervisoresForCanton']);
+        Route::post('/supervisor/dni',  [SupervisorController::class, 'getSupervisorForDNI']);
+
 
         /* Coordinadores */
         Route::get('/coordinadores/listar', [CoordinadorController::class, 'getCoordinadores']);
@@ -95,6 +104,8 @@ Route::group(
         Route::post('/coordinadores/import', [CoordinadorController::class, 'massiveStore']); /* TODO FINISH */
         Route::post('/coordinadores/canton', [CoordinadorController::class, 'getCoordinadoresForCanton']);
         Route::post('/coordinadores/export/excel', [CoordinadorController::class, 'exportExcelCoordinadores']);
+        Route::post('/coordinador/dni',  [CoordinadorController::class, 'getCoordinadorForDNI']);
+
 
         /* Veedores */
         Route::post('/veedores/listar', [VeedorController::class, 'getVeedores']);

@@ -30,7 +30,7 @@ class CoordinadorRequest extends FormRequest
             'dni'               =>  ['required', Rule::unique('coordinadores')->ignore($this->request->get('id'))],
             'email'             =>  '',
             'telefono'          =>  '',
-            'supervisor_id'     =>  'required',
+            'supervisor_id'     =>  '',
             'canton_id'         =>  'required',
             'parroquia_id'      =>  'required',
             'recinto_id'        =>  'required'
@@ -42,7 +42,7 @@ class CoordinadorRequest extends FormRequest
             'nombres_completos.required'  =>  'El/Los nombre(s) es obligatorio',
             'dni.required'                =>  'El número de cédula es obligatorio',
             'dni.unique'                  =>  'El número de cédula ya esta ingresado',
-            'supervisor_id.required'      =>  'El supervisor es requerido',
+            //'supervisor_id.required'      =>  'El supervisor es requerido',
             'canton_id.required'          =>  'El canton es requerido',
             'parroquia_id.required'       =>  'La parroquia es requerida',
             'recinto_id.required'         =>  'Seleccione uno o varios recintos'

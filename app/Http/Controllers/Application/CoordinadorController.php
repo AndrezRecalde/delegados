@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CoordinadorRequest;
 use App\Imports\CoordinadoresImport;
 use App\Models\Coordinador;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,7 +31,7 @@ class CoordinadorController extends Controller
                     return $query->select('recintos.id', 'recintos.nombre_recinto');
                 }
             ])
-            ->join('supervisores as s', 's.id', 'coord.supervisor_id')
+            ->leftJoin('supervisores as s', 's.id', 'coord.supervisor_id')
             ->join('cantones as c', 'c.id', 'coord.canton_id')
             ->join('parroquias as p', 'p.id', 'coord.parroquia_id')
             ->orderBy('coord.id', 'DESC')
@@ -70,6 +71,14 @@ class CoordinadorController extends Controller
         try {
             $coordinador = Coordinador::create($request->validated());
             $coordinador->recintos()->attach($request->recinto_id);
+
+            $usuario = User::create([
+                'apellidos' => $request->apellidos,
+                'nombres' => $request->nombres,
+                'dni' => $request->dni,
+            ]);
+            $usuario->assignRole([3]);
+
             return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
@@ -138,27 +147,42 @@ class CoordinadorController extends Controller
         }
     }
 
-    function getCoordinadorForDNI(Request $request) : JsonResponse
+    function getCoordinadorForDNI(Request $request): JsonResponse
     {
-        $coordinador = Coordinador::where('dni', $request->dni)->first();
-        if ($coordinador) {
-            return response()->json(['status' => 'success', 'coordinador' => $coordinador], 200);
-        } else {
-            return response()->json(['status' => 'error', 'msg' => "No existe un coordinador con ese DNI"], 404);
-        }
+        $coordinador = Coordinador::from('coordinadores as coord')
+            ->selectRaw('coord.id,
+                                coord.nombres as nombres_coordinador,
+                                coord.apellidos as apellidos_coordinador,
+                                coord.dni, coord.telefono, coord.email,
+                                super.nombres as nombres_supervisor,
+                                super.apellidos as apellidos_supervisor,
+                                coord.canton_id, c.nombre_canton as canton,
+                                parr.nombre_parroquia as parroquia')
+            ->with([
+                'recintos' => function ($query) {
+                    return $query->select('recintos.id', 'recintos.nombre_recinto');
+                }
+            ])
+            ->join('cantones as c', 'c.id', 'coord.canton_id')
+            ->join('parroquias as parr', 'parr.id', 'coord.parroquia_id')
+            ->join('supervisores as super', 'super.id', 'coord.supervisor_id')
+            ->join('recinto_coord as rc', 'rc.coordinador_id', 'coord.id')
+            ->where('coord.dni', $request->dni)
+            ->first();
+
+        return response()->json(['status' => 'success', 'coordinador' => $coordinador], 200);
     }
 
     function massiveStore(Request $request)
     {
         try {
-            if(!$request->hasFile('coordinadores_import')) {
+            if (!$request->hasFile('coordinadores_import')) {
                 return response()->json(['status' => 'error', 'msg' => 'El archivo no existe'], 500);
             }
 
             Excel::import(new CoordinadoresImport, $request->file('coordinadores_import'));
             return response()->json(['status' => 'success', 'msg' => 'Archivo subido con éxito'], 201);
-
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e){
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
             foreach ($failures as $failure) {
                 $failure->row();

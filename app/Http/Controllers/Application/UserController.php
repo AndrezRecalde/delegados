@@ -17,14 +17,14 @@ class UserController extends Controller
     function getUsuarios(): JsonResponse
     {
         $usuarios = User::from('users as u')
-            ->selectRaw('u.id, CONCAT(u.apellidos, " ", u.nombres) as nombres_completos, u.dni, u.activo')
+            ->selectRaw('u.id, u.apellidos, u.nombres, u.dni, u.activo')
             ->with([
                 'roles' => function ($query) {
                     return $query->select('roles.id', 'roles.name');
                 },
-                'cantones' => function ($query) {
+                /* 'cantones' => function ($query) {
                     return $query->select('cantones.id', 'cantones.nombre_canton');
-                }
+                } */
             ])
             ->where('u.id', '<>', 1)
             ->get();
@@ -38,29 +38,9 @@ class UserController extends Controller
             $usuario = User::create($request->validated());
             $usuario->assignRole($request->roles);
 
-            if ($request->filled('cantones')) {
+            /* if ($request->filled('cantones')) {
                 $usuario->cantones()->attach($request->cantones);
-            }
-
-            // Revisamos los roles
-            /* if (in_array(2, $request->roles)) {
-                Supervisor::create([
-                    'apellidos' => $usuario->apellidos,
-                    'nombres' => $usuario->nombres,
-                    'dni' => $usuario->dni,
-                    //'user_id' => $usuario->id, // Relacionamos el Supervisor con el User
-                ]);
-            }
-
-            if (in_array(3, $request->roles)) {
-                Coordinador::create([
-                    'nombres' => $usuario->nombres,
-                    'apellidos' => $usuario->apellidos,
-                    'dni' => $usuario->dni,
-                    //'user_id' => $usuario->id, // Relacionamos el Coordinador con el User
-                ]);
             } */
-
             return response()->json(['status' => 'success', 'msg' => 'Creado con éxito'], 201);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'msg' => $th->getMessage()], 500);
@@ -80,10 +60,10 @@ class UserController extends Controller
                     $usuario->assignRole($request->roles);
                 }
 
-                if ($request->filled('cantones')) {
+                /* if ($request->filled('cantones')) {
                     $usuario->cantones()->detach();
                     $usuario->cantones()->sync($request->cantones);
-                }
+                } */
 
                 return response()->json(['status' => 'success', 'msg' => 'Actualizado con éxito'], 201);
             } else {

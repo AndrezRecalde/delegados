@@ -23,7 +23,8 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                 size: 80,
             },
             {
-                accessorFn: (row) => row.nombres_coordinador + " " + row.apellidos_coordinador,
+                accessorFn: (row) =>
+                    row.nombres_coordinador + " " + row.apellidos_coordinador,
                 header: "Coordinador",
                 filterVariant: "autocomplete",
             },
@@ -50,7 +51,12 @@ export const TableCoordinadores = ({ viewBtn = 1 }) => {
                 header: "Recinto(s)",
             },
             {
-                accessorFn: (row) => row.nombres_supervisor + row.apellidos_supervisor,
+                accessorFn: (row) =>
+                    row?.nombres_supervisor || row?.apellidos_supervisor
+                        ? `${row?.nombres_supervisor || ""} ${
+                              row?.apellidos_supervisor || ""
+                          }`.trim()
+                        : "No registra...",
                 header: "Supervisor",
                 filterVariant: "autocomplete",
             },

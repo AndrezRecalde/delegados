@@ -42,6 +42,21 @@ class DashboardController extends Controller
         return response()->json(['status' => 'success', 'totalVeedores' => $totalVeedores], 200);
     }
 
+    function getTotalVeedoresForParroquias(Request $request): JsonResponse
+    {
+        $totalVeedores = Veedor::join('recintos as r', 'r.id', '=', 'veedores.recinto_id')
+        ->whereIn('r.parroquia_id', $request->parroquias)
+        ->count();
+
+    return response()->json(['status' => 'success', 'totalVeedores' => $totalVeedores], 200);
+    }
+
+    function getTotalVeedoresForRecintos(Request $request): JsonResponse
+    {
+        $totalVeedores = Veedor::whereIn('recinto_id', $request->recintos)->count();
+        return response()->json(['status' => 'success', 'totalVeedores' => $totalVeedores], 200);
+    }
+
     function getTotalJuntasForCantones(Request $request): JsonResponse
     {
         $totalJuntas = Recinto::from('recintos as r')
@@ -49,6 +64,35 @@ class DashboardController extends Controller
             ->join('parroquias as p', 'p.id', '=', 'r.parroquia_id')
             ->join('cantones as c', 'c.id', '=', 'p.canton_id')
             ->whereIn('c.id', $request->cantones) // Aplica el filtro antes de obtener los datos
+            ->pluck('totalJuntas') // Usamos pluck para obtener el valor como un array
+            ->first(); // Obtener el primer valor
+
+        return response()->json([
+            'status' => 'success',
+            'totalJuntas' => max(0, (int) $totalJuntas) // Asegura que sea un entero positivo
+        ], 200);
+    }
+
+    function getTotalJuntasForParroquias(Request $request): JsonResponse
+    {
+        $totalJuntas = Recinto::from('recintos as r')
+            ->selectRaw('SUM(r.num_juntas) as totalJuntas')
+            ->join('parroquias as p', 'p.id', '=', 'r.parroquia_id')
+            ->whereIn('r.parroquia_id', $request->parroquias) // Aplica el filtro antes de obtener los datos
+            ->pluck('totalJuntas') // Usamos pluck para obtener el valor como un array
+            ->first(); // Obtener el primer valor
+
+        return response()->json([
+            'status' => 'success',
+            'totalJuntas' => max(0, (int) $totalJuntas) // Asegura que sea un entero positivo
+        ], 200);
+    }
+
+    function getTotalJuntasForRecintos(Request $request): JsonResponse
+    {
+        $totalJuntas = Recinto::from('recintos as r')
+            ->selectRaw('SUM(r.num_juntas) as totalJuntas')
+            ->whereIn('r.id', $request->recintos) // Aplica el filtro antes de obtener los datos
             ->pluck('totalJuntas') // Usamos pluck para obtener el valor como un array
             ->first(); // Obtener el primer valor
 

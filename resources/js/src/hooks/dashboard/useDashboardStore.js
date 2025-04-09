@@ -352,11 +352,108 @@ export const useDashboardStore = () => {
         }
     };
 
+    const startLoadVeedoresForParroquia = async (parroquias) => {
+        try {
+            const { data } = await eleccionApi.post(
+                "/totales/veedores/parroquias",
+                { parroquias }
+            );
+            const { totalVeedores } = data;
+            dispatch(onLoadTotalVeedores(totalVeedores));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
+    const startLoadVeedoresForRecinto = async (recintos) => {
+        try {
+            const { data } = await eleccionApi.post(
+                "/totales/veedores/recintos",
+                { recintos }
+            );
+            const { totalVeedores } = data;
+            dispatch(onLoadTotalVeedores(totalVeedores));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
     const startLoadJuntasForCanton = async (cantones) => {
         try {
             const { data } = await eleccionApi.post(
                 "/totales/juntas/cantones",
                 { cantones }
+            );
+            const { totalJuntas } = data;
+            dispatch(onLoadTotalJuntas(totalJuntas));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
+    const startLoadJuntasForParroquia = async (parroquias) => {
+        try {
+            const { data } = await eleccionApi.post(
+                "/totales/juntas/parroquias",
+                { parroquias }
+            );
+            const { totalJuntas } = data;
+            dispatch(onLoadTotalJuntas(totalJuntas));
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: error.response.data.msg
+                    ? error.response.data.msg
+                    : error.response.data.errores
+                    ? Object.values(error.response.data.errores)
+                    : error.response.data.message
+                    ? error.response.data.message
+                    : error,
+                confirmButtonColor: "#c81d11",
+            });
+        }
+    };
+
+
+    const startLoadJuntasForRecinto = async (recintos) => {
+        try {
+            const { data } = await eleccionApi.post(
+                "/totales/juntas/recintos",
+                { recintos }
             );
             const { totalJuntas } = data;
             dispatch(onLoadTotalJuntas(totalJuntas));
@@ -444,6 +541,10 @@ export const useDashboardStore = () => {
         setClearAvanceParroquias,
         setClearAvanceRecintos,
         startLoadVeedoresForCanton,
+        startLoadVeedoresForParroquia,
+        startLoadVeedoresForRecinto,
         startLoadJuntasForCanton,
+        startLoadJuntasForParroquia,
+        startLoadJuntasForRecinto,
     };
 };

@@ -5,32 +5,63 @@ import {
     useCoordinadorStore,
     useJuntaStore,
     useStateStore,
+    useSupervisorStore,
     useUiVeedor,
     useVeedorStore,
 } from "../../../hooks";
 import { BtnSubmit } from "../../../components";
+import { ROLES } from "../../../helpers/getDictionary";
 
 export const FormVeedor = ({ form }) => {
     const { canton_id, recinto_id } = form.values;
     const usuario = JSON.parse(localStorage.getItem("service_user"));
-    const { coordinadores, startLoadCoordsForCanton } = useCoordinadorStore();
+    const { activateCoordinador, coordinadores, startLoadCoordsForCanton } =
+        useCoordinadorStore();
+    const { activateSupervisor } = useSupervisorStore();
     const { startAddVeedor, activateVeedor } = useVeedorStore();
-    const { modalActionVeedor } = useUiVeedor();
+    const { isOpenModalVeedor, modalActionVeedor } = useUiVeedor();
     const { cantones, recintos, startLoadCantones, startLoadAllRecintos } =
         useStateStore();
     const { juntas, startLoadJuntas } = useJuntaStore();
 
     useEffect(() => {
-        if (usuario.role !== "Administrador") {
-            const cantonesIds = usuario.cantones.map((canton) => canton.id);
-            startLoadCantones(cantonesIds);
-            return;
+        if (isOpenModalVeedor) {
+            startLoadCantones();
         }
-        startLoadCantones();
-    }, []);
+    }, [isOpenModalVeedor]);
 
     useEffect(() => {
-        startLoadCoordsForCanton(canton_id);
+        if (
+            (isOpenModalVeedor,
+            usuario.role === ROLES.SUPERVISOR &&
+                activateSupervisor &&
+                activateSupervisor.canton_id)
+        ) {
+            const cantonId = activateSupervisor.canton_id;
+            const canton = cantones.find((canton) => canton.id === cantonId);
+            if (canton) {
+                form.setFieldValue("canton_id", canton.id.toString());
+            }
+        }
+    }, [isOpenModalVeedor, activateSupervisor, cantones]);
+
+    useEffect(() => {
+        if (
+            (isOpenModalVeedor,
+            usuario.role === ROLES.COORDINADOR &&
+                activateCoordinador &&
+                activateCoordinador.canton_id)
+        ) {
+            const cantonId = activateCoordinador.canton_id;
+            const canton = cantones.find((canton) => canton.id === cantonId);
+            if (canton) {
+                form.setFieldValue("canton_id", canton.id.toString());
+            }
+        }
+    }, [isOpenModalVeedor, activateCoordinador, cantones]);
+
+    useEffect(() => {
+        startLoadCoordsForCanton({ canton_id });
     }, [canton_id]);
 
     useEffect(() => {
@@ -52,7 +83,9 @@ export const FormVeedor = ({ form }) => {
         startLoadAllRecintos(canton_id);
         form.setFieldValue(
             "recinto_id",
-            activateVeedor?.recinto_id.toString() ? activateVeedor?.recinto_id.toString() : null
+            activateVeedor?.recinto_id.toString()
+                ? activateVeedor?.recinto_id.toString()
+                : null
         );
     }, [canton_id]);
 
@@ -60,14 +93,49 @@ export const FormVeedor = ({ form }) => {
         startLoadJuntas(recinto_id);
         form.setFieldValue(
             "junta_id",
-            activateVeedor?.junta_id ? activateVeedor?.junta_id.toString() : null
+            activateVeedor?.junta_id
+                ? activateVeedor?.junta_id.toString()
+                : null
         );
     }, [recinto_id]);
 
     const handleSubmit = () => {
-        startAddVeedor(form.getTransformedValues());
-        form.reset();
-        modalActionVeedor(0);
+        if (
+            usuario.role === ROLES.SUPERVISOR &&
+            activateSupervisor &&
+            activateSupervisor.parroquias?.length > 0
+        ) {
+            const parroquiasId = activateSupervisor?.parroquias.map(
+                (parroquia) => parroquia.id
+            );
+            startAddVeedor(form.getTransformedValues(), [], parroquiasId, []);
+            form.reset();
+            modalActionVeedor(0);
+            return;
+        }
+
+        if (
+            usuario.role === ROLES.COORDINADOR &&
+            activateCoordinador &&
+            activateCoordinador.recintos?.length > 0
+        ) {
+            const recintosId = activateCoordinador?.recintos?.map(
+                (recinto) => recinto.id
+            );
+            startAddVeedor(form.getTransformedValues(), [], [], recintosId);
+            form.reset();
+            modalActionVeedor(0);
+            return;
+        }
+
+        if (
+            usuario.role === ROLES.ADMIN
+        ) {
+            startAddVeedor(form.getTransformedValues(), [], [], []);
+            form.reset();
+            modalActionVeedor(0);
+            return;
+        }
     };
 
     return (
@@ -104,7 +172,10 @@ export const FormVeedor = ({ form }) => {
                     data={coordinadores?.map((coord) => {
                         return {
                             value: coord.id.toString(),
-                            label: coord.nombres_coordinador + " " + coord.apellidos_coordinador,
+                            label:
+                                coord.nombres_coordinador +
+                                " " +
+                                coord.apellidos_coordinador,
                         };
                     })}
                 />
