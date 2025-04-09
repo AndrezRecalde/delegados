@@ -83,71 +83,73 @@
 </head>
 
 <body>
-    <table>
-        <tbody>
-            @foreach ($veedores->chunk(2) as $veedor)
-                <tr>
-                    @foreach ($veedor as $item)
-                        <td>
-                            <div class="card mr-4 ml-4 mb-3 fondo" style="width: 20rem;">
-                                <div class="text-center mt-2">
-                                    <img src={{ public_path('/images/cnelogo2025.png') }} class="img-fluid"
-                                        alt="cne_logo" height="130" width="130" />
-                                </div>
-                                <div class="card-body">
-                                    <div class="text-center">
-                                        <img src={{ public_path('/images/logoadn.jpg') }}
-                                            class="img-fluid mb-2 ml-2 mr-2" height="100" width="100"
-                                            alt="adn_logo" />
+    <div style="page-break-after: always;">
+        <table>
+            <tbody>
+                @foreach ($veedores->chunk(2) as $veedor)
+                    <tr>
+                        @foreach ($veedor as $item)
+                            <td>
+                                <div class="card mr-4 ml-4 mb-3 fondo" style="width: 20rem;">
+                                    <div class="text-center mt-2">
+                                        <img src={{ public_path('/images/cnelogo2025.png') }} class="img-fluid"
+                                            alt="cne_logo" height="130" width="130" />
                                     </div>
-                                    <input type="text" class="input-soft" readonly
-                                        value="ACCIÓN DEMOCRÁTICA NACIONAL ADN">
-                                    <small class="small-label">DELEGADOS DE LOS SUJETOS
-                                        POLÍTICOS</small>
-                                    <input type="text" class="input-soft text-uppercase" readonly
-                                        value="{{ Str::upper($item->apellidos_veedor . ' ' . $item->nombres_veedor) }}">
-                                    <small class="small-label">NOMBRES
-                                        APELLIDOS</small>
-                                    <input type="text" class="input-soft" aria-describedby="dni"
-                                        value={{ $item->dni }} />
-                                    <small class="small-label">CEDULA
-                                        CIUDADANIA N°</small>
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="input-soft" readonly
-                                                        value="{{ $item->parroquia }}">
-                                                    <small class="small-label">PARROQUIA</small>
-                                                    <input type="text" class="input-soft recinto-input" readonly
-                                                        value="{{ $item->recinto }}">
-                                                    <small class="small-label">RECINTO</small>
-                                                </td>
-                                                <td
-                                                    style="text-align: center; vertical-align: top; padding-left: 30px;">
-                                                    <input type="text" class="jrv-soft jrv-input" readonly
-                                                        value="{{ $item->junta }}">
-                                                    <small class="small-label">JRV N°</small>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <img src={{ public_path('/images/logoadn.jpg') }}
+                                                class="img-fluid mb-2 ml-2 mr-2" height="100" width="100"
+                                                alt="adn_logo" />
+                                        </div>
+                                        <input type="text" class="input-soft" readonly
+                                            value="ACCIÓN DEMOCRÁTICA NACIONAL ADN">
+                                        <small class="small-label">DELEGADOS DE LOS SUJETOS
+                                            POLÍTICOS</small>
+                                        <input type="text" class="input-soft text-uppercase" readonly
+                                            value="{{ Str::upper($item->apellidos_veedor . ' ' . $item->nombres_veedor) }}">
+                                        <small class="small-label">NOMBRES
+                                            APELLIDOS</small>
+                                        <input type="text" class="input-soft" aria-describedby="dni"
+                                            value={{ $item->dni }} />
+                                        <small class="small-label">CEDULA
+                                            CIUDADANIA N°</small>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" class="input-soft" readonly
+                                                            value="{{ $item->parroquia }}">
+                                                        <small class="small-label">PARROQUIA</small>
+                                                        <input type="text" class="input-soft recinto-input" readonly
+                                                            value="{{ $item->recinto }}">
+                                                        <small class="small-label">RECINTO</small>
+                                                    </td>
+                                                    <td
+                                                        style="text-align: center; vertical-align: top; padding-left: 30px;">
+                                                        <input type="text" class="jrv-soft jrv-input" readonly
+                                                            value="{{ $item->junta }}">
+                                                        <small class="small-label">JRV N°</small>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-footer text-center text-white font-weight-bold p-1"
+                                        style="background-color: black; font-size: 15px;">
+                                        DELEGADO/A ANTE LA<br /> JUNTA RECEPTORA DEL VOTO
+                                    </div>
+                                    <div class="card-footer text-center text-white font-weight-bold p-1"
+                                        style="background-color: blue; font-size: 15px;">
+                                        SEGUNDA VUELTA - 13·04·25
+                                    </div>
                                 </div>
-                                <div class="card-footer text-center text-white font-weight-bold p-1"
-                                    style="background-color: black; font-size: 15px;">
-                                    DELEGADO/A ANTE LA<br /> JUNTA RECEPTORA DEL VOTO
-                                </div>
-                                <div class="card-footer text-center text-white font-weight-bold p-1"
-                                    style="background-color: blue; font-size: 15px;">
-                                    SEGUNDA VUELTA - 13·04·25
-                                </div>
-                            </div>
-                        </td>
-                    @endforeach
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
