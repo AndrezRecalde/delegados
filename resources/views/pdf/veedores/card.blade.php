@@ -78,12 +78,29 @@
             margin-top: 0.5px;
             text-align: center;
         }
+
+        .contenedor-imagen {
+            width: 320px;
+            height: 440px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+        }
+
+        .contenedor-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* ajusta la imagen dentro del contenedor */
+        }
     </style>
     <title>{{ $title }}</title>
 </head>
 
 <body>
-    <div style="page-break-after: always;">
+    <div>
         <table>
             <tbody>
                 @foreach ($veedores->chunk(2) as $veedor)
@@ -150,6 +167,23 @@
             </tbody>
         </table>
     </div>
+    {{-- <div>
+        <table>
+            <tbody>
+                @foreach ($veedores->chunk(2) as $veedor)
+                    <tr>
+                        @foreach ($veedor as $item)
+                            <td>
+                                <div class="card mr-4 ml-4 mb-3 fondo" style="width: 20rem;">
+                                    <img src={{ public_path('/images/retiro_delegado.jpeg') }} alt="Atribuciones y Deberes de Delegados">
+                                </div>
+                            </td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div> --}}
 </body>
 
 </html>
