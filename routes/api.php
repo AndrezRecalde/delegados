@@ -29,6 +29,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
+Route::post('/delegado/exportar-pdf', [PDFController::class, 'exportarDelegadoPDF']);
+
+
+ /* States */
+ Route::post('cantones', [StateController::class, 'getCantones']);
+ Route::post('parroquias', [StateController::class, 'getParroquias']);
+ Route::post('recintos', [StateController::class, 'getRecintos']);
+ Route::post('/todos/recintos', [StateController::class, 'getAllRecintos']);
+
+
 Route::group(
     ['middleware' => ['auth:sanctum']],
     function () {
@@ -77,11 +87,7 @@ Route::group(
         /* Juntas */
         Route::post('/juntas/recinto', [JuntaController::class, 'getJuntas']);
 
-        /* States */
-        Route::post('cantones', [StateController::class, 'getCantones']);
-        Route::post('parroquias', [StateController::class, 'getParroquias']);
-        Route::post('recintos', [StateController::class, 'getRecintos']);
-        Route::post('/todos/recintos', [StateController::class, 'getAllRecintos']);
+
 
 
         /* Supervisores */

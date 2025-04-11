@@ -71,6 +71,9 @@ import { ActivateUserButton } from "./usuario/activar/btn/ActivateUserButton";
 import { ModalActivateUser } from "./usuario/activar/form/ModalActivateUser";
 import { FormActivateUser } from "./usuario/activar/form/FormActivateUser";
 
+import { ModalDelegadoPublic } from "./veedor/public/modal/ModalDelegadoPublic";
+import { FormDelegadoPublic } from "./veedor/public/form/FormDelegadoPublic";
+
 export {
     TitlePage,
     TextSection,
@@ -135,4 +138,7 @@ export {
     ActivateUserButton,
     ModalActivateUser,
     FormActivateUser,
+
+    ModalDelegadoPublic,
+    FormDelegadoPublic
 };

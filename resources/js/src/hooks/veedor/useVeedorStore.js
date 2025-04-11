@@ -224,6 +224,27 @@ export const useVeedorStore = () => {
         }
     };
 
+    const startExportCredencialDelegado = async (values = {}) => {
+        try {
+            dispatch(onExport(true));
+            const response = await eleccionApi.post(
+                "/delegado/exportar-pdf",
+                values,
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+            dispatch(onExport(false));
+        }
+    };
+
     const startClearVeedores = () => {
         dispatch(onClearVeedores());
     };
@@ -256,5 +277,7 @@ export const useVeedorStore = () => {
         setActivateVeedor,
         setClearActivateVeedor,
         startClearVeedores,
+
+        startExportCredencialDelegado
     };
 };

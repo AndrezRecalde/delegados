@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
+use App\Models\Canton;
 use App\Models\Coordinador;
 use App\Models\Escaneador;
 use App\Models\Jrvmovil;
+use App\Models\Junta;
+use App\Models\Parroquia;
+use App\Models\Recinto;
 use App\Models\Reconteo;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
@@ -298,5 +302,48 @@ class PDFController extends Controller
         $pdf = PDF::loadView('pdf.reconteos.card', $data);
 
         return $pdf->download('reconteos.pdf');
+    }
+
+
+
+    /* FICHAS PUBLICAS */
+    public function exportarDelegadoPDF(Request $request)
+    {
+        // Validar un array de delegados
+        $validated = $request->validate([
+            'delegados' => 'required|array|min:1',
+            'delegados.*.apellidos' => 'required|string',
+            'delegados.*.nombres' => 'required|string',
+            'delegados.*.dni' => 'required|string',
+            'delegados.*.canton_id' => 'required|integer',
+            'delegados.*.parroquia' => 'required|string',
+            'delegados.*.recinto' => 'required|string',
+            'delegados.*.junta' => 'required|string',
+        ]);
+
+        $delegados = [];
+
+        foreach ($validated['delegados'] as $delegado) {
+            $canton = Canton::find($delegado['canton_id']);
+
+            $delegados[] = [
+                'apellidos_veedor' => $delegado['apellidos'],
+                'nombres_veedor' => $delegado['nombres'],
+                'dni' => $delegado['dni'],
+                'canton' => $canton ? $canton->nombre_canton : 'No encontrado',
+                'parroquia' => $delegado['parroquia'],
+                'recinto' => $delegado['recinto'],
+                'junta' => $delegado['junta'],
+            ];
+        }
+
+        // Convertimos el array a una colección y aplicamos chunk
+        $delegados = collect($delegados); // Convertir el array a colección
+
+        // Cargar la vista y pasar TODOS los delegados usando chunk(2) para organizar
+        $pdf = PDF::loadView('pdf.veedores.public.card', ['delegados' => $delegados])
+            ->setOption(['isHtml5ParserEnabled' => true]);
+
+        return $pdf->download('reporte.pdf');
     }
 }
