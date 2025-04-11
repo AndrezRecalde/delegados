@@ -3,6 +3,7 @@ import { ProfilePage } from "./user/ProfilePage";
 
 import { CoordinadorPage } from "./coordinador/CoordinadorPage";
 import { SearchCoordPage } from "./coordinador/SearchCoordPage";
+import { CoordinadorViewPage } from "./coordinador/public/CoordinadorViewPage";
 
 import { EscanerPage } from "./escaner/EscanerPage";
 import { SearchEscanerPage } from "./escaner/SearchEscanerPage";
@@ -33,6 +34,7 @@ export {
   ProfilePage,
   CoordinadorPage,
   SearchCoordPage,
+  CoordinadorViewPage,
   EscanerPage,
   SearchEscanerPage,
   HomePage,

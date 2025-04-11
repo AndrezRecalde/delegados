@@ -226,6 +226,27 @@ export const useCoordinadorStore = () => {
         }
     };
 
+    const startExportCredencialCoordinador = async (values = {}) => {
+        try {
+            dispatch(onExport(true));
+            const response = await eleccionApi.post(
+                "/coordinador/exportar-pdf",
+                values,
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+            dispatch(onExport(false));
+        }
+    };
+
     const startClearCoordinadores = () => {
         dispatch(onClearCoordinadores());
     };
@@ -259,5 +280,6 @@ export const useCoordinadorStore = () => {
         startLoadCoordinadorForDNI,
         exportExcelCoordinadores,
         startClearCoordinadores,
+        startExportCredencialCoordinador
     };
 };

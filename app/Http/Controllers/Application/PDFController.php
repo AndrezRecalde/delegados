@@ -346,4 +346,32 @@ class PDFController extends Controller
 
         return $pdf->download('reporte.pdf');
     }
+
+    function exportarCoordinadorPDF(Request $request)
+    {
+        // Validar un array de delegados
+        $validated = $request->validate([
+            'coordinadores' => 'required|array|min:1',
+            'coordinadores.*.apellidos' => 'required|string',
+            'coordinadores.*.nombres' => 'required|string',
+            'coordinadores.*.dni' => 'required|string',
+        ]);
+        $coordinadores = [];
+
+        foreach ($validated['coordinadores'] as $delegado) {
+
+            $coordinadores[] = [
+                'apellidos_coordinador' => $delegado['apellidos'],
+                'nombres_coordinador' => $delegado['nombres'],
+                'dni' => $delegado['dni']
+            ];
+        }
+        $coordinadores = collect($coordinadores); // Convertir el array a colección
+
+        // Cargar la vista y pasar TODOS los delegados usando chunk(2) para organizar
+        $pdf = PDF::loadView('pdf.coordinadores.public.card', ['coordinadores' => $coordinadores])
+            ->setOption(['isHtml5ParserEnabled' => true]);
+
+        return $pdf->download('reporte.pdf');
+    }
 }

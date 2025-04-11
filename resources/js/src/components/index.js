@@ -74,6 +74,9 @@ import { FormActivateUser } from "./usuario/activar/form/FormActivateUser";
 import { ModalDelegadoPublic } from "./veedor/public/modal/ModalDelegadoPublic";
 import { FormDelegadoPublic } from "./veedor/public/form/FormDelegadoPublic";
 
+import { ModalCoordinadorPublic } from "./coordinador/public/modal/ModalCoordinadorPublic";
+import { FormCoordinadorPublic } from "./coordinador/public/form/FormCoordinadorPublic";
+
 export {
     TitlePage,
     TextSection,
@@ -140,5 +143,8 @@ export {
     FormActivateUser,
 
     ModalDelegadoPublic,
-    FormDelegadoPublic
+    FormDelegadoPublic,
+
+    ModalCoordinadorPublic,
+    FormCoordinadorPublic
 };

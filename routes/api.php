@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::post('/delegado/exportar-pdf', [PDFController::class, 'exportarDelegadoPDF']);
+Route::post('/coordinador/exportar-pdf', [PDFController::class, 'exportarCoordinadorPDF']);
 
 
  /* States */

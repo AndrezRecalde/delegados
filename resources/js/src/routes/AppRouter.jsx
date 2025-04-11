@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoutes } from "./public/PublicRoutes";
 import { PrivateRoutes } from "./private/PrivateRoutes";
 import { PrivatePages } from "./private/PrivatePages";
-import { AuthenticationPage, DelegadoViewPage, HomePage } from "../pages";
+import { AuthenticationPage, CoordinadorViewPage, DelegadoViewPage, HomePage } from "../pages";
 import { useAuthStore } from "../hooks";
 import { RoutesNotFound } from "./not-found/RoutesNotFound";
 import { ROLES } from "../helpers";
@@ -25,7 +25,9 @@ export const AppRouter = () => {
         <PublicRoutes>
             <Routes>
                 <Route path="auth/login/*" element={<AuthenticationPage />} />
-                <Route path="public/delegado/*" element={<DelegadoViewPage />} />
+                <Route path="public/jrv/delegado/*" element={<DelegadoViewPage />} />
+                <Route path="public/coordinador/*" element={<CoordinadorViewPage />} />
+
                 <Route
                     path="/*"
                     element={<Navigate replace to="/auth/login" />}
