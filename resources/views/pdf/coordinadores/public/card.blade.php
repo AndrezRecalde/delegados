@@ -28,6 +28,13 @@
 
         }
 
+        .fondo_reverso {
+            background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/04/fondo_cne2.png');
+            background-repeat: no-repeat;
+            background-size: 320px 440px;
+
+        }
+
         .input-soft {
             width: 95%;
             height: 35px;
@@ -153,18 +160,20 @@
 <div>
     <table>
         <tbody>
-            @foreach ($coordinadores->chunk(2) as $veedor)
+            @for ($i = 0; $i < 2; $i++)
                 <tr>
-                    @foreach ($veedor as $item)
+                    @for ($j = 0; $j < 2; $j++)
                         <td>
-                            <div class="card mr-4 ml-4 mb-3 fondo" style="width: 20rem;">
-                                <img src={{ public_path('/images/posterior_coordinador.png') }}
-                                    alt="Atribuciones y Deberes de Delegados">
+                            <div class="card mt-4 mr-4 ml-4 mb-5 fondo_reverso" style="width: 20rem;">
+                                <div class="card-body">
+                                    <img src="{{ public_path('/images/posterior_coordinador.png') }}"
+                                        class="img-fluid mb-2" alt="Atribuciones y Deberes de Delegados">
+                                </div>
                             </div>
                         </td>
-                    @endforeach
+                    @endfor
                 </tr>
-            @endforeach
+            @endfor
         </tbody>
     </table>
 </div>

@@ -25,6 +25,13 @@
 
         }
 
+        .fondo_reverso {
+            background-image: url('https://prefecturadeesmeraldas.gob.ec/wp-content/uploads/2025/04/fondo_cne2.png');
+            background-repeat: no-repeat;
+            background-size: 320px 440px;
+
+        }
+
         .input-soft {
             width: 95%;
             font-size: 8px;
@@ -36,9 +43,17 @@
             text-align: center;
         }
 
+        .parroquia-input {
+            width: 170px;
+            /* Más anchos */
+            box-sizing: border-box;
+        }
+
         .recinto-input {
+            width: 170px;
             height: 40px;
-            /* Aquí defines el alto fijo */
+            /* Más anchos */
+            box-sizing: border-box;
         }
 
         .input-soft.text-uppercase {
@@ -46,28 +61,24 @@
         }
 
         .jrv-soft {
-            width: 80%;
-            font-size: 8px;
-            padding: 5px 8px 8px 5px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            text-align: center;
-        }
-
-        .jrv-input {
             width: 50px;
-            /* Ancho pequeño para el número */
+            /* Igual que .jrv-input para que no se peleen */
             height: 50px;
-            /* Alto grande como querías */
+            /* Alto consistente */
             font-size: 20px;
+            /* Tamaño de letra grande */
             font-weight: bold;
+            /* Negrita */
             text-align: center;
             /* Centrado horizontal */
             vertical-align: middle;
             /* Centrado vertical */
+            margin-right: 15px;
             padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            //box-sizing: border-box;
         }
 
         .small-label {
@@ -137,16 +148,17 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type="text" class="input-soft" readonly
+                                                    <input type="text" class="input-soft parroquia-input" readonly
                                                         value="{{ $item['parroquia'] }}">
                                                     <small class="small-label">PARROQUIA</small>
+
                                                     <input type="text" class="input-soft recinto-input" readonly
                                                         value="{{ Str::upper($item['recinto']) }}">
                                                     <small class="small-label">RECINTO</small>
                                                 </td>
                                                 <td
                                                     style="text-align: center; vertical-align: top; padding-left: 30px;">
-                                                    <input type="text" class="jrv-soft jrv-input" readonly
+                                                    <input type="text" class="jrv-soft" readonly
                                                         value="{{ Str::upper($item['junta']) }}">
                                                     <small class="small-label">JRV N°</small>
                                                 </td>
@@ -173,18 +185,20 @@
 <div>
     <table>
         <tbody>
-            @foreach ($delegados->chunk(2) as $veedor)
+            @for ($i = 0; $i < 2; $i++)
                 <tr>
-                    @foreach ($veedor as $item)
+                    @for ($j = 0; $j < 2; $j++)
                         <td>
-                            <div class="card mr-4 ml-4 mb-3 fondo" style="width: 20rem;">
-                                <img src={{ public_path('/images/posterior_delegado.png') }}
-                                    alt="Atribuciones y Deberes de Delegados">
+                            <div class="card mt-4 mr-4 ml-4 mb-5 fondo_reverso" style="width: 20rem;">
+                                <div class="card-body">
+                                    <img src="{{ public_path('/images/posterior_delegado.png') }}"
+                                        class="img-fluid mb-2" alt="Atribuciones y Deberes de Delegados">
+                                </div>
                             </div>
                         </td>
-                    @endforeach
+                    @endfor
                 </tr>
-            @endforeach
+            @endfor
         </tbody>
     </table>
 </div>
