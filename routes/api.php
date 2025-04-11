@@ -31,6 +31,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::post('/delegado/exportar-pdf', [PDFController::class, 'exportarDelegadoPDF']);
 Route::post('/coordinador/exportar-pdf', [PDFController::class, 'exportarCoordinadorPDF']);
+Route::post('/cda/exportar-pdf', [PDFController::class, 'exportarCdaPDF']);
 
 
  /* States */

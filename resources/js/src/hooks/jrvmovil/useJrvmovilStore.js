@@ -145,6 +145,27 @@ export const useJrvmovilStore = () => {
         }
     };
 
+    const startExportCredencialCda = async (values = {}) => {
+        try {
+            dispatch(onExport(true));
+            const response = await eleccionApi.post(
+                "/cda/exportar-pdf",
+                values,
+                { responseType: "blob" }
+            );
+            const pdfBlob = new Blob([response.data], {
+                type: "application/pdf",
+            });
+            const url = window.open(URL.createObjectURL(pdfBlob));
+            window.URL.revokeObjectURL(url);
+            dispatch(onExport(false));
+        } catch (error) {
+            console.log(error);
+            ExceptionMessageError(error);
+            dispatch(onExport(false));
+        }
+    };
+
     const setActivateJrvmovil = (jrvmovil) => {
         dispatch(onSetActivateJrvmovil(jrvmovil));
     };
@@ -173,5 +194,6 @@ export const useJrvmovilStore = () => {
         setActivateJrvmovil,
         setClearActivateJrvmovil,
         startClearJrvmoviles,
+        startExportCredencialCda
     };
 };

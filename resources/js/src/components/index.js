@@ -77,6 +77,10 @@ import { FormDelegadoPublic } from "./veedor/public/form/FormDelegadoPublic";
 import { ModalCoordinadorPublic } from "./coordinador/public/modal/ModalCoordinadorPublic";
 import { FormCoordinadorPublic } from "./coordinador/public/form/FormCoordinadorPublic";
 
+import { ModalJrvPublic } from "./jrvmovil/public/modal/ModalJrvPublic";
+import { FormJvrPublic } from "./jrvmovil/public/form/FormJvrPublic";
+
+
 export {
     TitlePage,
     TextSection,
@@ -146,5 +150,8 @@ export {
     FormDelegadoPublic,
 
     ModalCoordinadorPublic,
-    FormCoordinadorPublic
+    FormCoordinadorPublic,
+
+    ModalJrvPublic,
+    FormJvrPublic
 };

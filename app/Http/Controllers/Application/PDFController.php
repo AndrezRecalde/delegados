@@ -374,4 +374,32 @@ class PDFController extends Controller
 
         return $pdf->download('reporte.pdf');
     }
+
+    function exportarCdaPDF(Request $request)
+    {
+        // Validar un array de delegados
+        $validated = $request->validate([
+            'jvrs' => 'required|array|min:1',
+            'jvrs.*.apellidos' => 'required|string',
+            'jvrs.*.nombres' => 'required|string',
+            'jvrs.*.dni' => 'required|string',
+        ]);
+        $jvrs = [];
+
+        foreach ($validated['jvrs'] as $jvr) {
+
+            $jvrs[] = [
+                'apellidos' => $jvr['apellidos'],
+                'nombres'   => $jvr['nombres'],
+                'dni'       => $jvr['dni']
+            ];
+        }
+        $jvrs = collect($jvrs); // Convertir el array a colección
+
+        // Cargar la vista y pasar TODOS los delegados usando chunk(2) para organizar
+        $pdf = PDF::loadView('pdf.jrvmoviles.public.card', ['jvrs' => $jvrs])
+            ->setOption(['isHtml5ParserEnabled' => true]);
+
+        return $pdf->download('reporte.pdf');
+    }
 }

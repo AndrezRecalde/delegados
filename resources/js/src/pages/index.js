@@ -18,8 +18,12 @@ import { PasswordPage } from "./usuario/PasswordPage";
 
 import { VeedorPage } from "./jrv/veedor/VeedorPage";
 import { SearchVeedPage } from "./jrv/veedor/SearchVeedPage";
+
 import { JrvmovilPage } from "./jrv/movil/JrvmovilPage";
 import { JrvreconteoPage } from "./jrv/reconteo/JrvreconteoPage";
+
+import { JvrmovilPublicPage } from "./jrv/movil/public/JvrmovilPublicPage";
+
 import { DelegadoViewPage } from "./jrv/veedor/public/DelegadoViewPage";
 
 import { DashboardPage } from "./dashboard/DashboardPage";
@@ -46,6 +50,7 @@ export {
   SearchVeedPage,
   JrvmovilPage,
   JrvreconteoPage,
+  JvrmovilPublicPage,
   DelegadoViewPage,
   DashboardPage,
   SummaryPage,
