@@ -37,8 +37,8 @@
 
         .input-soft {
             width: 95%;
-            height: 35px;
-            font-size: 10px;
+            height: 40px;
+            font-size: 11px;
             padding: 0;
             /* Quitamos padding innecesario */
             margin: 4px 0;
@@ -49,6 +49,10 @@
             /* Centra horizontalmente */
             line-height: 25px;
             /* Centra verticalmente */
+        }
+
+        .bold-input {
+            font-weight: bold;
         }
 
         .recinto-input {
@@ -125,15 +129,15 @@
                                             alt="adn_logo" />
                                     </div>
                                     <div>
-                                        <input type="text" class="input-soft" readonly
+                                        <input type="text" class="input-soft bold-input" readonly
                                             value="ACCIÓN DEMOCRÁTICA NACIONAL ADN">
                                         <small class="small-label">DELEGADOS DE LOS SUJETOS
                                             POLÍTICOS</small>
-                                        <input type="text" class="input-soft text-uppercase" readonly
+                                        <input type="text" class="input-soft text-uppercase bold-input" readonly
                                             value="{{ Str::upper($item['apellidos_coordinador'] . ' ' . $item['nombres_coordinador']) }}">
                                         <small class="small-label">NOMBRES
                                             APELLIDOS</small>
-                                        <input type="text" class="input-soft" aria-describedby="dni"
+                                        <input type="text" class="input-soft bold-input" aria-describedby="dni"
                                             value={{ $item['dni'] }} />
                                         <small class="small-label">CEDULA
                                             CIUDADANIA N°</small>

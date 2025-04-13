@@ -43,6 +43,10 @@
             text-align: center;
         }
 
+        .bold-input {
+            font-weight: bold;
+        }
+
         .parroquia-input {
             width: 170px;
             /* Más anchos */
@@ -132,15 +136,15 @@
                                             class="img-fluid mb-2 ml-2 mr-2" height="100" width="100"
                                             alt="adn_logo" />
                                     </div>
-                                    <input type="text" class="input-soft" readonly
+                                    <input type="text" class="input-soft bold-input" readonly
                                         value="ACCIÓN DEMOCRÁTICA NACIONAL ADN">
                                     <small class="small-label">DELEGADOS DE LOS SUJETOS
                                         POLÍTICOS</small>
-                                    <input type="text" class="input-soft text-uppercase" readonly
+                                    <input type="text" class="input-soft text-uppercase bold-input" readonly
                                         value="{{ Str::upper($item['apellidos_veedor'] . ' ' . $item['nombres_veedor']) }}">
                                     <small class="small-label">NOMBRES
                                         APELLIDOS</small>
-                                    <input type="text" class="input-soft" aria-describedby="dni"
+                                    <input type="text" class="input-soft bold-input" aria-describedby="dni"
                                         value={{ $item['dni'] }} />
                                     <small class="small-label">CEDULA
                                         CIUDADANIA N°</small>
@@ -159,7 +163,7 @@
                                                 <td
                                                     style="text-align: center; vertical-align: top; padding-left: 30px;">
                                                     <input type="text" class="jrv-soft" readonly
-                                                        value="{{ Str::upper($item['junta']) }}">
+                                                        value="{{ Str::upper($item['junta']) ?? "" }}">
                                                     <small class="small-label">JRV N°</small>
                                                 </td>
                                             </tr>

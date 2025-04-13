@@ -37,8 +37,8 @@
 
         .input-soft {
             width: 95%;
-            height: 35px;
-            font-size: 10px;
+            height: 40px;
+            font-size: 11px;
             padding: 0;
             /* Quitamos padding innecesario */
             margin: 4px 0;

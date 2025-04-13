@@ -318,7 +318,7 @@ class PDFController extends Controller
             'delegados.*.canton_id' => 'required|integer',
             'delegados.*.parroquia' => 'required|string',
             'delegados.*.recinto' => 'required|string',
-            'delegados.*.junta' => 'required|string',
+            'delegados.*.junta' => '',
         ]);
 
         $delegados = [];
@@ -333,7 +333,7 @@ class PDFController extends Controller
                 'canton' => $canton ? $canton->nombre_canton : 'No encontrado',
                 'parroquia' => $delegado['parroquia'],
                 'recinto' => $delegado['recinto'],
-                'junta' => $delegado['junta'],
+                'junta' => $delegado['junta'] ?? '',
             ];
         }
 
